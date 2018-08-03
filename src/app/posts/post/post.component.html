@@ -1,0 +1,52 @@
+<div id="fullscreen-post-container" class="overlay">
+  <mat-card class="full-screen">
+    <div style="padding-bottom:20px;">
+      <button mat-icon-button>
+        <mat-icon aria-label="Home button" (click)="postsService.closeNav()">clear</mat-icon>
+      </button>
+      <span class="spacer"></span>
+      <button mat-button class="post-button" color="accent" form="postForm">
+      PUBLICAR
+      </button>
+    </div>
+   <mat-card-header>
+    <img *ngIf="user.photoURL" mat-card-avatar src="{{user.photoURL}}" alt="{{user.displayName}}">
+    <img *ngIf="!user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
+     <mat-card-title style="margin-top:10px; margin-left:5px;">{{user.displayName}}</mat-card-title>
+    </mat-card-header>
+    <div id="mat-content">
+      <div id="div-postForm">
+        <form #postForm="ngForm" (ngSubmit)="checkPost(postForm)" id="postForm">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Titulo" name="tittle" id="post-tittle" 
+          [(ngModel)]="post.tittle" #tittle="ngModel" required>
+          <mat-error *ngIf="!tittle.valid">Por favor escribe el titulo</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <textarea matInput rows="4" placeholder="Descripcion" name="description" id="post-description" [(ngModel)]="post.description" #description="ngModel" required></textarea>
+          <mat-error *ngIf="!tittle.valid">Por favor escribe la descripcion</mat-error>
+        </mat-form-field>
+        </form>
+        <div *ngIf="uploadingPhoto">
+          <mat-spinner class="center-content"></mat-spinner>
+        </div>
+        <div *ngIf="uploadedPhotoURL">
+          <img class="auto-center" src="{{uploadedPhotoURL}}">
+        </div>
+      </div>
+     <div id="form-button">
+       <div class="flex">
+        <span class="spacer"></span>
+         <input id="fileToUpload" type="file" style="display:none;"  accept="image/*">
+        <button mat-icon-button (click)="addPhoto()">
+          <mat-icon aria-label="Home button">photo</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon aria-label="Home button">location_on</mat-icon>
+        </button>
+       </div>
+      </div>
+    </div>
+</mat-card>
+</div>
+

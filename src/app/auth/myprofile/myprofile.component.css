@@ -1,0 +1,12 @@
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+img.auto-center{
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin: auto;
+}
+

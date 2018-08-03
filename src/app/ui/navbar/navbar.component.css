@@ -1,0 +1,41 @@
+/* Make sure the toolbar will stay on top of the content as it scrolls past. */
+.navbar-toolbar {
+  position: fixed;
+  z-index: 2;
+}
+/* highlight the active link*/
+.active-link{
+  font-weight: bold;
+  background-color: #00897B;
+}
+
+.nav{
+  padding: 10px;
+}
+
+mat-toolbar#main-toolbar {
+  background-image: url(https://static.parastorage.com/services/skins/2.1229.80/images/wysiwyg/core/themes/base/ironpatern.png);
+}
+
+@media only screen and (min-width: 600px)  {
+  .nav{
+    padding: 26px;
+  }
+  mat-toolbar#main-toolbar{
+    height: 70px;
+  }
+  
+  .nav{
+    font-size: 0.8em;
+    font-weight: bold;
+  }
+
+  .nav mat-icon {
+    height: 30px;
+    width: 30px;
+    font-size: 30px;
+  }
+  
+
+}
+

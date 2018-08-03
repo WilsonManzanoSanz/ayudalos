@@ -1,0 +1,55 @@
+.full-size{
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
+.overlay {
+    height: 0%;
+    width: 100%;
+    position: fixed;
+    z-index: 50;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    overflow-y: hidden;
+    transition: 0.5s;
+}
+
+.big-height{
+  height: 400px;
+}
+
+.post-button {
+    float: right;
+}
+
+.full-screen{
+  margin-bottom:  20px;
+  height: 90%;
+}
+
+div#mat-content {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    /* Firefox */
+    height: -moz-calc(90% - 40px);
+    /* WebKit */
+    height: -webkit-calc(90%- 40px);
+    /* Opera */
+    height: -o-calc(90% - 40px);
+    /* Standard */
+    height: calc(90% - 40px);
+}
+
+div#div-postForm {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+div#div-form-button {
+  flex: 0 1 40px;
+  /* fixes the footer: min-height: 60px; */
+}
+

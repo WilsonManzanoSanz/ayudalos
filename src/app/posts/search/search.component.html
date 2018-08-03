@@ -1,0 +1,8 @@
+<mat-card [style.padding.px]="stateSearchBar == 'active' ? 25 : 0">
+  <mat-card-header>
+  <input matInput type="text" placeholder="Busca alguna donacion en especifico" [(ngModel)]="searchQuery" class="full-width">
+  <button mat-button *ngIf="searchQuery" matSuffix mat-icon-button aria-label="send" (click)="hideElement()">
+    <mat-icon>clear</mat-icon>
+  </button>
+  </mat-card-header>
+</mat-card>

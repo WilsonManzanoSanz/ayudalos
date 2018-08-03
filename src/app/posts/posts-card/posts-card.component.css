@@ -1,0 +1,28 @@
+.profile-link:hover{
+  cursor: pointer;
+}
+
+img#userprofile-input {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.form-comment{
+  width: 220px;
+}
+
+.small-image{
+  width: 200px;
+  margin: auto;
+  display: block;
+}
+
+.post-card{
+  min-height: 400px;
+}
+
+@media only screen and (min-width: 350px) and (max-width: 400px){
+  .form-comment{
+    width: 150px;
+  }
+}

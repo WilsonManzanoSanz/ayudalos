@@ -1,0 +1,28 @@
+<mat-card>
+   <mat-card-header>
+    <img *ngIf="user.photoURL" mat-card-avatar src="{{user.photoURL}}" alt="{{user.displayName}}">
+    <img *ngIf="!user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
+    <mat-card-subtitle style="margin-top:10px; margin-left:5px; cursor:pointer;" (click)="donationService.showNav()">Dona tus cosas, publica tu donacion!</mat-card-subtitle>
+    <span class="spacer"></span>
+     <mat-icon aria-label="Home button" style="padding-top:5px;" (click)="toggleSearchState()">search</mat-icon>
+    </mat-card-header>
+</mat-card>
+
+<app-search [@searchBarState]="stateSearchBar" [stateSearchBar]="stateSearchBar" (closeElement)="clearSearchForm()"></app-search>
+
+<div class="scrollable" infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()">
+  <div class="half-width" [class.half-width]="!isMobile">
+    <app-posts-card class="card-container" style="justify-content:flex-end;"  [posts]="donationsColumn1"></app-posts-card>
+  </div>
+  <div class="half-width" *ngIf="!isMobile" [class.half-width]="!isMobile">
+    <app-posts-card  class="card-container"  style="justify-content:flex-start;" [posts]="donationsColumn2"></app-posts-card>
+  </div>
+</div>
+ <div *ngIf="sendRequest">
+  <mat-spinner class="center-content"></mat-spinner>
+</div>
+<!-- post donation hiden -->
+<app-post [type]="{type:1}"></app-post>

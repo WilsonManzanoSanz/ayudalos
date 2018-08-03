@@ -1,0 +1,23 @@
+/* Flex contianer to make the foooter flex and responsive */
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  background: #00897B;
+  color: #fff;
+  font:500 15px/32px Roboto, "Helvetica Neue", sans-serif
+}
+
+/* Every link in footer is a div flex component*/
+div h4{
+  font-weight: bold;
+  cursor:pointer;
+  font-size: 14px;
+  padding: 0px 10px 0px 10px
+}
+
+.torn.footer-container {
+  background-image: url(https://static.parastorage.com/services/skins/2.1229.80/images/wysiwyg/core/themes/base/ironpatern.png);
+}
+
+

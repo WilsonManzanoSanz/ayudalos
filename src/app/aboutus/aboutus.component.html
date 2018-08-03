@@ -1,0 +1,74 @@
+<div class="home-main-content">
+  <h2>Ayudalos</h2>
+  <img class="image-content" src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/icon2.svg?alt=media&token=a02ca8a8-9e75-4002-bd34-4c59fb2fcde9" alt="iconlogo">
+  <h4>Somos una compa&ntilde;ia sin animo de lucro nacida financiado por el estado, creada para ayudar al mas necesitado con las donaciones de todos<mat-icon aria-label="icon">favorite</mat-icon></h4>
+</div>
+
+<div class="background-main-image">
+  <div class="display-flex">
+    <mat-card class="flex-item">
+      <h2 class="card-tittle primary">Contactanos</h2>
+      <button class="center-card-button full-width-important primary" mat-button>Llamanos al 3003242130</button>
+      <h4 class="center primary"> O escribenos en nuestra redes sociales</h4>
+      <div class="center-content">
+            <div  class="card-logo google-image"></div>
+            <div  class="card-logo fb-image" ></div>
+            <div  class="card-logo twitter-image" ></div>
+            <div  class="card-logo whatsapp-image" ></div>
+        </div>
+      <div style="width: 100%"><iframe width="100%" height="300" src="https://maps.google.com/maps?width=100%&amp;height=300&amp;hl=en&amp;coord=10.993885,-74.8078276&amp;q=Cra%2041D%20%23%2074-95%2C%20Barranquilla%2C%20Colombia+(Ayudalos)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+      </div>
+    </mat-card>
+    <mat-card class="flex-item">
+      <h2 class="card-tittle primary">Escribenos</h2>
+      <img src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/icon2.svg?alt=media&token=a02ca8a8-9e75-4002-bd34-4c59fb2fcde9" class="login-icon" alt="iconlogo" id="main-icon">
+      <mat-card-content>
+        <form #contactForm="ngForm" (ngSubmit)="submitForm(contactForm)" id="contactForm">
+          <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="Nombre" name="name" id="contact-name" 
+            required [(ngModel)]="contact.name" #name="ngModel">
+            <mat-error [hidden]="name.valid || name.pristine">Escribe tu nombre
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="email" placeholder="Email" name="email" id="contact-email" required email [(ngModel)]="contact.email" #email="ngModel">
+            <mat-error [hidden]="email.valid || email.pristine">Escribe un email valido
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="Asunto" name="subject" id="contact-subject" required [(ngModel)]="contact.subject" #subject="ngModel">
+            <mat-error [hidden]="subject.valid || subject.pristine">Escribe un asunto
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <textarea matInput type="text" placeholder="Mensaje" [rows]="3" name="message" id="contact-message"[(ngModel)]="contact.message" #message="ngModel"  required>
+            </textarea>
+            <mat-error [hidden]="message.valid || subject.pristine">Escribe un asunto
+            </mat-error>
+          </mat-form-field>
+          <button mat-button color="primary" class="center-card-button full-width-important" type="submit">ENVIAR
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <h1 class="header-section">Nuestros colaboradores</h1>
+  <div class="card-container">
+    <div class="pointer" *ngFor="let collaborator of collaborators;" (click)="showMoreInfo()">
+      <mat-card class="aboutus-card">
+          <mat-card-content>
+            <img  class="avatar-picture" src="{{collaborator.photoURL}}" alt="Helpthem photo">
+              <h2 class="mat-header">{{collaborator.displayName}}</h2>
+          <p class="sub-mat-header">{{collaborator.degree}}</p>
+          </mat-card-content>
+          <div class="mat-background">
+            <p><b>{{collaborator.description}}</b>
+            </p>
+          <button class="center-card-button full-width-important primary" mat-raised-button color="secondary">Mostrar mas</button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+ 

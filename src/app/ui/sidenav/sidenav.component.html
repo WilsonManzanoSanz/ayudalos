@@ -1,0 +1,13 @@
+<div class="main-container" [class.is-mobile]="mobileQuery.matches">
+  <app-navbar style=" background: #0277bd;"></app-navbar>
+   <!--No should be display when is not mobile || marginTop:0 means navbar starts from the 0top position|| fixedInViewport means sidenav starts from the 56 top position to not be overed for the navbar-->
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [class.no-display]="!mobileQuery.matches" [style.marginTop.px]="mobileQuery.matches ? 0 : 56">
+      <app-sidenav-list>
+      </app-sidenav-list>
+    </mat-sidenav>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </mat-sidenav-container>
+</div>
+

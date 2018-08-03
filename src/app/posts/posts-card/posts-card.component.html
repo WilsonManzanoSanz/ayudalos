@@ -1,0 +1,50 @@
+<div *ngFor="let post of posts; let idx = index;" id="post-card-container">
+  <mat-card class="post-card">
+  <mat-card-header class="profile-link" routerLink="/auth/profile/{{post.uid}}">
+    <img *ngIf="post.photoURL" mat-card-avatar src="{{post.photoURL}}" alt="{{post.displayName}}">
+    <img *ngIf="!post.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{post.displayName}}"  >
+    <mat-card-title>{{post.displayName}}</mat-card-title>
+    <mat-card-subtitle>{{post.email}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <h4 style="margin-bottom:10px;"> {{post.tittle}}</h4>
+    <p>{{post.description}}</p>
+    <img  *ngIf="post.photos" mat-card-image src="{{post.photos}}" alt="Donacion">
+    <img  *ngIf="!post.photos" mat-card-image class="small-image" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" alt="Donacion">
+    <mat-divider *ngIf="post.comments"></mat-divider>
+  </mat-card-content>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title *ngIf="posts[idx].comments == undefined">
+          Comments
+        </mat-panel-title>
+        <mat-panel-title *ngIf="posts[idx].comments">
+          Comments ({{posts[idx].comments.length}})
+        </mat-panel-title>
+        <!--<mat-panel-description>
+          Type your name and age
+        </mat-panel-description>-->
+      </mat-expansion-panel-header>
+      <mat-card-header *ngFor="let comment of posts[idx].comments">
+        <img *ngIf="comment.photoURL" mat-card-avatar src="{{comment.photoURL}}" 
+        alt="{{comment.displayName}}" routerLink="/auth/profile/{{comment.uid}}">
+        <img *ngIf="!comment.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{comment.displayName}}" routerLink="/auth/profile/{{comment.uid}}">
+        <mat-card-title>{{comment.displayName}}</mat-card-title>
+        <mat-card-subtitle>{{comment.description}}</mat-card-subtitle>    
+      </mat-card-header>
+      <div>
+        <img *ngIf="post.photoURL" mat-card-avatar id="userprofile-input" src="{{user.photoURL}}" 
+        alt="{{post.displayName}}">
+        <img *ngIf="!post.photoURL"  mat-card-avatar id="userprofile-input" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
+        <mat-form-field class="form-comment">
+          <input matInput type="text" placeholder="Write a comment input" [(ngModel)]="post.inputComment" class="full-width">
+          <button mat-button *ngIf="post.inputComment" matSuffix mat-icon-button aria-label="send" (click)="postComment(post.inputComment, idx)">
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+</div>

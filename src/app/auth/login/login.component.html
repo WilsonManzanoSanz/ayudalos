@@ -1,0 +1,53 @@
+<div class="center-card">
+  <mat-card>
+    <div class="cirlce-main-icon">
+      <h2 class="mat-header">Ayudalos</h2>
+      <img src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/icon2.svg?alt=media&token=a02ca8a8-9e75-4002-bd34-4c59fb2fcde9" class="login-icon" alt="iconlogo" id="main-icon">
+    </div>
+    <mat-card-content>
+      <form #loginForm="ngForm" [formGroup]="loginFormGroup" (ngSubmit)="attemptToLogin(loginFormGroup)">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Email" formControlName="email" name="email"
+                 id="loginForm-email" [errorStateMatcher]="matcher">
+          <mat-hint>Bienvenido de vuelta!</mat-hint>
+          <mat-error *ngIf="loginFormGroup.controls['email'].errors?.email && !loginFormGroup.controls['email'].errors?.required">
+            Por favor entra un email valido
+          </mat-error>
+          <mat-error *ngIf="loginFormGroup.controls['email'].errors?.required">
+             El email es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Constrase&ntilde;a" type="password" formControlName="password"
+                 name="password" id="loginForm-password" [errorStateMatcher]="matcher" autocomplete="current-password">
+          <mat-error *ngIf="loginFormGroup.controls['password'].errors?.required">
+            La constrase&ntilde;a es <strong>requerida</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <div class="center-content">
+            <h4>Ingresa con</h4>
+            <div  class="card-logo google-image" (click)="googleLogin()"></div>
+            <div  class="card-logo fb-image" (click)="facebookLogin()"></div>
+        </div>
+        <div *ngIf="!sendRequest" class="center-content">
+          <p class="warning-text" *ngIf="wrongCredentials">Tu email o constrase&ntilde;a no es correcta.</p>
+          <p class="warning-text" *ngIf="messageError">{{messageError}}</p>
+          <div>
+            <button mat-raised-button color="primary" type="submit" class="center-card-button">INGRESA</button>   
+          </div>
+          <div>
+            <button mat-button color="primary" class="center-card-button" routerLink="register">Registrarse</button>
+          </div> 
+          <div>
+            <button mat-button color="primary" class="center-card-button full-width-important" routerLink="/auth/forgotpassword">Olvide mi constrase&ntilde;a</button>
+          </div>    
+        </div>
+        <div *ngIf="sendRequest">
+          <mat-spinner class="center-content"></mat-spinner>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

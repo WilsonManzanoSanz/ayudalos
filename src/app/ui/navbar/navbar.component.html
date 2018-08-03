@@ -1,0 +1,40 @@
+<mat-toolbar class="torn mat-elevation-z4" color="primary" [class.navbar-toolbar]="isMobile" id="main-toolbar">
+
+  <button mat-icon-button *ngIf="isMobile">
+  <mat-icon aria-label="Home button" (click)="sidenavService.toggle()">menu</mat-icon>
+  </button>
+  
+
+  <button mat-button routerLink="/home" routerLinkActive="active-link" class="nav">
+    <mat-icon aria-label="Home button"><img src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/icon2.svg?alt=media&token=a02ca8a8-9e75-4002-bd34-4c59fb2fcde9" alt="iconlogo"></mat-icon>
+    AYUDALOS
+  </button>
+  
+  <span *ngIf="!isMobile">
+    <button mat-button routerLink="{{nav.path}}" *ngFor="let nav of navs" routerLinkActive="active-link" class="nav">
+      <mat-icon aria-label="Home button">{{nav.icon}}</mat-icon>
+      {{nav.name}}
+    </button>
+  </span>
+  
+  
+  <span class="spacer"></span>
+  
+  <button mat-button routerLink="auth" *ngIf="!authService.getCurrentlyUser()" routerLinkActive="active-link" class="nav">
+  <mat-icon aria-label="Home button">face</mat-icon>
+    Ingresa
+  </button>
+  <button mat-button [matMenuTriggerFor]="menu" *ngIf="authService.getCurrentlyUser() && ! isMobile"
+    routerLinkActive="active-link"class="nav">
+    {{authService.getCurrentlyUser().email | slice:0:10}}...
+     <img [matMenuTriggerFor]="menu"  mat-card-avatar src="{{authService.getCurrentlyUser().photoURL}}" alt="iconlogo">
+  </button>
+  <img [matMenuTriggerFor]="menu" *ngIf="authService.getCurrentlyUser() && isMobile" mat-card-avatar src="{{authService.getCurrentlyUser().photoURL}}" alt="iconlogo">
+  <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+    <button mat-menu-item routerLink="/auth/myprofile">Mi perfil</button>
+    <button mat-menu-item (click)="signOut()">Salir</button>
+  </mat-menu>
+  
+  
+</mat-toolbar>
+

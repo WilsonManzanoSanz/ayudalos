@@ -1,0 +1,32 @@
+<div class="center-card">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <img *ngIf="!user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
+      <img *ngIf="user.photoURL"  mat-card-avatar src="{{user.photoURL}}" alt="Photo of {{user.displayName}}">
+      <mat-card-title class="big-tittle primary">{{user.displayName}}</mat-card-title>
+      <mat-card-subtitle class="primary">{{user.email}}</mat-card-subtitle>
+    </mat-card-header>
+    <img *ngIf="!user.photoURL" class="auto-center" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
+    <img *ngIf="user.photoURL" class="auto-center" src="{{user.photoURL}}" alt="Photo of {{user.displayName}}">
+</mat-card>
+</div>
+<mat-tab-group *ngIf="isMobile">
+  <mat-tab label="Donaciones">
+    <app-posts-card class="card-container" [posts]="donations" ></app-posts-card>
+  </mat-tab>
+  <mat-tab label="Peticiones">
+    <app-posts-card  class="card-container" [posts]="petitions"></app-posts-card>
+  </mat-tab>
+</mat-tab-group>
+<div [class.half-width]="!isMobile">
+  <div>
+     <h1 class="card-tittle background-primary">Donaciones</h1>
+  </div>
+    <app-posts-card class="card-container" style="justify-content:flex-end;"  [posts]="donations" ></app-posts-card>
+</div>
+<div [class.half-width]="!isMobile">
+  <div>
+     <h1 class=" background-primary card-tittle ">Peticiones</h1>
+  </div>
+  <app-posts-card  class="card-container"  style="justify-content:flex-start;" [posts]="petitions"></app-posts-card>
+</div>

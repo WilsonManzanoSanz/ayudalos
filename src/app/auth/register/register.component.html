@@ -1,0 +1,66 @@
+<div class="center-card">
+  <mat-card>
+    <div class="cirlce-main-icon">
+      <h2 class="mat-header">Ayudalos</h2>
+      <img src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/icon2.svg?alt=media&token=a02ca8a8-9e75-4002-bd34-4c59fb2fcde9" class="login-icon" alt="iconlogo" id="main-icon">
+    </div>
+    <mat-card-content>
+      <form [formGroup]="registerFormGroup" (ngSubmit)="attemptToRegister(registerFormGroup)">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Email" formControlName="email" name="email"
+                 id="registerForm-email">
+          <mat-hint>Bienvenido a nuestra pagina</mat-hint>
+          <mat-error *ngIf="registerFormGroup.controls['email']?.errors?.email && !registerFormGroup.controls['email'].errors?.required">
+            Por favor entra un email valido
+          </mat-error>
+          <mat-error *ngIf="registerFormGroup.controls['email']?.errors?.required">
+             El email es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Nombre completo" formControlName="displayName" name="displayName" id="registerForm-displayName">
+          <mat-error *ngIf="registerFormGroup.controls['displayName']?.errors?.required">
+              El nombre completo es <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="registerFormGroup.controls['displayName']?.errors?.minlength">
+              Tu nombre completo al menos debe tener 10 caracteres
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Constrase&ntilde;a" type="password" formControlName="password"
+                 name="password" id="registerForm-password">
+          <mat-error *ngIf="registerFormGroup.controls['password']?.errors?.required">
+             La constrase&ntilde;a es <strong>requerida</strong>
+          </mat-error>
+          <mat-error *ngIf="registerFormGroup.controls['password']?.errors?.minlength">
+            Debes usar 6 o mas caracteres para tu constrase&ntilde;a
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Repite la constrase&ntilde;a" type="password" formControlName="password2"
+                 name="password2" id="registerForm-password2">
+          <mat-error *ngIf="registerFormGroup.controls['password2']?.errors?.required">
+            La constrase&ntilde;a es <strong>requerida</strong>
+          </mat-error>
+          <mat-error *ngIf="registerFormGroup.controls['password2']?.errors?.passwordMatchValidator">
+            La constrase&ntilde;as deben ser <strong>iguales</strong>
+          </mat-error>
+        </mat-form-field>
+        <div style="padding:20px;">
+          <button  mat-button color="primary" (click)="inputPhoto()" type="button"  
+          class="center-card-button full-width-important">Agrega tu foto de perfil</button>
+          <input id="fileToUpload" type="file" style="display:none;"  accept="image/*">
+        </div>
+        <div *ngIf="!sendRequest" class="center-content">
+          <p class="warning-text" *ngIf="wrongCredentials">Tu email ha sido usado. Selecciona a ingresar o olvidar constrase&ntilde;a</p>
+          <div>
+            <button mat-raised-button color="primary" type="submit" class="center-card-button">REGISTRARSE</button>   
+          </div>   
+        </div>       
+        <div *ngIf="sendRequest">
+          <mat-spinner class="center-content"></mat-spinner>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

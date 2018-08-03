@@ -1,0 +1,16 @@
+.half-width{
+  display: inline-block;
+  width: 50%;
+}
+.center-card {
+  margin-bottom: 0 !important;
+}
+
+.big-tittle{
+   margin-bottom: 10px;
+   font-size: 1.6em;
+   font-weight: bold;
+}
+
+
+
