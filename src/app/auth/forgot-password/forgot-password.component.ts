@@ -9,12 +9,12 @@ import {AuthService} from '../../core/auth.service';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-     
+
   public recoverFormGroup: FormGroup;
-  public recoverObject: any = {email: ''}; 
-  public sendRequest:Boolean = false;
-  public wrongCredentials:Boolean = false;
-  public successSent:Boolean = false;
+  public recoverObject: any = {email: ''};
+  public sendRequest: Boolean = false;
+  public wrongCredentials: Boolean = false;
+  public successSent: Boolean = false;
 
   constructor(private authService: AuthService) { }
 
@@ -26,27 +26,27 @@ export class ForgotPasswordComponent implements OnInit {
       ])
     });
   }
-  
-  recoverYourAccount(form:FormGroup) {
-    this.updateLoadBar();  
+
+  recoverYourAccount(form: FormGroup) {
+    this.updateLoadBar();
       this.resetMessages();
-      this.authService.resetPassword(this.recoverFormGroup.value.email).then((message)=>{
+      this.authService.resetPassword(this.recoverFormGroup.value.email).then((message) => {
         this.updateLoadBar();
-        this.successSent = true; 
+        this.successSent = true;
       }).catch((error) => {
          this.updateLoadBar();
          this.wrongCredentials = true;
       });
   }
-  
-  updateLoadBar(){
+
+  updateLoadBar() {
     this.sendRequest = !this.sendRequest;
   }
-  
-  resetMessages(){
+
+  resetMessages() {
      this.wrongCredentials = false;
-     this.successSent = false; 
+     this.successSent = false;
   }
- 
+
 
 }

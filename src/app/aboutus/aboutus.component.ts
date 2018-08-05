@@ -9,22 +9,22 @@ import {AboutService, Collaborator} from '../core/about.service';
 })
 export class AboutusComponent implements OnInit {
   // TODO get people from the server
-  public contact:any = {};
-  public collaborators:Collaborator[];
-  constructor(private aboutService:AboutService) {
+  public contact: any = {};
+  public collaborators: Collaborator[];
+  constructor(private aboutService: AboutService) {
   }
 
   ngOnInit() {
     this.getCollaborators();
   }
 
-  public getCollaborators(){
-    this.aboutService.getCollaborators().subscribe(response=>{
+  public getCollaborators() {
+    this.aboutService.getCollaborators().subscribe(response => {
       this.collaborators = response;
     });
   }
 
-  public submitForm(form){
+  public submitForm(form) {
     console.log(form);
   }
 

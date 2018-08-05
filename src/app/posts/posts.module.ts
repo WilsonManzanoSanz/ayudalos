@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-//Route
+// Route
 import {PostsRoutingModule} from './route/posts-route.module';
-//UI
+// UI
 import { MaterialModule } from '../ui/material.module';
 // Firebase
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -11,11 +11,10 @@ import { PetitionsComponent } from './petitions/petitions.component';
 import { PostsCardComponent } from './posts-card/posts-card.component';
 import { DonationsComponent } from './donations/donations.component';
 import { PostComponent } from './post/post.component';
-//Service
+// Service
 import { PostsService } from './shared/posts.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SearchComponent } from './search/search.component';
-
 
 @NgModule({
   imports: [
@@ -33,6 +32,6 @@ import { SearchComponent } from './search/search.component';
     SearchComponent,
   ],
   providers: [PostsService],
-  exports:[PostsCardComponent]
+  exports: [PostsCardComponent]
 })
 export class PostsModule { }

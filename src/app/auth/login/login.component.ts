@@ -23,11 +23,11 @@ export class LoginComponent implements OnInit {
   public loginFormGroup: FormGroup;
   public matcher = new MyErrorStateMatcher();
   public loginObject: any = {email: '', password: ''};
-  public sendRequest:Boolean = false; 
-  public wrongCredentials:Boolean = false;
-  public messageError:string = '';
+  public sendRequest: Boolean = false;
+  public wrongCredentials: Boolean = false;
+  public messageError = '';
 
-  constructor(private authService: AuthService, private router:Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.loginFormGroup = new FormGroup({
@@ -41,45 +41,45 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  attemptToLogin(form:FormGroup) {
-     if(form.valid){
-       this.updateLoadBar();  
+  attemptToLogin(form: FormGroup) {
+     if (form.valid) {
+       this.updateLoadBar();
        this.cleanView();
-       this.authService.emailLogin(this.loginFormGroup.value.email, this.loginFormGroup.value.password).then((user)=>{
+       this.authService.emailLogin(this.loginFormGroup.value.email, this.loginFormGroup.value.password).then((user) => {
          this.updateLoadBar();
-         this.router.navigateByUrl('/');      
+         this.router.navigateByUrl('/');
        }).catch((error) => {
          this.updateLoadBar();
          this.wrongCredentials = true;
       });
      }
   }
-  
-  googleLogin(){
-    this.authService.googleLogin().then((user)=>{
-       
-         this.router.navigateByUrl('/');      
+
+  googleLogin() {
+    this.authService.googleLogin().then((user) => {
+
+         this.router.navigateByUrl('/');
        }).catch((error) => {
           this.messageError = error.message;
       });
   }
-  
-  facebookLogin(){
-    this.authService.facebookLogin().then((user)=>{
-         this.router.navigateByUrl('/');      
+
+  facebookLogin() {
+    this.authService.facebookLogin().then((user) => {
+         this.router.navigateByUrl('/');
        }).catch((error) => {
           this.messageError = error.message;
       });
   }
-  
-  updateLoadBar(){
+
+  updateLoadBar() {
     this.sendRequest = !this.sendRequest;
   }
-  
-  cleanView(){
+
+  cleanView() {
     this.wrongCredentials = false;
     this.messageError = '';
   }
- 
+
 
 }

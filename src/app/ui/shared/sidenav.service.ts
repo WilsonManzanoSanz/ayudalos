@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 /* Interface of every Nav item*/
-export interface NavItem{
-  name:string;
-  path:string;
-  icon:string;
+export interface NavItem {
+  name: string;
+  path: string;
+  icon: string;
 }
 
 @Injectable()
 export class SidenavService {
 
   private sidenav: MatSidenav;
-  private navItems:Array<NavItem> = [
-    {name:'CONOCENOS', path:'/aboutus', icon:'info'},              
-    {name:'DONACIONES', path:'/posts/donations', icon:'favorite'}, 
-    {name:'PETICIONES', path:'/posts/petitions', icon:'filter_vintage'},
+  private navItems: Array<NavItem> = [
+    {name: 'CONOCENOS', path: '/aboutus', icon: 'info'},
+    {name: 'DONACIONES', path: '/posts/donations', icon: 'favorite'},
+    {name: 'PETICIONES', path: '/posts/petitions', icon: 'filter_vintage'},
   ];
   /* Initialize sideNav 'Pass the object reference' */
   public setSidenav(sidenav: MatSidenav) {
@@ -32,17 +32,17 @@ export class SidenavService {
   public toggle(): void {
     this.sidenav.toggle();
   }
-  
-  public getNavItems(){
+
+  public getNavItems() {
     return this.navItems;
   }
-  
-  public hideNav(){
-     document.getElementById("main-toolbar").style.visibility = "hidden";
+
+  public hideNav() {
+     document.getElementById('main-toolbar').style.visibility = 'hidden';
   }
 
-  public showNav(){
-     document.getElementById("main-toolbar").style.visibility = "visible";
+  public showNav() {
+     document.getElementById('main-toolbar').style.visibility = 'visible';
   }
 
 }

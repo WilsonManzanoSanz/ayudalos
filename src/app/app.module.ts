@@ -12,8 +12,10 @@ import { HomeComponent } from './home/home.component';
 // Auth
 import {AuthService} from './core/auth.service';
 import {AuthGuard} from './core/auth.guard';
+// Http
+import { HttpClientModule } from '@angular/common/http';
 
-//Firebase
+// Firebase
 import {AngularFireAuth} from 'angularfire2/auth';
 import {environment} from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
@@ -26,16 +28,17 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { AboutService } from './core/about.service';
 
 @NgModule({
-  declarations: 
+  declarations:
   [
     AppComponent,
     HomeComponent,
     AboutusComponent
   ],
-  imports: 
+  imports:
   [
     BrowserModule,
-    FormsModule, 
+    HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     UiModule,
     MaterialModule,
@@ -47,7 +50,7 @@ import { AboutService } from './core/about.service';
   ],
   providers: [
     AngularFireAuth,
-    AuthService, 
+    AuthService,
     AuthGuard, AboutService
   ],
   bootstrap: [AppComponent]

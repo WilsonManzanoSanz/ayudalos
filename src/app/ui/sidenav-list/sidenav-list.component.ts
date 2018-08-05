@@ -9,14 +9,14 @@ import {Router} from '@angular/router';
 })
 export class SidenavListComponent implements OnInit {
 
-  constructor(public sidenavService: SidenavService, private router:Router) { }
+  constructor(public sidenavService: SidenavService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  public goToPage(path){
-     this.sidenavService.toggle(); 
-     this.router.navigateByUrl(path); 
+  public goToPage(path) {
+     this.sidenavService.toggle();
+     this.router.navigateByUrl(path);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import Flickity from 'flickity'
+import Flickity from 'flickity';
 
 @Component({
   selector: 'app-home',
@@ -8,17 +8,17 @@ import Flickity from 'flickity'
 })
 export class HomeComponent implements OnInit {
 
-  flkty:any;
+  flkty: any;
 
   constructor() {
   }
 
-  ngOnInit(){
+  ngOnInit() {
      this.flkty = new Flickity( '.carousel', {
       // options
-      wrapAround:true,
+      wrapAround: true,
       contain: true,
-      autoPlay:false,
+      autoPlay: false,
     });
 
   }

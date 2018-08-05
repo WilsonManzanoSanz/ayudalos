@@ -11,17 +11,17 @@ import {SidenavService} from '../shared/sidenav.service';
 })
 export class SidenavComponent implements OnInit {
 
-//This events read the widht of the screen
+// This events read the widht of the screen
  @ViewChild('sidenav') public sidenav: MatSidenav;
  @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.configureSideNav();
-  } 
-  
+  }
+
   public mobileQuery: MediaQueryList;
-  
+
   constructor(public sidenavService: SidenavService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    //Get with of the screen
+    // Get with of the screen
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
@@ -29,12 +29,12 @@ export class SidenavComponent implements OnInit {
     this.sidenavService.setSidenav(this.sidenav);
     this.configureSideNav();
   }
-  
+
   configureSideNav() {
-    if(window.matchMedia('(max-width: 600px)').matches){  
-      this.sidenav.close();  
+    if (window.matchMedia('(max-width: 600px)').matches) {
+      this.sidenav.close();
       this.sidenav.mode = 'over';
-    }else{   
+    } else {
       this.sidenav.open();
       this.sidenav.mode = 'side';
     }
@@ -44,5 +44,5 @@ export class SidenavComponent implements OnInit {
     console.log($event);
     // should log top or bottom
   }
-  
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject , HostListener, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit , HostListener } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {PostsService, Post} from '../shared/posts.service';
 
@@ -9,31 +9,31 @@ import {PostsService, Post} from '../shared/posts.service';
 })
 export class PetitionsComponent implements OnInit {
 
-  public petitionsColumn1:any[] = [];
-  public petitionsColumn2:any[] = [];
-  public user:User;
-  public isMobile:Boolean;
-  public sendRequest:Boolean;
+  public petitionsColumn1: any[] = [];
+  public petitionsColumn2: any[] = [];
+  public user: User;
+  public isMobile: Boolean;
+  public sendRequest: Boolean;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.configureCards();
-  } 
+  }
 
-  constructor(public petitionService:PostsService, private authService:AuthService) { 
+  constructor(public petitionService: PostsService, private authService: AuthService) {
     this.user = this.authService.getCurrentlyUser();
   }
 
-  public getPetitionContent(){
-     this.petitionService.getPetitions().subscribe(response=>{
-      if(this.isMobile){
+  public getPetitionContent() {
+     this.petitionService.getPetitions().subscribe(response => {
+      if (this.isMobile) {
         this.petitionsColumn1 = response;
         return response;
-      } 
-      if(response.length>0){
+      }
+      if (response.length > 0) {
         this.petitionsColumn1 = [];
         this.petitionsColumn2 = [];
-        this.petitionService.separateIntoTwoArrays(response,this.petitionsColumn1, this.petitionsColumn2);
+        this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
       }
     });
   }
@@ -43,34 +43,34 @@ export class PetitionsComponent implements OnInit {
     this.getPetitionContent();
   }
 
-  public getMore(startFrom){
+  public getMore(startFrom) {
     this.updateLoadBar();
-    this.petitionService.getDonations(startFrom).subscribe(response=>{
+    this.petitionService.getDonations(startFrom).subscribe(response => {
       this.updateLoadBar();
-      if(response.length>0){
-        if(this.isMobile){
+      if (response.length > 0) {
+        if (this.isMobile) {
           this.petitionsColumn1.push(response);
           return response;
-        }else{
-           this.petitionService.separateIntoTwoArrays(response,this.petitionsColumn1, this.petitionsColumn2);
-        }   
+        } else {
+           this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
+        }
       }
     });
   }
 
-  configureCards(){
-    if(window.matchMedia('(max-width: 900px)').matches){
+  configureCards() {
+    if (window.matchMedia('(max-width: 900px)').matches) {
       this.isMobile = true;
-    }else{
+    } else {
       this.isMobile = false;
     }
-  } 
+  }
 
   public onScroll() {
     this.getMore(this.petitionService.getLastEntry());
   }
 
-  updateLoadBar(){
+  updateLoadBar() {
     this.sendRequest = !this.sendRequest;
   }
 

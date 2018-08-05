@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../core/auth.service';
 import {Router} from '@angular/router';
 import {PasswordValidator} from '../class/PasswordValidation';
@@ -15,13 +15,13 @@ import { finalize } from 'rxjs/operators';
 export class RegisterComponent implements OnInit {
 
   public registerFormGroup: FormGroup;
-  public registerObject: any = {email: '', password: '', password2:'', displayName:''};
-  public sendRequest:Boolean = false;
-  public wrongCredentials:Boolean = false;
+  public registerObject: any = {email: '', password: '', password2: '', displayName: ''};
+  public sendRequest: Boolean = false;
+  public wrongCredentials: Boolean = false;
   public passwordValidator = new PasswordValidator();
-  public photo:any = null;
-  
-  constructor(private authService: AuthService, private router:Router, private storage: AngularFireStorage) {
+  public photo: any = null;
+
+  constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage) {
   }
 
   ngOnInit() {
@@ -44,67 +44,66 @@ export class RegisterComponent implements OnInit {
       ])
     });
   }
-  
-  attemptToRegister(form:FormGroup){
-    if(form.valid){
+
+  attemptToRegister(form: FormGroup) {
+    if (form.valid) {
       this.updateLoadBar();
       this.wrongCredentials = false;
-      this.authService.emailSignUp(this.registerFormGroup.value.email, this.registerFormGroup.value.password).then((response)=>{
+      this.authService.emailSignUp(this.registerFormGroup.value.email, this.registerFormGroup.value.password).then((response) => {
          this.updateProfile(this.authService.getCurrentlyUser(), form.value.displayName);
        }).catch((error) => {
           console.error(error);
           this.updateLoadBar();
           this.wrongCredentials = true;
       });
-      
+
     }
   }
 
-   updateProfile(user, displayName){
-    if(Boolean(this.photo)){
+   updateProfile(user, displayName) {
+    if (Boolean(this.photo)) {
        // If can get the percent in the suscribe funciton
        this.authService.uploadPhofilePhoto(this.photo).snapshotChanges().pipe(
           finalize(() => {
-            this.authService.fileRef.getDownloadURL().subscribe((response)=>{
-              this.authService.updateProfile({displayName:displayName , photoURL: response})
-              .then((response)=>{
+            this.authService.fileRef.getDownloadURL().subscribe((response) => {
+              this.authService.updateProfile({displayName: displayName , photoURL: response})
+              .then((response) => {
                 this.updateLoadBar();
-                this.router.navigateByUrl('/');   
-              }).catch((error)=>{
+                this.router.navigateByUrl('/');
+              }).catch((error) => {
                 console.error(error);
                 this.updateLoadBar();
-              });  
-            });            
+              });
+            });
           })
-        ).subscribe();  
-    }      
-    else {this.changeFullName(displayName);}
+        ).subscribe();
+    } else {this.changeFullName(displayName); }
   }
 
-  changeFullName(displayName){
-    this.authService.updateProfile({displayName:displayName}).then((user)=>{
+  changeFullName(displayName) {
+    this.authService.updateProfile({displayName: displayName}).then((user) => {
         this.updateLoadBar();
-        this.router.navigateByUrl('/');   
-    }).catch((error)=>{
+        this.router.navigateByUrl('/');
+    }).catch((error) => {
       console.error(error);
        this.updateLoadBar();
     });
   }
-  
-  updateLoadBar(){
+
+  updateLoadBar() {
     this.sendRequest = !this.sendRequest;
   }
 
-  inputPhoto(){
+  inputPhoto() {
     document.getElementById('fileToUpload').click();
     const fileInput = document.getElementById('fileToUpload');
-    fileInput.addEventListener('change', (e:any) => this.savePhotoInCache(e.target.files[0]));
+    fileInput.addEventListener('change', (e: any) => this.savePhotoInCache(e.target.files[0]));
   }
 
-  savePhotoInCache(file){
+  savePhotoInCache(file) {
      this.photo = file;
   }
 
 
-  
+
 }

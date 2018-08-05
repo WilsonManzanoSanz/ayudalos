@@ -10,6 +10,7 @@
     <img *ngIf="user.photoURL" class="auto-center" src="{{user.photoURL}}" alt="Photo of {{user.displayName}}">
 </mat-card>
 </div>
+
 <mat-tab-group *ngIf="isMobile">
   <mat-tab label="Donaciones">
     <app-posts-card class="card-container" [posts]="donations" ></app-posts-card>
