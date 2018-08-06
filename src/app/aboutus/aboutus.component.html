@@ -8,8 +8,8 @@
   <div class="display-flex">
     <mat-card class="flex-item">
       <h2 class="card-tittle primary">Contactanos</h2>
-      <button class="center-card-button full-width-important primary" mat-button>Llamanos al 3003242130</button>
-      <h4 class="center primary"> O escribenos en nuestra redes sociales</h4>
+      <h4 class="center primary nopadding">Llamanos al 1241241424</h4>
+      <h4 class="center primary nopadding">Escribenos en nuestras redes</h4>
       <div class="center-content">
             <div  class="card-logo google-image"></div>
             <div  class="card-logo fb-image" ></div>
@@ -58,13 +58,17 @@
       <mat-card class="aboutus-card">
           <mat-card-content>
             <img  class="avatar-picture" src="{{collaborator.photoURL}}" alt="Helpthem photo">
-              <h2 class="mat-header">{{collaborator.displayName}}</h2>
+              <h4 class="mat-header">{{collaborator.displayName}}</h4>
           <p class="sub-mat-header">{{collaborator.degree}}</p>
           </mat-card-content>
           <div class="mat-background">
-            <p><b>{{collaborator.description}}</b>
+            <p style="font-size:0.8em;"><b>{{collaborator.description}}</b>
             </p>
-          <button class="center-card-button full-width-important primary" mat-raised-button color="secondary">Mostrar mas</button>
+            <div class="center-content">
+              <div  class="card-logo fb-image" ></div>
+              <div  class="card-logo twitter-image" ></div>
+              <div  class="card-logo whatsapp-image" ></div>
+            </div>
         </div>
       </mat-card>
     </div>

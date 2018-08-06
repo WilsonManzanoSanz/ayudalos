@@ -15,6 +15,11 @@ h1, h2, h3, h4{
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.nopadding{
+  padding: 0;
+  margin: 0;
+}
+
 .header-section{
   text-align: start;
   padding-left: 50px;

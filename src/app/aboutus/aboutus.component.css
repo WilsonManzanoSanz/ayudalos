@@ -17,6 +17,13 @@ h4{
   margin-top: 0px;
 }
 
+.card-container > div {
+  width: 27em;
+  padding: 15px 10px;
+  margin: 0px 20px;
+}
+
+
 .image-content{
   width: 100px;
 }
