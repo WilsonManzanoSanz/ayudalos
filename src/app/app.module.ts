@@ -32,7 +32,7 @@ import { AboutService } from './core/about.service';
   [
     AppComponent,
     HomeComponent,
-    AboutusComponent
+    AboutusComponent,
   ],
   imports:
   [

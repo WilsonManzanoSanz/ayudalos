@@ -53,13 +53,16 @@ img.auto-center{
   align-content:center;
    padding: 15px 15px 10px 15px;
 }
-
 .center-card-button{
   width:35%;
 }
 
 mat-card.mat-card p{
   word-wrap: break-word;
+}
+
+.image-content{
+  width: 100px;
 }
 
 @media only screen and (min-width: 900px) {

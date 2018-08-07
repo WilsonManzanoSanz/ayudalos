@@ -15,6 +15,7 @@ import { PostComponent } from './post/post.component';
 import { PostsService } from './shared/posts.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SearchComponent } from './search/search.component';
+import { DonationsHomeComponent } from './donations-home/donations-home.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { SearchComponent } from './search/search.component';
     PetitionsComponent,
     PostsCardComponent,
     SearchComponent,
+    DonationsHomeComponent,
   ],
   providers: [PostsService],
   exports: [PostsCardComponent]

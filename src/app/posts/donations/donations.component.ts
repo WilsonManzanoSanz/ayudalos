@@ -1,4 +1,4 @@
-import { Component, OnInit , HostListener } from '@angular/core';
+import { Component, OnInit , HostListener, OnDestroy } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {PostsService} from '../shared/posts.service';
 import {
@@ -101,8 +101,12 @@ export class DonationsComponent implements OnInit {
     this.getMore(this.donationService.getLastEntry());
   }
 
-  updateLoadBar() {
+  public updateLoadBar() {
     this.sendRequest = !this.sendRequest;
+  }
+  
+  ngOnDestroy(){
+    console.log('Destroyed');
   }
 
 }

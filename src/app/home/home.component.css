@@ -4,16 +4,8 @@
     height: 555px;
 }
 
-.center-button{
-  text-align: center;
-}
-
-.center-card-button{
-  text-align: center;
-}
-
-p{
-  color:#004D40;
+.image-content{
+  margin:auto;
 }
 
 .card-container{
