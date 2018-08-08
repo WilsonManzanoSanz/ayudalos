@@ -3,7 +3,6 @@
   <button mat-icon-button *ngIf="isMobile">
   <mat-icon aria-label="Home button" (click)="sidenavService.toggle()">menu</mat-icon>
   </button>
-  
 
   <button mat-button routerLink="/home" routerLinkActive="active-link" class="nav">
     <mat-icon aria-label="Home button"><img src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/icon2.svg?alt=media&token=a02ca8a8-9e75-4002-bd34-4c59fb2fcde9" alt="iconlogo"></mat-icon>
@@ -16,7 +15,6 @@
       {{nav.name}}
     </button>
   </span>
-  
   
   <span class="spacer"></span>
   
@@ -34,7 +32,6 @@
     <button mat-menu-item routerLink="/auth/myprofile">Mi perfil</button>
     <button mat-menu-item (click)="signOut()">Salir</button>
   </mat-menu>
-  
   
 </mat-toolbar>
 

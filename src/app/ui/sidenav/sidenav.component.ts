@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild, HostListener, ChangeDetectorRef} from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatSidenav} from '@angular/material';
 import {SidenavService} from '../shared/sidenav.service';
@@ -20,7 +21,7 @@ export class SidenavComponent implements OnInit {
 
   public mobileQuery: MediaQueryList;
 
-  constructor(public sidenavService: SidenavService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(public sidenavService: SidenavService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private router: Router) {
     // Get with of the screen
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
@@ -28,6 +29,16 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
     this.sidenavService.setSidenav(this.sidenav);
     this.configureSideNav();
+    this.scrollUpWhenRouteChange();
+  }
+  
+  scrollUpWhenRouteChange(){
+    this.router.events.subscribe((evt) => {
+        if (!(evt instanceof NavigationEnd)) {
+            return;
+        }
+        window.scrollTo(0, 0);
+    });
   }
 
   configureSideNav() {

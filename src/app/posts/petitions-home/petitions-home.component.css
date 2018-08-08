@@ -1,0 +1,14 @@
+mat-card#mat-title-petitions{
+    width:calc(80% - 48px);
+}
+
+@media only screen and (max-width:700px){
+  mat-card#mat-title-petitions{
+    width:100%;
+  }
+}
+
+.card-container > div{
+  width:20em;
+}
+

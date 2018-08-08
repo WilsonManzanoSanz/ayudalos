@@ -14,7 +14,7 @@ export class SidenavService {
   private navItems: Array<NavItem> = [
     {name: 'CONOCENOS', path: '/aboutus', icon: 'info'},
     {name: 'DONACIONES', path: '/posts/donations/home', icon: 'favorite'},
-    {name: 'PETICIONES', path: '/posts/petitions', icon: 'filter_vintage'},
+    {name: 'PETICIONES', path: '/posts/petitions/home', icon: 'filter_vintage'},
   ];
   /* Initialize sideNav 'Pass the object reference' */
   public setSidenav(sidenav: MatSidenav) {
