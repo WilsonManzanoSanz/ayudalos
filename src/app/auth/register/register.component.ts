@@ -70,6 +70,7 @@ export class RegisterComponent implements OnInit {
               .then((response) => {
                 this.updateLoadBar();
                 this.router.navigateByUrl('/');
+                this.authService.getToken();
               }).catch((error) => {
                 console.error(error);
                 this.updateLoadBar();
@@ -83,6 +84,7 @@ export class RegisterComponent implements OnInit {
   changeFullName(displayName) {
     this.authService.updateProfile({displayName: displayName}).then((user) => {
         this.updateLoadBar();
+        this.authService.getToken();
         this.router.navigateByUrl('/');
     }).catch((error) => {
       console.error(error);

@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import { AngularFireStorage,  AngularFireUploadTask , AngularFireStorageReference} from 'angularfire2/storage';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as firebase from 'firebase/app';
 import {map} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 export interface User {
   uid: string;
@@ -19,18 +21,21 @@ export class AuthService {
   private providerGoogle = new firebase.auth.GoogleAuthProvider();
   private providerFb = new firebase.auth.FacebookAuthProvider();
   private token = '';
+  private URL = environment.urlbase;
   // Firestore
   public filePath: string;
   public fileRef: AngularFireStorageReference;
   private postsCollection: AngularFirestoreCollection<any>;
 
   constructor(public firebaseAuth: AngularFireAuth, private fireReference: AngularFirestore,
-  private fireStore: AngularFirestore, private fireStorage: AngularFireStorage) {
+  private fireStore: AngularFirestore, private fireStorage: AngularFireStorage, private http: HttpClient) {
+
     this.postsCollection = this.fireReference.collection<any>('posts');
     this.onAuthStateChanged().then((user) => {
-       this.updateUserData(user);
+       this.getToken();
     }).catch((error) => {
       this.user = null;
+      this.token = '';
     });
 
   }
@@ -39,9 +44,9 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithPopup(this.providerGoogle).then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        this.token = result.credential.providerId;
+        // this.token = result.credential.providerId;
         // The signed-in user info.
-        this.updateUserData(result.user);
+        this.getToken();
         resolve(result.user);
         // ...
       }).catch(function(error) {
@@ -57,9 +62,9 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithPopup(this.providerFb).then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        this.token = result.credential.providerId;
+        // this.token = result.credential.providerId;
         // The signed-in user info.
-        this.updateUserData(result.user);
+        this.getToken();
         resolve(result.user);
         // ...
       }).catch(function(error) {
@@ -74,7 +79,8 @@ export class AuthService {
     return this.firebaseAuth.auth
       .signInWithPopup(provider)
       .then(credential => {
-        return this.updateUserData(credential.user);
+        console.log('listener', credential);
+        return this.getToken();
       })
       .catch(error => this.handleError(error));
   }
@@ -84,7 +90,7 @@ export class AuthService {
   public emailLogin(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((response) => {
-        this.updateUserData(response.user);
+        this.getToken();
         resolve(response);
       }).catch((error) => {
         this.handleError(error);
@@ -96,7 +102,6 @@ export class AuthService {
   public emailSignUp(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password).then((response) => {
-        this.updateUserData(response.user);
         resolve(response.user);
       }).catch((error) => {
         this.handleError(error);
@@ -128,23 +133,27 @@ export class AuthService {
    public signOut() {
     this.firebaseAuth.auth.signOut().then(() => {
       this.user = null;
+      this.token = '';
     });
   }
 
 
-  public updateUserData(user: any) {
-    const userRef: AngularFirestoreDocument<any> = this.fireStore.doc(`users/${user.uid}`);
-
-    this.user = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL
-    };
-
-    return userRef.set(this.user, { merge: true });
-
-
+  public getToken() {
+    this.user = this.firebaseAuth.auth.currentUser;
+    if(this.token){
+      return this.token;
+    }
+    this.firebaseAuth.auth.currentUser.getIdToken(/* forceRefresh */ true).then((idToken)=>{
+        this.token = idToken;
+        this.http.post(this.URL, this.user).subscribe(
+           data => console.log(data),
+           err => console.log(err)
+        );
+    });
+  }
+  
+  public updateUserData(user:any){
+    
   }
 
   public uploadPhofilePhoto(file) {

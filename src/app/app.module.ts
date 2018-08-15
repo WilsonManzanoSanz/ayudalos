@@ -13,8 +13,8 @@ import { HomeComponent } from './home/home.component';
 import {AuthService} from './core/auth.service';
 import {AuthGuard} from './core/auth.guard';
 // Http
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './core/token.interceptor';
 // Firebase
 import {AngularFireAuth} from 'angularfire2/auth';
 import {environment} from '../environments/environment';
@@ -49,9 +49,11 @@ import { AboutService } from './core/about.service';
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     AngularFireAuth,
     AuthService,
-    AuthGuard, AboutService
+    AuthGuard, 
+    AboutService,
   ],
   bootstrap: [AppComponent]
 })
