@@ -61,42 +61,57 @@ export class MyprofileComponent implements OnInit {
   saveChanges(nameForm: NgForm) {
     if (nameForm.valid) {
        const displayName = nameForm.value.displayName;
-       // If can get the percent in the suscribe funciton
+       // If can get the percent in the subscribe funciton
        if (Boolean(this.photo)) {
          this.updateLoadBar();
          this.authService.uploadPhofilePhoto(this.photo).snapshotChanges().pipe(
           finalize(() => {
             this.authService.fileRef.getDownloadURL().subscribe((response) => {
-              this.authService.updateProfile({displayName: displayName , photoURL: response})
-              .then((response) => {
-                this.updateLoadBar();
-                 this.editProfile();
-                  this.updateInfo();
-              }).catch((error) => {
-                console.log(error);
-                this.updateLoadBar();
-              });
+              const user = {
+                displayName: displayName,
+                photoURL: response,
+                uid: this.user.uid,
+                email: this.user.email,
+              };
+              this.updateUser(user);
             });
           })
         ).subscribe();
        } else {
-        this.changeFullName(nameForm);
+         const user = {
+          displayName: displayName,
+          uid: this.user.uid,
+          email: this.user.email,
+        };
+        this.updateUser(user);
        }
-
     }
   }
-
-  changeFullName(nameForm: NgForm) {
-    if (nameForm.valid) {
-       this.updateLoadBar();
-      this.authService.updateProfile(nameForm.value).then((user) => {
+  
+  public updateUser(user:any) {
+    this.authService.updateUser(user).subscribe((response) => {
          this.updateLoadBar();
          this.editProfile();
          this.updateInfo();
-      }).catch((error) => {
-        console.log(error);
-         this.updateLoadBar();
-      });
+         this.authService.updateUser(user).subscribe((user)=>{
+            this.authService.setUser(user);
+         });
+      },(error)=>{
+      console.error(error);
+        this.updateLoadBar();
+    });
+  }
+
+  changeFullName(nameForm: NgForm) {
+  
+    if (nameForm.valid) {
+     const user = {
+      displayName: nameForm.value,
+      photoURL: this.user.photoURL,
+      uid: this.user.uid,
+      email: this.user.email,
+    };
+    this.updateUser(user);
     }
   }
 

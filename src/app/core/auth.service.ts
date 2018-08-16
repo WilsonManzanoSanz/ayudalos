@@ -17,7 +17,7 @@ export interface User {
 @Injectable()
 export class AuthService {
 
-  private user: any;
+  public user: any = null;
   private providerGoogle = new firebase.auth.GoogleAuthProvider();
   private providerFb = new firebase.auth.FacebookAuthProvider();
   private token = '';
@@ -29,13 +29,16 @@ export class AuthService {
 
   constructor(public firebaseAuth: AngularFireAuth, private fireReference: AngularFirestore,
   private fireStore: AngularFirestore, private fireStorage: AngularFireStorage, private http: HttpClient) {
-
+    console.log('Auth service init...');
     this.postsCollection = this.fireReference.collection<any>('posts');
     this.onAuthStateChanged().then((user) => {
-       this.getToken();
+      if(user){
+         this.getUser(user).subscribe(data=>{
+           this.user = data['response'];
+         }, error=> console.log(error));
+      }     
     }).catch((error) => {
-      this.user = null;
-      this.token = '';
+      console.error(error);
     });
 
   }
@@ -46,7 +49,13 @@ export class AuthService {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // this.token = result.credential.providerId;
         // The signed-in user info.
-        this.getToken();
+        this.registerUser(result.user).subscribe(
+           data => this.getUser(result.user).subscribe((data)=>{
+              console.log(data);
+           //this.user = data.response;
+           }),
+           err => console.log(err)
+        );
         resolve(result.user);
         // ...
       }).catch(function(error) {
@@ -64,7 +73,12 @@ export class AuthService {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // this.token = result.credential.providerId;
         // The signed-in user info.
-        this.getToken();
+        this.registerUser(result.user).subscribe(
+           data => this.getUser(result.user).subscribe((data)=>{
+             this.user = data['response'];
+           }),
+           err => console.log(err)
+        );
         resolve(result.user);
         // ...
       }).catch(function(error) {
@@ -86,11 +100,18 @@ export class AuthService {
   }
 
   // Auth with email//password
-
   public emailLogin(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((response) => {
-        this.getToken();
+        this.registerUser(response.user).subscribe(
+           data => this.getUser(response.user).subscribe((data)=>{
+              this.user = data['response'];
+              console.log(this.user);
+           }),
+           err => this.getUser(response.user).subscribe((response)=>{
+              this.user = response['response'];
+           },(error)=>console.error(error))
+        );
         resolve(response);
       }).catch((error) => {
         this.handleError(error);
@@ -137,23 +158,42 @@ export class AuthService {
     });
   }
 
-
   public getToken() {
-    this.user = this.firebaseAuth.auth.currentUser;
+    this.refreshUser();
     if(this.token){
       return this.token;
     }
-    this.firebaseAuth.auth.currentUser.getIdToken(/* forceRefresh */ true).then((idToken)=>{
-        this.token = idToken;
-        this.http.post(this.URL, this.user).subscribe(
-           data => console.log(data),
-           err => console.log(err)
-        );
-    });
+    if(this.user){
+      this.firebaseAuth.auth.currentUser.getIdToken(/* forceRefresh */ true).then((idToken)=>{
+          this.token = idToken;
+          return idToken;
+      });
+    }
+    return this.token;
   }
   
-  public updateUserData(user:any){
-    
+  public refreshUser(){
+    this.user = this.firebaseAuth.auth.currentUser;
+  }
+  
+  public registerUser(user:any){
+    return this.http.post(this.URL, user);
+  }
+  
+  public updateUser(user:any){
+    return this.http.put(this.URL, user);
+  }
+  
+  public getUser(user:any){
+    return this.http.get(`${this.URL}/${user.uid}`);
+  }
+  
+  public getCurrentlyUser() {
+    return this.user;
+  }
+  
+  public setUser(user) {
+    this.user = user;
   }
 
   public uploadPhofilePhoto(file) {
@@ -171,7 +211,7 @@ export class AuthService {
     const thiss = this;
     return new Promise(( resolve, reject) => {
       this.firebaseAuth.auth.currentUser.updateProfile(editedUser).then(response => {
-        thiss.updateUserData(Object.assign({}, thiss.user, editedUser));
+        //thiss.updateUserData(Object.assign({}, thiss.user, editedUser));
         resolve(user);
       }).catch(function(error) {
         reject(error);
@@ -187,14 +227,6 @@ export class AuthService {
         reject(error);
       });
     });
-  }
-
-  public getCurrentlyUser() {
-    return this.user;
-  }
-
-  public getCurrentlyUserFromTheServer() {
-
   }
 
   public getPetitionsByUser(user) {

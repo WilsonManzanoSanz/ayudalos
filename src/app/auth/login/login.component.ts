@@ -43,14 +43,14 @@ export class LoginComponent implements OnInit {
 
   attemptToLogin(form: FormGroup) {
      if (form.valid) {
-       this.updateLoadBar();
-       this.cleanView();
-       this.authService.emailLogin(this.loginFormGroup.value.email, this.loginFormGroup.value.password).then((user) => {
          this.updateLoadBar();
-         this.router.navigateByUrl('/');
+         this.cleanView();
+         this.authService.emailLogin(this.loginFormGroup.value.email, this.loginFormGroup.value.password).then((user) => {
+           this.updateLoadBar();
+           this.router.navigateByUrl('/');
        }).catch((error) => {
-         this.updateLoadBar();
-         this.wrongCredentials = true;
+           this.updateLoadBar();
+           this.wrongCredentials = true;
       });
      }
   }

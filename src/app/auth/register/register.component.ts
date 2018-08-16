@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {PasswordValidator} from '../class/PasswordValidation';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { finalize } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 
 @Component({
@@ -20,8 +22,9 @@ export class RegisterComponent implements OnInit {
   public wrongCredentials: Boolean = false;
   public passwordValidator = new PasswordValidator();
   public photo: any = null;
+  private URL = 'https://node-wilsonmanzanosanz271555.codeanyapp.com/api/v1/users';
 
-  constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage) {
+  constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -50,7 +53,7 @@ export class RegisterComponent implements OnInit {
       this.updateLoadBar();
       this.wrongCredentials = false;
       this.authService.emailSignUp(this.registerFormGroup.value.email, this.registerFormGroup.value.password).then((response) => {
-         this.updateProfile(this.authService.getCurrentlyUser(), form.value.displayName);
+         this.updateProfile(response, form.value.displayName);
        }).catch((error) => {
           console.error(error);
           this.updateLoadBar();
@@ -62,34 +65,44 @@ export class RegisterComponent implements OnInit {
 
    updateProfile(user, displayName) {
     if (Boolean(this.photo)) {
-       // If can get the percent in the suscribe funciton
+       // If can get the percent in the subscribe funciton
        this.authService.uploadPhofilePhoto(this.photo).snapshotChanges().pipe(
           finalize(() => {
             this.authService.fileRef.getDownloadURL().subscribe((response) => {
-              this.authService.updateProfile({displayName: displayName , photoURL: response})
-              .then((response) => {
-                this.updateLoadBar();
-                this.router.navigateByUrl('/');
-                this.authService.getToken();
-              }).catch((error) => {
-                console.error(error);
-                this.updateLoadBar();
-              });
+                 const newUser = {
+                  displayName: displayName,
+                  photoURL: response,
+                  uid: user.uid,
+                  email: user.email,
+                };
+                this.registerUser(newUser);
             });
           })
-        ).subscribe();
-    } else {this.changeFullName(displayName); }
+       ).subscribe();
+    } else {
+      const newUser = {
+        displayName: displayName,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        email: user.email,
+      };
+      this.registerUser(newUser);
+    }
   }
 
-  changeFullName(displayName) {
-    this.authService.updateProfile({displayName: displayName}).then((user) => {
+  registerUser(user:any) {
+    this.http.post(this.URL, user).subscribe((data) => {
+        debugger;
         this.updateLoadBar();
-        this.authService.getToken();
         this.router.navigateByUrl('/');
-    }).catch((error) => {
-      console.error(error);
-       this.updateLoadBar();
-    });
+        this.authService.getToken();
+        this.authService.getUser(user).subscribe(data=>{
+             this.authService.setUser(user);
+           }, error=> console.log(error));
+        },(error)=>{
+        console.error(error);
+          this.updateLoadBar();
+      });
   }
 
   updateLoadBar() {

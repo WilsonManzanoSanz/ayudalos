@@ -27,7 +27,17 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.configureNavBar(null);
-
+    this.authService.onAuthStateChanged().then((user) => {
+      console.log(user);
+      if(user){
+         this.authService.getUser(user).subscribe(data=>{ 
+           console.log(data);
+            this.user = data['response'];
+         }, error=> console.log(error));
+      }     
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   configureNavBar(event) {
@@ -36,6 +46,7 @@ export class NavbarComponent implements OnInit {
 
   signOut() {
     this.authService.signOut();
+    this.user = null;
     this.router.navigateByUrl('/');
   }
 
