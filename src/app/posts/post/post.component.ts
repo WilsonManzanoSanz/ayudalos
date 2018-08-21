@@ -67,20 +67,18 @@ export class PostComponent implements OnInit {
         this.uploadingPromise.then((response) => {
           newPost =  {... form.value, ...this.user, photos: this.uploadedPhotoURL};
           this.newPost(newPost);
-      });
+        }).catch((error)=> console.error(error));
       }
     }
   }
 
   newPost(newPost) {
     this.postForm.reset();
-    this.postsService.newPost({...newPost, ...this.type}).then(response => {
+    this.postsService.newPost({...newPost, ...this.type}).subscribe(response => {
       console.log('new post has been posted');
       this.cleanForm();
       this.postsService.closeNav();
-    }).catch(error => {
-      console.log(error);
-    });
+    },error => console.log(error));
   }
 
   public cleanForm() {

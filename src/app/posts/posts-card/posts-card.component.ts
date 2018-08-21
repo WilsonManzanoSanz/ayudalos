@@ -23,9 +23,9 @@ export class PostsCardComponent implements OnInit {
   postComment(value: string, idx: number) {
     if (Boolean(value)) {
       this.cleanComment(value, idx);
-      this.postService.updatePost(this.posts[idx]).then(response => {
+      this.postService.updatePost(this.posts[idx]).subscribe(response => {
         console.log('comment inserted');
-      }).catch(error => {
+      },error => {
         console.log(error);
         this.posts[idx].comments.splice(idx, 1);
       });

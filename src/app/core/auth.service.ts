@@ -21,7 +21,7 @@ export class AuthService {
   private providerGoogle = new firebase.auth.GoogleAuthProvider();
   private providerFb = new firebase.auth.FacebookAuthProvider();
   private token = '';
-  private URL = environment.urlbase;
+  private URL = environment.urlbase + '/users';
   // Firestore
   public filePath: string;
   public fileRef: AngularFireStorageReference;
@@ -33,8 +33,8 @@ export class AuthService {
     this.postsCollection = this.fireReference.collection<any>('posts');
     this.onAuthStateChanged().then((user) => {
       if(user){
-         this.getUser(user).subscribe(data=>{
-           this.user = data['response'];
+         this.getUser(user).subscribe(response=>{
+           this.user = response.data;
          }, error=> console.log(error));
       }     
     }).catch((error) => {
@@ -51,8 +51,8 @@ export class AuthService {
         // The signed-in user info.
        result.user['typeUserId'] = 3;
         this.registerUser(result.user).subscribe(
-           data => this.getUser(result.user).subscribe((data)=>{
-              this.user = data['response'];
+           data => this.getUser(result.user).subscribe((response)=>{
+              this.user = response.data
            }),
            err => console.log(err)
         );
@@ -75,8 +75,8 @@ export class AuthService {
         // The signed-in user info.
         result.user['typeUserId'] = 2;
         this.registerUser(result.user).subscribe(
-           data => this.getUser(result.user).subscribe((data)=>{
-             this.user = data['response'];
+           data => this.getUser(result.user).subscribe((response)=>{
+             this.user = response.data;
            }),
            err => console.log(err)
         );
@@ -106,12 +106,12 @@ export class AuthService {
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((response) => {
         response.user['typeUserId']= 1;
         this.registerUser(response.user).subscribe(
-           data => this.getUser(response.user).subscribe((data)=>{
+           data => this.getUser(response.user).subscribe((response)=>{
               console.log(response);
-              this.user = data['response'];
+              this.user = response.data;
            }),
            err => this.getUser(response.user).subscribe((response)=>{
-              this.user = response['response'];
+              this.user = response.data;
            },(error)=>console.error(error))
         );
         resolve(response);
@@ -134,7 +134,6 @@ export class AuthService {
   }
 
   public resetPassword(email: string) {
-
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.sendPasswordResetEmail(email).then((message) => {
         resolve('OK');
@@ -232,15 +231,15 @@ export class AuthService {
   }
   
   public registerUser(user:any){
-    return this.http.post(this.URL, user);
+    return this.http.post<any>(this.URL, user);
   }
   
   public updateUser(user:any){
-    return this.http.put(`${this.URL}/${user.uid}`, user);
+    return this.http.put<any>(`${this.URL}/${user.uid}`, user);
   }
   
   public getUser(user:any){
-    return this.http.get(`${this.URL}/${user.uid}`);
+    return this.http.get<any>(`${this.URL}/${user.uid}`);
   }
   
   public getCurrentlyUser() {

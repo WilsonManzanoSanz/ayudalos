@@ -57,29 +57,31 @@ export class DonationsComponent implements OnInit {
 
   public getDonationContent() {
     this.donationService.getDonations().subscribe(response => {
-      if (response.length > 0) {
+      console.log(response.data.items);
+      if (response.data.items.length > 0) {
         if (this.isMobile) {
-          this.donationsColumn1 = response;
-          return response;
+          this.donationsColumn1 = response.data.items;
+          return response.data.items;
         } else {
           this.donationsColumn1 = [];
           this.donationsColumn2 = [];
-          this.donationService.separateIntoTwoArrays(response, this.donationsColumn1, this.donationsColumn2);
+          this.donationService.separateIntoTwoArrays(response.data.items, this.donationsColumn1, this.donationsColumn2);
         }
       }
     });
   }
 
   public getMore(startFrom) {
+    const params = {};
     this.updateLoadBar();
-    this.donationService.getDonations(startFrom).subscribe(response => {
+    this.donationService.getDonations(params).subscribe((response) => {
       this.updateLoadBar();
-      if (response.length > 0) {
+      if (response.data.items.length > 0) {
         if (this.isMobile) {
-          this.donationsColumn1.push(response);
-          return response;
+          this.donationsColumn1.push(response.data.items);
+          return response.data.items;
         } else {
-           this.donationService.separateIntoTwoArrays(response, this.donationsColumn1, this.donationsColumn2);
+           this.donationService.separateIntoTwoArrays(response.data.items, this.donationsColumn1, this.donationsColumn2);
         }
       }
     });
@@ -98,7 +100,7 @@ export class DonationsComponent implements OnInit {
   }
 
   public onScroll() {
-    this.getMore(this.donationService.getLastEntry());
+    this.getMore(10);
   }
 
   public updateLoadBar() {

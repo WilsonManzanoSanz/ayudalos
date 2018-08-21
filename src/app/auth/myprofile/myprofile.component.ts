@@ -89,8 +89,8 @@ export class MyprofileComponent implements OnInit {
          this.updateLoadBar();
          this.editProfile();
          this.updateInfo();
-         this.authService.setUser(response['response']);
-         this.user = response['response'];
+         this.authService.setUser(response.data);
+         this.user = response.data;
       },(error)=>{
       console.error(error);
         this.updateLoadBar();

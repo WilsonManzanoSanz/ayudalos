@@ -17,6 +17,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SearchComponent } from './search/search.component';
 import { DonationsHomeComponent } from './donations-home/donations-home.component';
 import { PetitionsHomeComponent } from './petitions-home/petitions-home.component';
+// HTTP
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './../core/token.interceptor';
 
 @NgModule({
   imports: [
@@ -25,8 +28,10 @@ import { PetitionsHomeComponent } from './petitions-home/petitions-home.componen
     AngularFirestoreModule,
     AngularFireStorageModule,
     InfiniteScrollModule,
+    HttpClientModule
   ],
   declarations: [
+   
     DonationsComponent,
     PostComponent,
     PetitionsComponent,
@@ -35,7 +40,10 @@ import { PetitionsHomeComponent } from './petitions-home/petitions-home.componen
     DonationsHomeComponent,
     PetitionsHomeComponent,
   ],
-  providers: [PostsService],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    PostsService
+  ],
   exports: [PostsCardComponent]
 })
 export class PostsModule { }
