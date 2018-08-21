@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
    updateProfile(user, displayName) {
     if (Boolean(this.photo)) {
        // If can get the percent in the subscribe funciton
-       this.authService.uploadPhofilePhoto(this.photo).snapshotChanges().pipe(
+       this.authService.uploadPhofilePhoto(user.uid, this.photo).snapshotChanges().pipe(
           finalize(() => {
             this.authService.fileRef.getDownloadURL().subscribe((response) => {
                  const newUser = {
@@ -74,6 +74,7 @@ export class RegisterComponent implements OnInit {
                   photoURL: response,
                   uid: user.uid,
                   email: user.email,
+                  typeUserId:1,
                 };
                 this.registerUser(newUser);
             });
@@ -92,7 +93,6 @@ export class RegisterComponent implements OnInit {
 
   registerUser(user:any) {
     this.http.post(this.URL, user).subscribe((data) => {
-        debugger;
         this.updateLoadBar();
         this.router.navigateByUrl('/');
         this.authService.getToken();

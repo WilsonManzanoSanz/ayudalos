@@ -18,16 +18,16 @@
   
   <span class="spacer"></span>
   
-  <button mat-button routerLink="auth" *ngIf="!authService.user" routerLinkActive="active-link" class="nav">
+  <button mat-button routerLink="auth" *ngIf="!authService.getCurrentlyUser()" routerLinkActive="active-link" class="nav">
   <mat-icon aria-label="Home button">face</mat-icon>
     Ingresa
   </button>
-  <button mat-button [matMenuTriggerFor]="menu" *ngIf="authService.user && ! isMobile"
+  <button mat-button [matMenuTriggerFor]="menu" *ngIf="authService.getCurrentlyUser() && ! isMobile"
     routerLinkActive="active-link"class="nav">
-    {{authService.user.email | slice:0:10}}...
-     <img [matMenuTriggerFor]="menu"  mat-card-avatar src="{{authService.user.photoURL || async}}" alt="iconlogo">
+    {{authService.getCurrentlyUser().email | slice:0:10}}...
+     <img [matMenuTriggerFor]="menu"  mat-card-avatar src="{{authService.getCurrentlyUser().photoURL || async}}" alt="iconlogo">
   </button>
-  <img [matMenuTriggerFor]="menu" *ngIf="authService.user && isMobile" mat-card-avatar src="{{authService.user.photoURL}}" alt="iconlogo">
+  <img [matMenuTriggerFor]="menu" *ngIf="authService.getCurrentlyUser() && isMobile" mat-card-avatar src="{{authService.getCurrentlyUser().photoURL}}" alt="iconlogo">
   <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
     <button mat-menu-item routerLink="/auth/myprofile">Mi perfil</button>
     <button mat-menu-item (click)="signOut()">Salir</button>

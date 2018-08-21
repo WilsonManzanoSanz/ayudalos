@@ -49,10 +49,10 @@ export class AuthService {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // this.token = result.credential.providerId;
         // The signed-in user info.
+       result.user['typeUserId'] = 3;
         this.registerUser(result.user).subscribe(
            data => this.getUser(result.user).subscribe((data)=>{
-              console.log(data);
-           //this.user = data.response;
+              this.user = data['response'];
            }),
            err => console.log(err)
         );
@@ -73,6 +73,7 @@ export class AuthService {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // this.token = result.credential.providerId;
         // The signed-in user info.
+        result.user['typeUserId'] = 2;
         this.registerUser(result.user).subscribe(
            data => this.getUser(result.user).subscribe((data)=>{
              this.user = data['response'];
@@ -103,10 +104,11 @@ export class AuthService {
   public emailLogin(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((response) => {
+        response.user['typeUserId']= 1;
         this.registerUser(response.user).subscribe(
            data => this.getUser(response.user).subscribe((data)=>{
+              console.log(response);
               this.user = data['response'];
-              console.log(this.user);
            }),
            err => this.getUser(response.user).subscribe((response)=>{
               this.user = response['response'];
@@ -171,33 +173,9 @@ export class AuthService {
     }
     return this.token;
   }
-  
-  public refreshUser(){
-    this.user = this.firebaseAuth.auth.currentUser;
-  }
-  
-  public registerUser(user:any){
-    return this.http.post(this.URL, user);
-  }
-  
-  public updateUser(user:any){
-    return this.http.put(this.URL, user);
-  }
-  
-  public getUser(user:any){
-    return this.http.get(`${this.URL}/${user.uid}`);
-  }
-  
-  public getCurrentlyUser() {
-    return this.user;
-  }
-  
-  public setUser(user) {
-    this.user = user;
-  }
 
-  public uploadPhofilePhoto(file) {
-    this.filePath =  this.user.uid + '/photo';
+  public uploadPhofilePhoto(uid, file) {
+    this.filePath =  uid + '/photo';
     this.fileRef = this.fireStorage.ref(this.filePath);
     const task: AngularFireUploadTask = this.fireStorage.upload(this.filePath, file);
     return task;
@@ -247,6 +225,31 @@ export class AuthService {
           const id = a.payload.doc.id;
           return { id, ...data };
       })));
+  }
+  
+   public refreshUser(){
+    this.user = this.firebaseAuth.auth.currentUser;
+  }
+  
+  public registerUser(user:any){
+    return this.http.post(this.URL, user);
+  }
+  
+  public updateUser(user:any){
+    return this.http.put(`${this.URL}/${user.uid}`, user);
+  }
+  
+  public getUser(user:any){
+    return this.http.get(`${this.URL}/${user.uid}`);
+  }
+  
+  public getCurrentlyUser() {
+    return this.user;
+  }
+  
+  public setUser(user) {
+    this.user = user;
+    //console.log(this.user);
   }
 
   private handleError(error) {

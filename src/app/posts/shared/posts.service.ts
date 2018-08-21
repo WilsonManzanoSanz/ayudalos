@@ -9,6 +9,7 @@ import { AngularFireStorage,  AngularFireUploadTask } from 'angularfire2/storage
 import { Observable, of  } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
 
 export interface Comment extends User {
   description: string;
@@ -33,6 +34,7 @@ export class PostsService {
   public fileRef = null;
   private posts: Observable<Post[]>;
   private lastEntry;
+  private URL = environment.urlbase;
 
   constructor(
     public fireReference: AngularFirestore,

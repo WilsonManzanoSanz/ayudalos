@@ -33,12 +33,7 @@ export class MyprofileComponent implements OnInit {
   constructor(private authService: AuthService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.authService.onAuthStateChanged().then((user: any) => {
-      this.user = user;
-      if (this.user.providerData[0].providerId == 'password') {
-        this.edit_password_allowed = true;
-      }
-    }).catch((error) => {console.log(error); });
+    this.user = this.authService.getCurrentlyUser();
     this.registerFormGroup();
   }
 
@@ -64,7 +59,7 @@ export class MyprofileComponent implements OnInit {
        // If can get the percent in the subscribe funciton
        if (Boolean(this.photo)) {
          this.updateLoadBar();
-         this.authService.uploadPhofilePhoto(this.photo).snapshotChanges().pipe(
+         this.authService.uploadPhofilePhoto(this.user.uid,this.photo).snapshotChanges().pipe(
           finalize(() => {
             this.authService.fileRef.getDownloadURL().subscribe((response) => {
               const user = {
@@ -83,6 +78,7 @@ export class MyprofileComponent implements OnInit {
           uid: this.user.uid,
           email: this.user.email,
         };
+        this.updateLoadBar();
         this.updateUser(user);
        }
     }
@@ -93,9 +89,8 @@ export class MyprofileComponent implements OnInit {
          this.updateLoadBar();
          this.editProfile();
          this.updateInfo();
-         this.authService.updateUser(user).subscribe((user)=>{
-            this.authService.setUser(user);
-         });
+         this.authService.setUser(response['response']);
+         this.user = response['response'];
       },(error)=>{
       console.error(error);
         this.updateLoadBar();

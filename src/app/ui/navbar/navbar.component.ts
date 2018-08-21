@@ -28,10 +28,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.configureNavBar(null);
     this.authService.onAuthStateChanged().then((user) => {
-      console.log(user);
       if(user){
          this.authService.getUser(user).subscribe(data=>{ 
-           console.log(data);
             this.user = data['response'];
          }, error=> console.log(error));
       }     
