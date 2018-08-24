@@ -3,7 +3,7 @@
   <mat-card-header class="profile-link" routerLink="/auth/profile/{{post.user.uid}}">
     <img *ngIf="post.user.photoURL" mat-card-avatar src="{{post.user.photoURL}}" alt="{{post.user.displayName}}">
     <img *ngIf="!post.user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{post.user.displayName}}"  >
-    <mat-card-title>{{post.displayName}}</mat-card-title>
+    <mat-card-title>{{post.user.displayName}}</mat-card-title>
     <mat-card-subtitle>{{post.user.email}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>

@@ -25,4 +25,4 @@
   <mat-spinner class="center-content"></mat-spinner>
 </div>
 <!-- post donation hiden -->
-<app-post [type]="{type:1}"></app-post>
+<app-post [type]="{type:1}" (uploaded)="refreshPosts($event)"></app-post>

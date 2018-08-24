@@ -246,6 +246,10 @@ export class AuthService {
     return this.user;
   }
   
+  public getFirebaseUser(){
+    return this.firebaseAuth.auth.currentUser;
+  }
+  
   public setUser(user) {
     this.user = user;
     //console.log(this.user);

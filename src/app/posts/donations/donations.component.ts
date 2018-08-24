@@ -1,6 +1,7 @@
 import { Component, OnInit , HostListener, OnDestroy } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {PostsService} from '../shared/posts.service';
+import {HttpParams} from "@angular/common/http";
 import {
   trigger,
   state,
@@ -36,6 +37,8 @@ export class DonationsComponent implements OnInit {
   public sendRequest: Boolean = false;
   public stateSearchBar = 'inactive';
   public searchQuery: string;
+  public globalPosts:any[];
+  public skip:number  = 10;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -59,6 +62,7 @@ export class DonationsComponent implements OnInit {
     this.donationService.getDonations().subscribe(response => {
       console.log(response.data.items);
       if (response.data.items.length > 0) {
+        this.globalPosts = response.data.items;
         if (this.isMobile) {
           this.donationsColumn1 = response.data.items;
           return response.data.items;
@@ -70,21 +74,34 @@ export class DonationsComponent implements OnInit {
       }
     });
   }
+  
+  addNewPosts(newArray:any[]){
+    if (newArray.length > 0) {
+        if (this.isMobile) {
+          this.donationsColumn1= [...this.donationsColumn1, ... newArray];
+          return newArray;
+        } else {
+           this.globalPosts = [...this.globalPosts, ... newArray];
+           this.donationService.separateIntoTwoArrays(newArray, this.donationsColumn1, this.donationsColumn2);
+        }
+    }
+  }
+  
+  refreshPosts(newPost){
+    let newArray:any[];
+    newArray.push(newPost);
+    this.addNewPosts(newArray);
+  }
 
   public getMore(startFrom) {
-    const params = {};
     this.updateLoadBar();
+    const params = new HttpParams().set('skip', this.skip as string).set('limit', '10');
     this.donationService.getDonations(params).subscribe((response) => {
+      console.log('newArrays', response.data.items);
+      this.skip = this.skip + 10;
       this.updateLoadBar();
-      if (response.data.items.length > 0) {
-        if (this.isMobile) {
-          this.donationsColumn1.push(response.data.items);
-          return response.data.items;
-        } else {
-           this.donationService.separateIntoTwoArrays(response.data.items, this.donationsColumn1, this.donationsColumn2);
-        }
-      }
-    });
+      this.addNewPosts(response.data.items);
+    },(error)=>console.error(error));
   }
 
   public clearSearchForm() {

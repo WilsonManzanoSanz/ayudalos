@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {PostsService} from '../shared/posts.service';
 import {SidenavService} from '../../ui/shared/sidenav.service';
 import {AuthService, User} from '../../core/auth.service';
@@ -21,6 +21,8 @@ export class PostComponent implements OnInit {
    public uploadingPhoto: Boolean;
    public uploadingPromise = null;
    @Input() type: any;
+  @Output()
+  uploaded = new EventEmitter<string>();
 
   constructor(
     private authService: AuthService,
@@ -61,11 +63,11 @@ export class PostComponent implements OnInit {
       this.postForm = form;
       let newPost;
       if (this.uploadingPromise == null) {
-        newPost =  {... form.value, ...this.user};
+        newPost =  {... form.value, ... {userUid: this.user.uid}};
         this.newPost(newPost);
       } else {
         this.uploadingPromise.then((response) => {
-          newPost =  {... form.value, ...this.user, photos: this.uploadedPhotoURL};
+          newPost =  {... form.value, ...{userUid: this.user.uid}, photoURL: this.uploadedPhotoURL};
           this.newPost(newPost);
         }).catch((error)=> console.error(error));
       }
@@ -75,10 +77,17 @@ export class PostComponent implements OnInit {
   newPost(newPost) {
     this.postForm.reset();
     this.postsService.newPost({...newPost, ...this.type}).subscribe(response => {
-      console.log('new post has been posted');
+      console.log('new post has been posted', response);
+      let newPost = response.response;
+      newPost.user = this.user;
+      this.uploadComplete(newPost);
       this.cleanForm();
       this.postsService.closeNav();
     },error => console.log(error));
+  }
+  
+  uploadComplete(newPost) {
+    this.uploaded.emit(newPost);
   }
 
   public cleanForm() {

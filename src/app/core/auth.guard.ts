@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
 
   }
   canActivate() {
-    if (Boolean(this.authService.getCurrentlyUser())) {
+    if (Boolean(this.authService.getFirebaseUser())) {
        return true;
     } else {
       this.router.navigate(['/auth']);
