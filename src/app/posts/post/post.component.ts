@@ -4,7 +4,7 @@ import {SidenavService} from '../../ui/shared/sidenav.service';
 import {AuthService, User} from '../../core/auth.service';
 import {Router} from '@angular/router';
 import { NgForm} from '@angular/forms';
-import { tap, finalize } from 'rxjs/operators';
+import {  finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post',
@@ -69,7 +69,7 @@ export class PostComponent implements OnInit {
         this.uploadingPromise.then((response) => {
           newPost =  {... form.value, ...{userUid: this.user.uid}, photoURL: this.uploadedPhotoURL};
           this.newPost(newPost);
-        }).catch((error)=> console.error(error));
+        }).catch((error) => console.error(error));
       }
     }
   }
@@ -78,14 +78,14 @@ export class PostComponent implements OnInit {
     this.postForm.reset();
     this.postsService.newPost({...newPost, ...this.type}).subscribe(response => {
       console.log('new post has been posted', response);
-      let newPost = response.response;
-      newPost.user = this.user;
-      this.uploadComplete(newPost);
+      const newDonation = response.response;
+        newDonation.user = this.user;
+      this.uploadComplete(newDonation);
       this.cleanForm();
       this.postsService.closeNav();
-    },error => console.log(error));
+    }, error => console.log(error));
   }
-  
+
   uploadComplete(newPost) {
     this.uploaded.emit(newPost);
   }

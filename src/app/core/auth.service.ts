@@ -32,11 +32,11 @@ export class AuthService {
     console.log('Auth service init...');
     this.postsCollection = this.fireReference.collection<any>('posts');
     this.onAuthStateChanged().then((user) => {
-      if(user){
-         this.getUser(user).subscribe(response=>{
+      if (user) {
+         this.getUser(user).subscribe(response => {
            this.user = response.data;
-         }, error=> console.log(error));
-      }     
+         }, error => console.log(error));
+      }
     }).catch((error) => {
       console.error(error);
     });
@@ -51,8 +51,8 @@ export class AuthService {
         // The signed-in user info.
        result.user['typeUserId'] = 3;
         this.registerUser(result.user).subscribe(
-           data => this.getUser(result.user).subscribe((response)=>{
-              this.user = response.data
+           data => this.getUser(result.user).subscribe((response) => {
+              this.user = response.data;
            }),
            err => console.log(err)
         );
@@ -75,7 +75,7 @@ export class AuthService {
         // The signed-in user info.
         result.user['typeUserId'] = 2;
         this.registerUser(result.user).subscribe(
-           data => this.getUser(result.user).subscribe((response)=>{
+           data => this.getUser(result.user).subscribe((response) => {
              this.user = response.data;
            }),
            err => console.log(err)
@@ -97,26 +97,26 @@ export class AuthService {
         console.log('listener', credential);
         return this.getToken();
       })
-      .catch(error => this.handleError(error));
+      .catch(error => AuthService.handleError(error));
   }
 
   // Auth with email//password
   public emailLogin(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((response) => {
-        response.user['typeUserId']= 1;
+        response.user['typeUserId'] = 1;
         this.registerUser(response.user).subscribe(
-           data => this.getUser(response.user).subscribe((response)=>{
-              console.log(response);
-              this.user = response.data;
+           data => this.getUser(response.user).subscribe((responseUser) => {
+              console.log(responseUser);
+              this.user = responseUser.data;
            }),
-           err => this.getUser(response.user).subscribe((response)=>{
-              this.user = response.data;
-           },(error)=>console.error(error))
+           err => this.getUser(response.user).subscribe((errorUser) => {
+              this.user = errorUser.data;
+           }, (error) => console.error(error))
         );
         resolve(response);
       }).catch((error) => {
-        this.handleError(error);
+        AuthService.handleError(error);
         reject(error);
       });
     });
@@ -127,7 +127,7 @@ export class AuthService {
       this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password).then((response) => {
         resolve(response.user);
       }).catch((error) => {
-        this.handleError(error);
+        AuthService.handleError(error);
         reject(error);
       });
     });
@@ -138,7 +138,7 @@ export class AuthService {
       this.firebaseAuth.auth.sendPasswordResetEmail(email).then((message) => {
         resolve('OK');
       }).catch((error) => {
-        this.handleError(error);
+        AuthService.handleError(error);
         reject(error);
       });
     });
@@ -161,11 +161,11 @@ export class AuthService {
 
   public getToken() {
     this.refreshUser();
-    if(this.token){
+    if (this.token) {
       return this.token;
     }
-    if(this.user){
-      this.firebaseAuth.auth.currentUser.getIdToken(/* forceRefresh */ true).then((idToken)=>{
+    if (this.user) {
+      this.firebaseAuth.auth.currentUser.getIdToken(/* forceRefresh */ true).then((idToken) => {
           this.token = idToken;
           return idToken;
       });
@@ -188,7 +188,7 @@ export class AuthService {
     const thiss = this;
     return new Promise(( resolve, reject) => {
       this.firebaseAuth.auth.currentUser.updateProfile(editedUser).then(response => {
-        //thiss.updateUserData(Object.assign({}, thiss.user, editedUser));
+        // thiss.updateUserData(Object.assign({}, thiss.user, editedUser));
         resolve(user);
       }).catch(function(error) {
         reject(error);
@@ -225,37 +225,37 @@ export class AuthService {
           return { id, ...data };
       })));
   }
-  
-   public refreshUser(){
+
+   public refreshUser() {
     this.user = this.firebaseAuth.auth.currentUser;
   }
-  
-  public registerUser(user:any){
+
+  public registerUser(user: any) {
     return this.http.post<any>(this.URL, user);
   }
-  
-  public updateUser(user:any){
+
+  public updateUser(user: any) {
     return this.http.put<any>(`${this.URL}/${user.uid}`, user);
   }
-  
-  public getUser(user:any){
+
+  public getUser(user: any) {
     return this.http.get<any>(`${this.URL}/${user.uid}`);
   }
-  
+
   public getCurrentlyUser() {
     return this.user;
   }
-  
-  public getFirebaseUser(){
+
+  public getFirebaseUser() {
     return this.firebaseAuth.auth.currentUser;
   }
-  
+
   public setUser(user) {
     this.user = user;
-    //console.log(this.user);
+    // console.log(this.user);
   }
 
-  private handleError(error) {
+  private static handleError(error) {
     console.log(error);
   }
 

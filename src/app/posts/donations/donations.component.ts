@@ -1,7 +1,7 @@
-import { Component, OnInit , HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit , HostListener } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {PostsService} from '../shared/posts.service';
-import {HttpParams} from "@angular/common/http";
+import {HttpParams} from '@angular/common/http';
 import {
   trigger,
   state,
@@ -32,13 +32,13 @@ export class DonationsComponent implements OnInit {
 
   public donationsColumn1: any[] = [];
   public donationsColumn2: any[] = [];
-  public user: User;
+  public user = {};
   public isMobile: Boolean;
   public sendRequest: Boolean = false;
   public stateSearchBar = 'inactive';
   public searchQuery: string;
-  public globalPosts:any[];
-  public skip:number  = 10;
+  public globalPosts: any[] = [];
+  public skip  = 10;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -46,7 +46,17 @@ export class DonationsComponent implements OnInit {
   }
 
   constructor(public donationService: PostsService, private authService: AuthService) {
-    this.user = this.authService.getCurrentlyUser();
+    if (this.authService.getCurrentlyUser()) {
+      this.user = this.authService.getCurrentlyUser();
+    } else {
+    this.authService.onAuthStateChanged().then(user => {
+        if (user) {
+            this.authService.getUser(user).subscribe((responseUser) => {
+                this.user = responseUser;
+            }, error => console.error(error));
+        }
+    });
+    }
   }
 
   ngOnInit() {
@@ -60,48 +70,38 @@ export class DonationsComponent implements OnInit {
 
   public getDonationContent() {
     this.donationService.getDonations().subscribe(response => {
-      console.log(response.data.items);
-      if (response.data.items.length > 0) {
-        this.globalPosts = response.data.items;
-        if (this.isMobile) {
-          this.donationsColumn1 = response.data.items;
-          return response.data.items;
-        } else {
-          this.donationsColumn1 = [];
-          this.donationsColumn2 = [];
-          this.donationService.separateIntoTwoArrays(response.data.items, this.donationsColumn1, this.donationsColumn2);
-        }
-      }
+        this.addNewPosts(response.data.items);
     });
   }
-  
-  addNewPosts(newArray:any[]){
+
+  addNewPosts(newArray: any[]) {
     if (newArray.length > 0) {
         if (this.isMobile) {
-          this.donationsColumn1= [...this.donationsColumn1, ... newArray];
+          this.donationsColumn1 = [...this.donationsColumn1, ... newArray];
           return newArray;
         } else {
+            this.donationsColumn1 = [];
+            this.donationsColumn2 = [];
            this.globalPosts = [...this.globalPosts, ... newArray];
-           this.donationService.separateIntoTwoArrays(newArray, this.donationsColumn1, this.donationsColumn2);
+           this.donationService.separateIntoTwoArrays(this.globalPosts, this.donationsColumn1, this.donationsColumn2);
         }
     }
   }
-  
-  refreshPosts(newPost){
-    let newArray:any[];
+
+  refreshPosts(newPost) {
+    const newArray: any[] = [];
     newArray.push(newPost);
     this.addNewPosts(newArray);
   }
 
   public getMore(startFrom) {
     this.updateLoadBar();
-    const params = new HttpParams().set('skip', this.skip as string).set('limit', '10');
+    const params = new HttpParams().set('skip', this.skip.toString()).set('limit', '10');
     this.donationService.getDonations(params).subscribe((response) => {
-      console.log('newArrays', response.data.items);
       this.skip = this.skip + 10;
       this.updateLoadBar();
       this.addNewPosts(response.data.items);
-    },(error)=>console.error(error));
+    }, (error) => console.error(error));
   }
 
   public clearSearchForm() {
@@ -122,10 +122,6 @@ export class DonationsComponent implements OnInit {
 
   public updateLoadBar() {
     this.sendRequest = !this.sendRequest;
-  }
-  
-  ngOnDestroy(){
-    console.log('Destroyed');
   }
 
 }

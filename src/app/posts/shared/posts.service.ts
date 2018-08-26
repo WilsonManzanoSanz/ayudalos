@@ -59,7 +59,7 @@ export class PostsService {
   public getDonations(params =  new HttpParams().set('skip', '0').set('limit', '10')) {
     return this.http.get<any>(this.URL, {params: params});
   }
-  
+
   public getDonation(id, params) {
     return this.http.get<any>(`${this.URL}/${id}`, params);
   }
@@ -100,8 +100,7 @@ export class PostsService {
   public uploadPostPhoto(file, userId) {
     this.filePath =  `${userId}/posts/${file.name}${file.lastModified}`;
     this.fileRef = this.fireStorage.ref(this.filePath);
-    const task: AngularFireUploadTask = this.fireStorage.upload(this.filePath, file);
-    return task;
+    return this.fireStorage.upload(this.filePath, file);
   }
 
   public showNav() {

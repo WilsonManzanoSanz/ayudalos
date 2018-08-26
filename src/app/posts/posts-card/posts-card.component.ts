@@ -25,7 +25,7 @@ export class PostsCardComponent implements OnInit {
       this.cleanComment(value, idx);
       this.postService.updatePost(this.posts[idx]).subscribe(response => {
         console.log('comment inserted');
-      },error => {
+      }, error => {
         console.log(error);
         this.posts[idx].comments.splice(idx, 1);
       });
