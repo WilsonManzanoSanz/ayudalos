@@ -7,5 +7,6 @@ export const environment = {
     projectId: 'helpthem-60d1a',
     storageBucket: 'gs://helpthem-60d1a.appspot.com/',
     messagingSenderId: '1033310700341'
-  }
+  },
+  urlbase: 'https://node-wilsonmanzanosanz271555.codeanyapp.com/api/v1',
 };

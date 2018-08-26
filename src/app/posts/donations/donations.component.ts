@@ -32,7 +32,7 @@ export class DonationsComponent implements OnInit {
 
   public donationsColumn1: any[] = [];
   public donationsColumn2: any[] = [];
-  public user = {};
+  public user:any;
   public isMobile: Boolean;
   public sendRequest: Boolean = false;
   public stateSearchBar = 'inactive';

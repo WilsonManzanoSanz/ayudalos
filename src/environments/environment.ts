@@ -14,5 +14,5 @@ export const environment = {
     storageBucket: 'gs://helpthem-60d1a.appspot.com/',
     messagingSenderId: '1033310700341'
   },
-  urlbase:'https://node-wilsonmanzanosanz271555.codeanyapp.com/api/v1',
+  urlbase: 'https://node-wilsonmanzanosanz271555.codeanyapp.com/api/v1',
 };
