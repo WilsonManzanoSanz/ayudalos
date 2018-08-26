@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e46e1562-d9bd-4d10-b790-9b010fe8b1bc" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/ayudalos.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/0.37137e47161c973ddba1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/1.66e8d46ef327fee1ea84.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/2.3d194d23647bc50aa89a.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/main.cce224837145d4d513b0.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/runtime.db55c2403854e2f3a2c1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/styles.8df877f830ca16cc9de2.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/core/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/core/auth.guard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/core/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/core/auth.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/posts/donations/donations.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/posts/donations/donations.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/posts/post/post.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/posts/post/post.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/posts/posts-card/posts-card.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/posts/posts-card/posts-card.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/posts/shared/posts.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/posts/shared/posts.service.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -35,8 +22,8 @@
       <file leaf-file-name="donations.component.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/posts/donations/donations.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="103" column="25" selection-start-line="103" selection-start-column="18" selection-end-line="103" selection-end-column="25" />
+            <state relative-caret-position="-380">
+              <caret line="84" column="9" lean-forward="true" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
               </folding>
@@ -44,11 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="posts.service.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="posts.service.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/posts/shared/posts.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="125" column="7" selection-start-line="125" selection-start-column="7" selection-end-line="125" selection-end-column="7" />
+            <state relative-caret-position="170">
+              <caret line="116" column="29" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="29" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -56,11 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="auth.guard.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="auth.guard.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/core/auth.guard.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+            <state relative-caret-position="113">
+              <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -155,9 +142,9 @@
         <option value="$PROJECT_DIR$/src/index.html" />
         <option value="$PROJECT_DIR$/src/app/posts/post/post.component.ts" />
         <option value="$PROJECT_DIR$/src/app/core/auth.service.ts" />
-        <option value="$PROJECT_DIR$/src/app/core/auth.guard.ts" />
         <option value="$PROJECT_DIR$/src/app/posts/donations/donations.component.ts" />
         <option value="$PROJECT_DIR$/src/app/posts/shared/posts.service.ts" />
+        <option value="$PROJECT_DIR$/src/app/core/auth.guard.ts" />
       </list>
     </option>
   </component>
@@ -302,7 +289,7 @@
       <workItem from="1533610215811" duration="3411000" />
       <workItem from="1534374840351" duration="589000" />
       <workItem from="1535219368352" duration="5820000" />
-      <workItem from="1535294425014" duration="6908000" />
+      <workItem from="1535294425014" duration="8069000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed circular dependencies and clean extras imports and reformat the code in general">
       <created>1533499805590</created>
@@ -329,7 +316,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39188000" />
+    <option name="totallyTimeSpent" value="40349000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -344,7 +331,7 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.32843137" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.5653595" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.5653595" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -395,13 +382,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/app/posts/search/search.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/posts/posts.module.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -630,20 +610,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/core/auth.guard.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/tslint.json">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/posts/donations/donations.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="103" column="25" selection-start-line="103" selection-start-column="18" selection-end-line="103" selection-end-column="25" />
+        <state relative-caret-position="-380">
+          <caret line="84" column="9" lean-forward="true" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
           </folding>
@@ -652,10 +625,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/posts/shared/posts.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="125" column="7" selection-start-line="125" selection-start-column="7" selection-end-line="125" selection-end-column="7" />
+        <state relative-caret-position="170">
+          <caret line="116" column="29" selection-start-line="116" selection-start-column="29" selection-end-line="116" selection-end-column="29" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/core/auth.guard.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>

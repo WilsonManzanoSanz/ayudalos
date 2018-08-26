@@ -114,16 +114,20 @@ export class PostsService {
   }
 
   // TODO SEPARETE MODEL AND SERVICE
-  public separateIntoTwoArrays(array: any[] = [], odds: any[] = [], evens: any[]= []) {
-    let checker: Boolean = true;
-    array.forEach(value => {
-      checker = !checker;
-      if (checker) {
+  public separateIntoTwoArrays(array: any[] = [], newArray: any[] = [], odds: any[] = [], evens: any[]= []) {
+    let isOdd: Boolean = false;
+    if (array.length === 0 || array.length % 2 === 0 ) {
+      isOdd = true;
+    }
+    newArray.forEach(value => {
+      if (isOdd) {
         odds.push(value);
       } else {
         evens.push(value);
       }
+      isOdd = !isOdd;
     });
+    return [...array, ...newArray];
   }
 
 }

@@ -80,10 +80,8 @@ export class DonationsComponent implements OnInit {
           this.donationsColumn1 = [...this.donationsColumn1, ... newArray];
           return newArray;
         } else {
-            this.donationsColumn1 = [];
-            this.donationsColumn2 = [];
-           this.globalPosts = [...this.globalPosts, ... newArray];
-           this.donationService.separateIntoTwoArrays(this.globalPosts, this.donationsColumn1, this.donationsColumn2);
+            this.globalPosts = this.donationService.separateIntoTwoArrays(
+                this.globalPosts, newArray, this.donationsColumn1, this.donationsColumn2);
         }
     }
   }
