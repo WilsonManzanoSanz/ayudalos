@@ -32,7 +32,7 @@ export class DonationsComponent implements OnInit {
 
   public donationsColumn1: any[] = [];
   public donationsColumn2: any[] = [];
-  public user:any;
+  public user: any = {};
   public isMobile: Boolean;
   public sendRequest: Boolean = false;
   public stateSearchBar = 'inactive';
@@ -46,22 +46,26 @@ export class DonationsComponent implements OnInit {
   }
 
   constructor(public donationService: PostsService, private authService: AuthService) {
-    if (this.authService.getCurrentlyUser()) {
-      this.user = this.authService.getCurrentlyUser();
-    } else {
-    this.authService.onAuthStateChanged().then(user => {
-        if (user) {
-            this.authService.getUser(user).subscribe((responseUser) => {
-                this.user = responseUser;
-            }, error => console.error(error));
-        }
-    });
-    }
+    this.initializeUser();
   }
 
   ngOnInit() {
     this.configureCards();
     this.getDonationContent();
+  }
+
+  public initializeUser() {
+      if (this.authService.getCurrentlyUser()) {
+          this.user = this.authService.getCurrentlyUser();
+      } else {
+          this.authService.hardLoadUser().subscribe(user => {
+              if (user) {
+                  this.authService.getUser(user).subscribe((responseUser) => {
+                      this.user = responseUser.data;
+                  }, error => console.error(error));
+              }
+          }, (error => console.error(error)));
+      }
   }
 
   toggleSearchState() {

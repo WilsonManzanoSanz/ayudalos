@@ -30,12 +30,6 @@ export class ProfileComponent implements OnInit {
       userId = {uid: params.id};
     });
     this.user = this.authService.getCurrentlyUser();
-    this.authService.getDonationsByUser(userId).subscribe(response => {
-      this.donations = response;
-    });
-     this.authService.getPetitionsByUser(userId).subscribe(response => {
-      this.petitions = response;
-    });
   }
 
    configureCards() {

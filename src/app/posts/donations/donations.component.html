@@ -15,14 +15,14 @@
   [infiniteScrollThrottle]="1000"
   (scrolled)="onScroll()">
   <div class="half-width" [class.half-width]="!isMobile">
-    <app-posts-card class="card-container" style="justify-content:flex-end;"  [posts]="donationsColumn1"></app-posts-card>
+    <app-posts-card class="card-container" style="justify-content:flex-end;"  [posts]="donationsColumn1" [user]="user"></app-posts-card>
   </div>
   <div class="half-width" *ngIf="!isMobile" [class.half-width]="!isMobile">
-    <app-posts-card  class="card-container"  style="justify-content:flex-start;" [posts]="donationsColumn2"></app-posts-card>
+    <app-posts-card  class="card-container"  style="justify-content:flex-start;" [posts]="donationsColumn2" [user]="user"></app-posts-card>
   </div>
 </div>
  <div *ngIf="sendRequest">
   <mat-spinner class="center-content"></mat-spinner>
 </div>
 <!-- post donation hiden -->
-<app-post [type]="{type:1}" (uploaded)="refreshPosts($event)"></app-post>
+<app-post [type]="{type:1}" [user]="user" (uploaded)="refreshPosts($event)"></app-post>

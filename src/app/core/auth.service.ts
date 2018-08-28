@@ -17,7 +17,7 @@ export interface User {
 @Injectable()
 export class AuthService {
 
-  public user: any = null;
+  private user: any = null;
   private providerGoogle = new firebase.auth.GoogleAuthProvider();
   private providerFb = new firebase.auth.FacebookAuthProvider();
   private token = '';
@@ -25,22 +25,22 @@ export class AuthService {
   // Firestore
   public filePath: string;
   public fileRef: AngularFireStorageReference;
-  private postsCollection: AngularFirestoreCollection<any>;
 
-  constructor(public firebaseAuth: AngularFireAuth, private fireReference: AngularFirestore,
+  constructor(private firebaseAuth: AngularFireAuth, private fireReference: AngularFirestore,
   private fireStore: AngularFirestore, private fireStorage: AngularFireStorage, private http: HttpClient) {
     console.log('Auth service init...');
-    this.postsCollection = this.fireReference.collection<any>('posts');
-    this.onAuthStateChanged().then((user) => {
-      if (user) {
-         this.getUser(user).subscribe(response => {
-           this.user = response.data;
-         }, error => console.log(error));
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-
+      this.firebaseAuth.user.subscribe((user) => {
+        if (user) {
+          if (localStorage.getItem(`user_${user.uid}`)) {
+            this.user = JSON.parse(localStorage.getItem(`user_${user.uid}`));
+          } else {
+            this.getUser(user).subscribe(response => {
+                this.user = response.data;
+                localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
+            }, error => console.log(error));
+          }
+        }
+      }, (error) => console.error(error));
   }
 
   public googleLogin() {
@@ -90,14 +90,14 @@ export class AuthService {
     });
   }
 
-  private oAuthLogin(provider: any) {
+  public oAuthLogin(provider: any) {
     return this.firebaseAuth.auth
       .signInWithPopup(provider)
       .then(credential => {
         console.log('listener', credential);
         return this.getToken();
       })
-      .catch(error => AuthService.handleError(error));
+      .catch(error => this.handleError(error));
   }
 
   // Auth with email//password
@@ -116,7 +116,7 @@ export class AuthService {
         );
         resolve(response);
       }).catch((error) => {
-        AuthService.handleError(error);
+        this.handleError(error);
         reject(error);
       });
     });
@@ -127,7 +127,7 @@ export class AuthService {
       this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password).then((response) => {
         resolve(response.user);
       }).catch((error) => {
-        AuthService.handleError(error);
+        this.handleError(error);
         reject(error);
       });
     });
@@ -138,7 +138,7 @@ export class AuthService {
       this.firebaseAuth.auth.sendPasswordResetEmail(email).then((message) => {
         resolve('OK');
       }).catch((error) => {
-        AuthService.handleError(error);
+        this.handleError(error);
         reject(error);
       });
     });
@@ -154,18 +154,18 @@ export class AuthService {
 
    public signOut() {
     this.firebaseAuth.auth.signOut().then(() => {
+      localStorage.removeItem(`user_${this.user.uid}`);
       this.user = null;
       this.token = '';
     });
   }
 
   public getToken() {
-    this.refreshUser();
     if (this.token) {
       return this.token;
     }
     if (this.user) {
-      this.firebaseAuth.auth.currentUser.getIdToken(/* forceRefresh */ true).then((idToken) => {
+      this.firebaseAuth.auth.currentUser.getIdToken(/* forceRefresh */ ).then((idToken) => {
           this.token = idToken;
           return idToken;
       });
@@ -207,26 +207,12 @@ export class AuthService {
   }
 
   public getPetitionsByUser(user) {
-      this.postsCollection = this.fireReference.collection<any>('posts',
-          ref => ref.where('type', '==', 2).where('uid', '==', user.uid).limit(20));
-      return  this.postsCollection.snapshotChanges().pipe(map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as any;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-      })));
   }
 
   public getDonationsByUser(user) {
-      this.postsCollection = this.fireReference.collection<any>('posts',
-          ref => ref.where('type', '==', 1).where('uid', '==', user.uid).limit(20));
-      return this.postsCollection.snapshotChanges().pipe(map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as any;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-      })));
   }
 
-   public refreshUser() {
+  public refreshUser() {
     this.user = this.firebaseAuth.auth.currentUser;
   }
 
@@ -239,11 +225,16 @@ export class AuthService {
   }
 
   public getUser(user: any) {
+    console.log('se invoco... get User');
     return this.http.get<any>(`${this.URL}/${user.uid}`);
   }
 
   public getCurrentlyUser() {
     return this.user;
+  }
+
+  public hardLoadUser() {
+      return this.firebaseAuth.user;
   }
 
   public getFirebaseUser() {
@@ -255,8 +246,8 @@ export class AuthService {
     // console.log(this.user);
   }
 
-  private static handleError(error) {
-    console.log(error);
+  public handleError(error) {
+    console.error(error);
   }
 
 

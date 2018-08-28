@@ -121,9 +121,17 @@ export class PostsService {
     }
     newArray.forEach(value => {
       if (isOdd) {
-        odds.push(value);
+        if (newArray.length === 1) {
+          odds.unshift(value);
+        } else {
+          odds.push(value);
+        }
       } else {
-        evens.push(value);
+        if (newArray.length === 1) {
+            evens.unshift(value);
+        } else {
+          evens.push(value);
+        }
       }
       isOdd = !isOdd;
     });

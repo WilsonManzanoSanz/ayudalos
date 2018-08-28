@@ -10,10 +10,9 @@ import {PostsService, Post} from '../shared/posts.service';
 export class PostsCardComponent implements OnInit {
 
   @Input() posts: Post[];
-  user: User;
+  @Input() user: any;
 
   constructor(public postService: PostsService, private authService: AuthService) {
-    this.user = this.authService.getCurrentlyUser();
   }
 
   ngOnInit() {

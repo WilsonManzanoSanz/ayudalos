@@ -13,7 +13,6 @@ import {  finalize } from 'rxjs/operators';
 })
 export class PostComponent implements OnInit {
 
-   public user: User = null;
    public post: any = {};
    public postForm: NgForm;
    private photo: any;
@@ -21,7 +20,8 @@ export class PostComponent implements OnInit {
    public uploadingPhoto: Boolean;
    public uploadingPromise = null;
    @Input() type: any;
-  @Output()
+   @Input() user: any;
+   @Output()
   uploaded = new EventEmitter<string>();
 
   constructor(
@@ -30,7 +30,6 @@ export class PostComponent implements OnInit {
     private router: Router,
     public postsService: PostsService,
     ) {
-      this.user = this.authService.getCurrentlyUser();
   }
 
   ngOnInit() {
