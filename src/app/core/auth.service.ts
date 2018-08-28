@@ -51,10 +51,8 @@ export class AuthService {
         // The signed-in user info.
        result.user['typeUserId'] = 3;
         this.registerUser(result.user).subscribe(
-           data => this.getUser(result.user).subscribe((response) => {
-              this.user = response.data;
-           }),
-           err => console.log(err)
+           data => this.user = data.response,
+           err => this.user = err
         );
         resolve(result.user);
         // ...
@@ -75,10 +73,8 @@ export class AuthService {
         // The signed-in user info.
         result.user['typeUserId'] = 2;
         this.registerUser(result.user).subscribe(
-           data => this.getUser(result.user).subscribe((response) => {
-             this.user = response.data;
-           }),
-           err => console.log(err)
+          data => this.user = data.response,
+           err => this.user = err
         );
         resolve(result.user);
         // ...
@@ -106,13 +102,8 @@ export class AuthService {
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((response) => {
         response.user['typeUserId'] = 1;
         this.registerUser(response.user).subscribe(
-           data => this.getUser(response.user).subscribe((responseUser) => {
-              console.log(responseUser);
-              this.user = responseUser.data;
-           }),
-           err => this.getUser(response.user).subscribe((errorUser) => {
-              this.user = errorUser.data;
-           }, (error) => console.error(error))
+           data => this.user = data.response,
+           err => this.user = err
         );
         resolve(response);
       }).catch((error) => {
