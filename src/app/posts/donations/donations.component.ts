@@ -77,6 +77,18 @@ export class DonationsComponent implements OnInit {
         this.addNewPosts(response.data.items);
     });
   }
+  
+  updatesBySearch(newArray: any[]){
+    console.log(newArray);
+    this.cleanArrays();
+    this.addNewPosts(newArray); 
+  }
+  
+  cleanArrays(){
+    this.donationsColumn1 = [];
+    this.donationsColumn2 = [];
+    this.globalPosts = [];
+  }
 
   addNewPosts(newArray: any[]) {
     if (newArray.length > 0) {
@@ -107,6 +119,8 @@ export class DonationsComponent implements OnInit {
   }
 
   public clearSearchForm() {
+    this.cleanArrays();
+    this.getDonationContent();
     this.toggleSearchState();
   }
 

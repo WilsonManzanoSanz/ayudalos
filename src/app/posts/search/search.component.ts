@@ -12,16 +12,16 @@ import {PostsService, Post} from '../shared/posts.service';
 })
 export class SearchComponent implements OnInit {
 
- @Input() stateSearchBar: string;
+  @Input() stateSearchBar: string;
   public searchQuery = '';
   public searchTerms = new Subject<string>();
-  posts$: Observable<Post[]>;
-   @Output() closeElement = new EventEmitter<boolean>();
+  @Output() closeElement = new EventEmitter<any>();
+  @Output() updatePosts = new EventEmitter<any>();
 
   constructor(public postService: PostsService) { }
 
   ngOnInit(): void {
-    this.posts$ = this.searchTerms.pipe(
+    this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
 
@@ -29,8 +29,19 @@ export class SearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.postService.searchPosts(term)),
-    );
+      switchMap(
+        (term: string) => {
+          console.log(term);
+          return this.postService.searchPosts(term);
+        })
+    ).subscribe(data => { 
+      if(data['data'].items){
+        this.updatePosts.emit(data['data'].items);
+      }else{
+        this.updatePosts.emit(data['data']);
+      }
+    }, 
+                error => console.error(error));
   }
 
   search(term: string): void {

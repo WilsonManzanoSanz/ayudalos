@@ -4,11 +4,12 @@
     <img *ngIf="!user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
     <mat-card-subtitle style="margin-top:10px; margin-left:5px; cursor:pointer;" (click)="donationService.showNav()">Dona tus cosas, publica tu donacion!</mat-card-subtitle>
     <span class="spacer"></span>
-     <mat-icon aria-label="Home button" style="padding-top:5px;" (click)="toggleSearchState()">search</mat-icon>
+     <mat-icon aria-label="Home button" style="padding-top:5px;" class="pointer" (click)="toggleSearchState()">search</mat-icon>
     </mat-card-header>
 </mat-card>
 
-<app-search [@searchBarState]="stateSearchBar" [stateSearchBar]="stateSearchBar" (closeElement)="clearSearchForm()"></app-search>
+<app-search [@searchBarState]="stateSearchBar" [stateSearchBar]="stateSearchBar"
+            (updatePosts)="updatesBySearch($event)" (closeElement)="clearSearchForm($event)"></app-search>
 
 <div class="scrollable" infiniteScroll
   [infiniteScrollDistance]="2"

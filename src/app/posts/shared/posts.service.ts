@@ -79,14 +79,13 @@ export class PostsService {
     return this.posts;
   }
 
-  public searchPosts (term: string, type: number = 1): Observable<any[]> {
+  public searchPosts (term: string): Observable<any[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
-      return of([]);
+      return this.getDonations();
     }
-    this.postsCollection = this.fireReference.collection<Post>('posts',
-    ref => ref.where('type', '==', 1).where('tittle', '==', 'term'));
-    return this.postsCollection.valueChanges();
+    const params = new HttpParams().set('key', 'tittle').set('value',term);
+    return this.http.get<any>(this.URL, {params: params});
   }
 
   public newPost(body: any) {
