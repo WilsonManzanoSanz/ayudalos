@@ -27,15 +27,9 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.configureNavBar(null);
-    this.authService.onAuthStateChanged().then((user) => {
-      if(user){
-         this.authService.getUser(user).subscribe(data=>{ 
-            this.user = data['response'];
-         }, error=> console.log(error));
-      }     
-    }).catch((error) => {
-      console.error(error);
-    });
+    this.authService.getCurrentUser().then((user) => {
+      this.user = user;
+    }).catch(error => console.error(error));
   }
 
   configureNavBar(event) {

@@ -65,7 +65,6 @@ export class AuthService {
   }
 
   public facebookLogin() {
-
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithPopup(this.providerFb).then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -84,16 +83,6 @@ export class AuthService {
         // ...
       });
     });
-  }
-
-  public oAuthLogin(provider: any) {
-    return this.firebaseAuth.auth
-      .signInWithPopup(provider)
-      .then(credential => {
-        console.log('listener', credential);
-        return this.getToken();
-      })
-      .catch(error => this.handleError(error));
   }
 
   // Auth with email//password
@@ -197,12 +186,6 @@ export class AuthService {
     });
   }
 
-  public getPetitionsByUser(user) {
-  }
-
-  public getDonationsByUser(user) {
-  }
-
   public refreshUser() {
     this.user = this.firebaseAuth.auth.currentUser;
   }
@@ -220,16 +203,32 @@ export class AuthService {
     return this.http.get<any>(`${this.URL}/${user.uid}`);
   }
 
-  public getCurrentlyUser() {
+  public getUserValue() {
     return this.user;
+  }
+  
+  public getCurrentUser(){
+    return new Promise((resolve, reject) => {
+      if (this.getUserValue()) {
+        resolve(this.user);
+      } else {
+          this.hardLoadUser().subscribe(user => {
+            if (user) {
+              this.getUser(user).subscribe((responseUser) => {
+                  resolve(responseUser.data);
+              }, error => console.error(error));
+            }
+          }, (error => {
+              console.error(error);
+              reject(error);
+              })
+          );
+       }
+    });
   }
 
   public hardLoadUser() {
       return this.firebaseAuth.user;
-  }
-
-  public getFirebaseUser() {
-    return this.firebaseAuth.auth.currentUser;
   }
 
   public setUser(user) {

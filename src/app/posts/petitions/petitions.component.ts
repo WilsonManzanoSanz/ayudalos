@@ -21,7 +21,7 @@ export class PetitionsComponent implements OnInit {
   }
 
   constructor(public petitionService: PostsService, private authService: AuthService) {
-    this.user = this.authService.getCurrentlyUser();
+    this.user = this.authService.getUserValue();
   }
 
   public getPetitionContent() {

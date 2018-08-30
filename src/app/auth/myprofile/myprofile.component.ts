@@ -33,7 +33,7 @@ export class MyprofileComponent implements OnInit {
   constructor(private authService: AuthService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.user = this.authService.getCurrentlyUser();
+    this.user = this.authService.getCurrentUser();
     this.registerFormGroup();
   }
 

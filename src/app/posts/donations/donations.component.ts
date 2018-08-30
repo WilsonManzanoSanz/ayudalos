@@ -55,17 +55,9 @@ export class DonationsComponent implements OnInit {
   }
 
   public initializeUser() {
-      if (this.authService.getCurrentlyUser()) {
-          this.user = this.authService.getCurrentlyUser();
-      } else {
-          this.authService.hardLoadUser().subscribe(user => {
-              if (user) {
-                  this.authService.getUser(user).subscribe((responseUser) => {
-                      this.user = responseUser.data;
-                  }, error => console.error(error));
-              }
-          }, (error => console.error(error)));
-      }
+    this.authService.getCurrentUser().then((user) => {
+      this.user = user;
+    }).catch(error => console.error(error));
   }
 
   toggleSearchState() {

@@ -13,7 +13,7 @@
 
 <mat-tab-group *ngIf="isMobile">
   <mat-tab label="Donaciones">
-    <app-posts-card class="card-container" [posts]="donations" ></app-posts-card>
+    <app-posts-card class="card-container" [posts]="user.posts" ></app-posts-card>
   </mat-tab>
   <mat-tab label="Peticiones">
     <app-posts-card  class="card-container" [posts]="petitions"></app-posts-card>
@@ -23,7 +23,7 @@
   <div>
      <h1 class="card-tittle background-primary">Donaciones</h1>
   </div>
-    <app-posts-card class="card-container" style="justify-content:flex-end;"  [posts]="donations" ></app-posts-card>
+    <app-posts-card  class="card-container" style="justify-content:flex-end;"  [posts]="user.posts" [user]="loggedUser"></app-posts-card>
 </div>
 <div [class.half-width]="!isMobile">
   <div>

@@ -9,7 +9,8 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  public user: User;
+  public user: any = {};
+  public loggedUser: any = {};
   public donations: any[];
   public petitions: any[];
   public isMobile: Boolean;
@@ -20,7 +21,9 @@ export class ProfileComponent implements OnInit {
   }
 
   constructor( private authService: AuthService, private route: ActivatedRoute) {
-    this.user = this.authService.getCurrentlyUser();
+    this.authService.getCurrentUser().then(user => {
+      this.loggedUser = user;
+    }).catch(error => console.error(error));
   }
 
   ngOnInit() {
@@ -28,8 +31,15 @@ export class ProfileComponent implements OnInit {
     let userId;
     this.route.params.subscribe( params => {
       userId = {uid: params.id};
+      this.authService.getUser(userId).subscribe((response) => {
+        this.user = response.data;
+        this.user.posts = response.data.posts.map((value) => {
+          let newValue = value;
+          newValue.user = this.user;
+          return newValue;
+        });
+      });
     });
-    this.user = this.authService.getCurrentlyUser();
   }
 
    configureCards() {
