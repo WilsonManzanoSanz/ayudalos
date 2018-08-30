@@ -45,7 +45,7 @@ export class PetitionsComponent implements OnInit {
 
   public getMore(startFrom) {
     this.updateLoadBar();
-    this.petitionService.getDonations(startFrom).subscribe(response => {
+    this.petitionService.getDonations().subscribe(response => {
       this.updateLoadBar();
       if (response.length > 0) {
         if (this.isMobile) {

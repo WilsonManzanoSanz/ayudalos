@@ -73,13 +73,13 @@ export class DonationsComponent implements OnInit {
   }
 
   public getDonationContent() {
+    this.donationService.addParamaters([{key:'skip', value:0}]);
     this.donationService.getDonations().subscribe(response => {
         this.addNewPosts(response.data.items);
     });
   }
   
   updatesBySearch(newArray: any[]){
-    console.log(newArray);
     this.cleanArrays();
     this.addNewPosts(newArray); 
   }
@@ -110,8 +110,8 @@ export class DonationsComponent implements OnInit {
 
   public getMore(startFrom) {
     this.updateLoadBar();
-    const params = new HttpParams().set('skip', this.skip.toString()).set('limit', '10');
-    this.donationService.getDonations(params).subscribe((response) => {
+    this.donationService.addParamaters([{key:'skip', value:this.skip.toString()}]);
+    this.donationService.getDonations().subscribe((response) => {
       this.skip = this.skip + 10;
       this.updateLoadBar();
       this.addNewPosts(response.data.items);

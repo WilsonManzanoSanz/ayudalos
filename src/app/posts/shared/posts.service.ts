@@ -37,6 +37,7 @@ export class PostsService {
   private posts: Observable<any[]>;
   private lastEntry;
   private URL = environment.urlbase + '/posts/' ;
+  private getParams = new HttpParams().set('skip', '0').set('limit', '10');
 
   constructor(
     public fireReference: AngularFirestore,
@@ -56,8 +57,8 @@ export class PostsService {
      return types.valueChanges();
   }
 
-  public getDonations(params =  new HttpParams().set('skip', '0').set('limit', '10')) {
-    return this.http.get<any>(this.URL, {params: params});
+  public getDonations() {
+    return this.http.get<any>(this.URL, {params: this.getParams});
   }
 
   public getDonation(id, params) {
@@ -82,10 +83,24 @@ export class PostsService {
   public searchPosts (term: string): Observable<any[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
-      return this.getDonations();
+      this.getParams = this.getParams.delete('key').delete('value');
+    } else{
+      this.getParams = this.getParams.set('key', 'tittle').set('value', term);
     }
-    const params = new HttpParams().set('key', 'tittle').set('value',term);
-    return this.http.get<any>(this.URL, {params: params});
+    return this.getDonations();
+  }
+  
+  public addParamaters(array: any[]){
+    array.forEach((element) => {
+      this.getParams = this.getParams.delete(element.key);
+      this.getParams = this.getParams.append(element.key, element.value);
+    });
+  }
+  
+  public deleteParamaters(array: any[]){
+    array.forEach((element) => {
+      this.getParams = this.getParams.delete(element.key);
+    });
   }
 
   public newPost(body: any) {

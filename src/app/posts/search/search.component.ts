@@ -31,7 +31,6 @@ export class SearchComponent implements OnInit {
       // switch to new search observable each time the term changes
       switchMap(
         (term: string) => {
-          console.log(term);
           return this.postService.searchPosts(term);
         })
     ).subscribe(data => { 
@@ -50,7 +49,9 @@ export class SearchComponent implements OnInit {
 
   hideElement() {
     this.searchQuery = '';
+    this.postService.deleteParamaters([{key:'key'}, {key:'value'}]);
     this.closeElement.emit();
+    
   }
 
 }
