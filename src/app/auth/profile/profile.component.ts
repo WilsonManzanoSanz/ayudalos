@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   public petitions: any[];
   public isMobile: Boolean;
   public skip: number = 0;
-  public scrollPostsDiv: any;
+  public sendRequest: Boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -25,7 +25,6 @@ export class ProfileComponent implements OnInit {
   }
 
   constructor( private authService: AuthService, private route: ActivatedRoute) {
-    this.scrollPostsDiv = document.getElementById('scrollPostsDiv');
     this.authService.getCurrentUser().then(user => {
       this.loggedUser = user;
     }).catch(error => console.error(error));
@@ -51,16 +50,21 @@ export class ProfileComponent implements OnInit {
   }
   
   onScroll(){
-    console.log('scroll');
+    this.updateLoadBar();
     this.authService.getUser(this.userId, new HttpParams().set('skip', this.skip.toString()).set('limit', '10')).subscribe((response) => {
-        this.user = response.data;
         this.skip = this.skip + 10;
-        this.user.posts = response.data.posts.map((value) => {
+        const newPosts = response.data.posts.map((value) => {
           let newValue = value;
           newValue.user = this.user;
           return newValue;
         });
+        this.user.posts = [... this.user.posts, ...newPosts];
+        this.updateLoadBar();
     });
+  }
+  
+  public updateLoadBar() {
+    this.sendRequest = !this.sendRequest;
   }
 
 }

@@ -15,12 +15,13 @@
 <div [class.half-width]="!isMobile">
   <mat-tab-group>
     <mat-tab label="Donaciones">
-      <div id="scrollPostsDiv">
-        <div  infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollContainer]="scrollPostsDiv"
-           [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" [scrollWindow]="false"> 
+        <div  infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false" [infiniteScrollContainer]="'.card-container'"
+           [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" > 
           <app-posts-card class="card-container" [posts]="user.posts" [user]="loggedUser"></app-posts-card>
+          <!-- <div *ngIf="sendRequest">
+           <mat-spinner class="center-content"></mat-spinner>
+          </div> -->
         </div>
-      </div>
     </mat-tab>
     <mat-tab label="Peticiones">
     <app-posts-card  class="card-container" [posts]="petitions"></app-posts-card>

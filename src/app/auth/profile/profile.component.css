@@ -14,7 +14,5 @@
 
 .card-container {
    height: 67.2vh;
+   overflow-y:scroll;
 }
-
-
-
