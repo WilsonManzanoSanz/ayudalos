@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {ActivatedRoute} from '@angular/router';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -10,10 +11,13 @@ import {ActivatedRoute} from '@angular/router';
 export class ProfileComponent implements OnInit {
 
   public user: any = {};
+  public userId: any;
   public loggedUser: any = {};
   public donations: any[];
   public petitions: any[];
   public isMobile: Boolean;
+  public skip: number = 0;
+  public scrollPostsDiv: any;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -21,6 +25,7 @@ export class ProfileComponent implements OnInit {
   }
 
   constructor( private authService: AuthService, private route: ActivatedRoute) {
+    this.scrollPostsDiv = document.getElementById('scrollPostsDiv');
     this.authService.getCurrentUser().then(user => {
       this.loggedUser = user;
     }).catch(error => console.error(error));
@@ -28,10 +33,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.configureCards();
-    let userId;
     this.route.params.subscribe( params => {
-      userId = {uid: params.id};
-      this.authService.getUser(userId).subscribe((response) => {
+      this.userId = {uid: params.id};
+      this.authService.getUser(this.userId).subscribe((response) => {
         this.user = response.data;
         this.user.posts = response.data.posts.map((value) => {
           let newValue = value;
@@ -44,6 +48,19 @@ export class ProfileComponent implements OnInit {
 
    configureCards() {
     this.isMobile = window.matchMedia('(max-width: 900px)').matches;
+  }
+  
+  onScroll(){
+    console.log('scroll');
+    this.authService.getUser(this.userId, new HttpParams().set('skip', this.skip.toString()).set('limit', '10')).subscribe((response) => {
+        this.user = response.data;
+        this.skip = this.skip + 10;
+        this.user.posts = response.data.posts.map((value) => {
+          let newValue = value;
+          newValue.user = this.user;
+          return newValue;
+        });
+    });
   }
 
 }

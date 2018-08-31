@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import { AngularFireStorage,  AngularFireUploadTask , AngularFireStorageReference} from 'angularfire2/storage';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as firebase from 'firebase/app';
 import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
@@ -198,9 +198,9 @@ export class AuthService {
     return this.http.put<any>(`${this.URL}/${user.uid}`, user);
   }
 
-  public getUser(user: any) {
+  public getUser(user: any, params = new HttpParams().set('skip', '0').set('limit', '10')) {
     console.log('se invoco... get User');
-    return this.http.get<any>(`${this.URL}/${user.uid}`);
+    return this.http.get<any>(`${this.URL}/${user.uid}`, {params:params});
   }
 
   public getUserValue() {
