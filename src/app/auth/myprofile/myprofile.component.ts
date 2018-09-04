@@ -6,13 +6,13 @@ import {MatSnackBar} from '@angular/material';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-myprofile',
   templateUrl: './myprofile.component.html',
   styleUrls: ['./myprofile.component.css']
 })
 export class MyprofileComponent implements OnInit {
+ 
 
   public user: any = {};
   // Ng Model
@@ -33,7 +33,9 @@ export class MyprofileComponent implements OnInit {
   constructor(private authService: AuthService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.user = this.authService.getCurrentUser();
+    this.authService.getCurrentUser().then(user => {
+      this.user = user;
+    }).catch(error => console.error(error));
     this.registerFormGroup();
   }
 

@@ -1,5 +1,6 @@
-<div [class.half-width]="!isMobile">
-  <div style="padding:20px;">
+<div class="flex">
+  <div [class.half-width]="!isMobile">
+    <div style="padding:20px;">
     <mat-card class="" style="justify-content:center;">
       <mat-card-header>
         <img *ngIf="!user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
@@ -9,38 +10,109 @@
       </mat-card-header>
       <img *ngIf="!user.photoURL" class="auto-center" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
       <img *ngIf="user.photoURL" class="auto-center" src="{{user.photoURL}}" alt="Photo of {{user.displayName}}">
-    </mat-card>
+      <mat-card-actions class="center-content" *ngIf="!edit_profile && sameUserLogged">
+       <button mat-button color="primary" (click)="editProfile()" 
+               class="center-card-button full-width-important">
+         EDITA TU PERFIL
+        </button>   
+      </mat-card-actions>
+      <div *ngIf="sendRequest" >
+          <mat-spinner class="center-content"></mat-spinner>
+      </div>
+      <div *ngIf="!sendRequest">
+        <div *ngIf="edit_profile">
+         <button  mat-button color="primary" (click)="inputPhoto()"  
+          class="center-card-button full-width-important">EDITA TU FOTO</button>
+          <input id="fileToUpload" type="file" style="display:none;"  accept="image/*"> 
+          <form #nameForm="ngForm" (ngSubmit)="saveChanges(nameForm)" >
+          <mat-form-field class="full-width">
+              <input matInput placeholder="Nombre completo" name="displayName"
+                     id="nameForm-name" required minlength="6"  [(ngModel)]="displayName" #fullname="ngModel">
+              <mat-error *ngIf="!fullname.errors?.required">
+                Por favor entra tu nombre completo
+              </mat-error>
+              <mat-error *ngIf="!fullname.errors?.minlength">
+                Tu nombre completo tiene que tener al menos 6 caracteres.
+              </mat-error>
+          </mat-form-field>
+          <button mat-raised-button color="primary" class="center-card-button full-width-important"  type="submit">GUARDAR</button>
+        </form>      
+      </div>
+
+      <mat-card-actions class="center-content" *ngIf="!edit_password && edit_profile && user.typeUser.passwordRequired">
+         <button mat-button color="warn" (click)="editPasswordView()"
+                 class="center-card-button full-width-important">CAMBIAR CONTRASE&Ntilde;A</button>  
+      </mat-card-actions>
+       <form #passwordForm="ngForm" [formGroup]="passwordFormGroup" (ngSubmit)="attemptToChangePassword(passwordFormGroup)" *ngIf="edit_password && edit_profile && user.typeUser.passwordRequired">    
+         <mat-form-field class="full-width">
+            <input matInput placeholder="Actual contrase&ntilde;a" type="password" formControlName="oldpassword"
+                   name="oldpassword" id="passwordForm-oldpassword">
+            <mat-error *ngIf="passwordFormGroup.controls['password'].errors?.required">
+              La constrase&ntilde;a es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>    
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Nueva constrase&ntilde;a" type="password" formControlName="password"
+                   name="password" id="passwordForm-password">
+            <mat-error *ngIf="passwordFormGroup.controls['password'].errors?.required">
+              La constrase&ntilde;a es <strong>requerida</strong>
+            </mat-error>
+            <mat-error *ngIf="passwordFormGroup.controls['password'].errors?.minlength">
+              Usa 6 mas caracteres para tu constrase&ntilde;a
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Confirma tu constrase&ntilde;a" type="password" formControlName="password2"
+                   name="password2" id="passwordForm-password2">
+            <mat-error *ngIf="passwordFormGroup.controls['password2'].errors?.required">
+              La constrase&ntilde;a es <strong>requerida</strong>
+            </mat-error>
+            <mat-error *ngIf="passwordFormGroup.controls['password2'].errors?.passwordMatchValidator">
+              Las constrase&ntilde;as deben ser <strong>iguales</strong>
+            </mat-error>
+          </mat-form-field>
+          <div *ngIf="!sendRequest" class="center-content">
+            <div>
+              <button mat-raised-button color="warn" type="submit" class="center-card-button full-width-important">CAMBIAR CONTRASE&Ntilde;A</button>   
+            </div>   
+          </div>
+          <div *ngIf="wrongCredentials" class="center-content">
+            <p class="warning-text"> Tu actual constrase&ntilde;a no es correcta</p>
+         </div>
+        </form>
+       </div>
+      </mat-card>
+    </div>
   </div>
-</div>
-<div [class.half-width]="!isMobile">
-  <mat-tab-group>
-    <mat-tab label="Donaciones">
-        <div  infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false" [infiniteScrollContainer]="'.card-container'"
-           [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" > 
-          <app-posts-card class="card-container" [posts]="user.posts" [user]="loggedUser"></app-posts-card>
-          <!-- <div *ngIf="sendRequest">
-           <mat-spinner class="center-content"></mat-spinner>
-          </div> -->
-        </div>
-    </mat-tab>
-    <mat-tab label="Peticiones">
-    <app-posts-card  class="card-container" [posts]="petitions"></app-posts-card>
-    </mat-tab>
-  </mat-tab-group>
+  <div [class.half-width]="!isMobile">
+    <mat-tab-group>
+      <mat-tab label="Donaciones">
+          <div  infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false" [infiniteScrollContainer]="'.card-container'"
+             [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" > 
+            <app-posts-card class="card-container" [posts]="user.posts" [user]="loggedUser"></app-posts-card>
+            <!-- <div *ngIf="sendRequest">
+             <mat-spinner class="center-content"></mat-spinner>
+            </div> -->
+          </div>
+      </mat-tab>
+      <mat-tab label="Peticiones">
+      <app-posts-card  class="card-container" [posts]="petitions"></app-posts-card>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
 
-
-<!--
-<div [class.half-width]="!isMobile">
-  <div>
-     <h1 class="card-tittle background-primary">Donaciones</h1>
-  </div>
-    <app-posts-card  class="card-container" style="justify-content:flex-end;"  [posts]="user.posts" [user]="loggedUser"></app-posts-card>
-</div>
-<div [class.half-width]="!isMobile">
-  <div>
-     <h1 class=" background-primary card-tittle ">Peticiones</h1>
-  </div>
-  <app-posts-card  class="card-container"  style="justify-content:flex-start;" [posts]="petitions"></app-posts-card>
-</div>
--->
+    <!--
+    <div [class.half-width]="!isMobile">
+    <div>
+       <h1 class="card-tittle background-primary">Donaciones</h1>
+    </div>
+      <app-posts-card  class="card-container" style="justify-content:flex-end;"  [posts]="user.posts" [user]="loggedUser"></app-posts-card>
+    </div>
+    <div [class.half-width]="!isMobile">
+    <div>
+       <h1 class=" background-primary card-tittle ">Peticiones</h1>
+    </div>
+    <app-posts-card  class="card-container"  style="justify-content:flex-start;" [posts]="petitions"></app-posts-card>
+    </div>
+    -->

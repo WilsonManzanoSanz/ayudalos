@@ -29,7 +29,7 @@
   </button>
   <img [matMenuTriggerFor]="menu" *ngIf="authService.getUserValue() && isMobile" mat-card-avatar src="{{authService.getUserValue().photoURL}}" alt="iconlogo">
   <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
-    <button mat-menu-item routerLink="/auth/myprofile">Mi perfil</button>
+    <button mat-menu-item routerLink="/auth/profile/{{authService?.getUserValue()?.uid}}">Mi perfil</button>
     <button mat-menu-item (click)="signOut()">Salir</button>
   </mat-menu>
   

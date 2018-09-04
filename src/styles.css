@@ -82,6 +82,10 @@ h1, h2, h3, h4{
   width:100% !important;
 }
 
+.flex{
+  display:flex;
+}
+
 .center {
     text-align: center;
     vertical-align: middle;
