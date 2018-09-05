@@ -22,9 +22,9 @@ export interface Post extends User {
   description: string;
   tags?: string[];
   photos?: string;
-  comments?: Comment[];
   inputComment?: string;
   id?: string;
+  commentPosts?: Comment[];
 }
 
 @Injectable()
@@ -64,8 +64,11 @@ export class PostsService {
   public getDonation(id, params) {
     return this.http.get<any>(`${this.URL}/${id}`, params);
   }
-
-
+  
+  public postComment(payload){
+    return this.http.post<any>(`${environment.urlbase}/posts-comments`, payload);
+  }
+  
   public getPetitions(startAfter = '', limit = 14) {
     this.postsCollection = this.fireReference.collection<any>('posts',
     ref => ref.where('type', '==', 2).orderBy('email', 'asc').limit(limit).startAfter(startAfter));

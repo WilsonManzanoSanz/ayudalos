@@ -8,7 +8,7 @@ img#userprofile-input {
 }
 
 .form-comment{
-  width: 220px;
+  width: calc( 100% - 50px);
 }
 
 .small-image{
@@ -23,6 +23,6 @@ img#userprofile-input {
 
 @media only screen and (min-width: 350px) and (max-width: 400px){
   .form-comment{
-    width: 150px;
+    width: calc( 100% - 50px);
   }
 }

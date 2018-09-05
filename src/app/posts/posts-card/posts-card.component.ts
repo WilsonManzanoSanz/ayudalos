@@ -19,18 +19,29 @@ export class PostsCardComponent implements OnInit {
 
   }
 
-  postComment(value: string, idx: number) {
+  postComment(value: string, idx: number, postId) {
     if (Boolean(value)) {
-      this.cleanComment(value, idx);
+      const newComment = {
+        description: value,
+        postId : postId,
+        userUid : this.user.uid
+      };
+      this.postService.postComment(newComment).subscribe(response => {
+        const newComment = {...response.data, uid: this.user.uid, user: this.user};
+        this.posts[idx].commentPosts.push(newComment);
+        this.posts[idx].inputComment = ''
+      }, error => console.error(error));
+      /*this.cleanComment(value, idx);
       this.postService.updatePost(this.posts[idx]).subscribe(response => {
         console.log('comment inserted');
       }, error => {
         console.log(error);
         this.posts[idx].comments.splice(idx, 1);
       });
+    }*/
     }
   }
-
+/*
   public cleanComment(value: string, idx: number) {
     const newComment =  {...{description: value}, ...this.user};
     if (this.posts[idx].comments === undefined) {
@@ -40,5 +51,5 @@ export class PostsCardComponent implements OnInit {
     }
     this.posts[idx].inputComment = '';
   }
-
+*/
 }
