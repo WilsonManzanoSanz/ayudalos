@@ -33,7 +33,7 @@ export class PetitionsComponent implements OnInit {
       if (response.length > 0) {
         this.petitionsColumn1 = [];
         this.petitionsColumn2 = [];
-        this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
+        //this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
       }
     });
   }
@@ -52,7 +52,7 @@ export class PetitionsComponent implements OnInit {
           this.petitionsColumn1.push(response);
           return response;
         } else {
-           this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
+           //this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
         }
       }
     });

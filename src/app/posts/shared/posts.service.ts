@@ -25,6 +25,8 @@ export interface Post extends User {
   inputComment?: string;
   id?: string;
   commentPosts?: Comment[];
+  date_view?: any;
+  user?:User;
 }
 
 @Injectable()
@@ -113,6 +115,10 @@ export class PostsService {
   public updatePost(body: any) {
     return this.http.put<any>(this.URL, body);
   }
+  
+  public deletePost(idx: any, data) {
+    return this.http.delete<any>(`${this.URL}${idx}`, {params: data});
+  }
 
   public uploadPostPhoto(file, userId) {
     this.filePath =  `${userId}/posts/${file.name}${file.lastModified}`;
@@ -131,20 +137,23 @@ export class PostsService {
   }
 
   // TODO SEPARETE MODEL AND SERVICE
-  public separateIntoTwoArrays(array: any[] = [], newArray: any[] = [], odds: any[] = [], evens: any[]= []) {
+  public separateIntoTwoArrays(array: any[] = [], newArray: any[] = [], odds: any[] = [], evens: any[]= [], uid: string, newElement: Boolean = false) {
     let isOdd: Boolean = false;
     if (array.length === 0 || array.length % 2 === 0 ) {
       isOdd = true;
     }
     newArray.forEach(value => {
+      if(value.userUid === uid){
+        value.allowedDelete = true;
+      }
       if (isOdd) {
-        if (newArray.length === 1) {
+        if (newElement) {
           odds.unshift(value);
         } else {
           odds.push(value);
         }
       } else {
-        if (newArray.length === 1) {
+        if (newElement) {
             evens.unshift(value);
         } else {
           evens.push(value);

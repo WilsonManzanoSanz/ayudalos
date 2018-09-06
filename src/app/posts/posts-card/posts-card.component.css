@@ -1,5 +1,12 @@
 .profile-link:hover{
-  cursor: pointer;
+}
+
+.date{
+  padding-top: 4px;
+}
+
+.dateover:hover{
+  cursor:pointer;
 }
 
 img#userprofile-input {

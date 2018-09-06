@@ -82,22 +82,28 @@ export class DonationsComponent implements OnInit {
     this.globalPosts = [];
   }
 
-  addNewPosts(newArray: any[]) {
+  addNewPosts(newArray: any[], newElement = false) {
     if (newArray.length > 0) {
         if (this.isMobile) {
-          this.donationsColumn1 = [...this.donationsColumn1, ... newArray];
+           this.donationsColumn1 = (newElement) ? [ ...newArray, ...this.donationsColumn1 ]: [ ...this.donationsColumn1, ... newArray];
+          this.donationsColumn1 = this.donationsColumn1.map(value => {
+            if(this.user.uid === value.user.uid){
+                value.allowedDelete = true;
+            }
+            return value;
+          });
           return newArray;
         } else {
             this.globalPosts = this.donationService.separateIntoTwoArrays(
-                this.globalPosts, newArray, this.donationsColumn1, this.donationsColumn2);
+                this.globalPosts, newArray, this.donationsColumn1, this.donationsColumn2, this.user.uid, newElement);
         }
     }
   }
 
   refreshPosts(newPost) {
     const newArray: any[] = [];
-    newArray.push(newPost);
-    this.addNewPosts(newArray);
+    newArray.push(newPost, );
+    this.addNewPosts(newArray, true);
   }
 
   public getMore(startFrom) {

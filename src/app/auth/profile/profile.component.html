@@ -89,7 +89,7 @@
       <mat-tab label="Donaciones">
           <div  infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false" [infiniteScrollContainer]="'.card-container'"
              [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" > 
-            <app-posts-card class="card-container" [posts]="user.posts" [user]="loggedUser"></app-posts-card>
+            <app-posts-card class="card-container" [posts]="user.posts" [user]="loggedUser" [allowedDelete]="sameUserLogged"></app-posts-card>
             <!-- <div *ngIf="sendRequest">
              <mat-spinner class="center-content"></mat-spinner>
             </div> -->

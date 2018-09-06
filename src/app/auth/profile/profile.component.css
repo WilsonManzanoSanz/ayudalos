@@ -13,6 +13,6 @@
 }
 
 .card-container {
-   height: 67.2vh;
+   height: calc(100vh - 220px);
    overflow-y:scroll;
 }

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Hola {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>Estas seguro que quieres borrar este elemento?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">NO</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>SI</button>
+</div>

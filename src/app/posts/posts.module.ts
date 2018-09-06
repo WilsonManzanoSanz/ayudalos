@@ -20,6 +20,7 @@ import { PetitionsHomeComponent } from './petitions-home/petitions-home.componen
 // HTTP
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './../core/token.interceptor';
+import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-delete-dialog.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,9 @@ import { TokenInterceptor } from './../core/token.interceptor';
     SearchComponent,
     DonationsHomeComponent,
     PetitionsHomeComponent,
+    ConfirmDeleteDialogComponent,
   ],
+  entryComponents: [ConfirmDeleteDialogComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     PostsService

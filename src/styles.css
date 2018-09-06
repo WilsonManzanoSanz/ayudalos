@@ -15,6 +15,10 @@ h1, h2, h3, h4{
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+mat-card span.date{
+  font-size: 0.8em;
+}
+
 .nopadding{
   padding: 0 !important;
   margin: 0 !important;

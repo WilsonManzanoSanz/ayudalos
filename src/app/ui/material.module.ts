@@ -18,6 +18,7 @@ import {
   MatExpansionModule,
   MatSelectModule,
   MatTabsModule,
+  MatDialogModule,
 } from '@angular/material';
 
 @NgModule({
@@ -37,6 +38,7 @@ import {
     MatProgressSpinnerModule,
     MatSelectModule,
     MatTabsModule,
+    MatDialogModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -57,6 +59,7 @@ import {
     MatTooltipModule,
     MatSelectModule,
     MatTabsModule,
+    MatDialogModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,

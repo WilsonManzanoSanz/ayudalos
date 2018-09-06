@@ -167,28 +167,6 @@ export class ProfileComponent implements OnInit {
     const fileInput = document.getElementById('fileToUpload');
     fileInput.addEventListener('change', (e: any) => this.saveFile(e.target.files[0]));
   }
-
-  saveFile(file) {
-    this.photo = file;
-  }
-
-  editProfile() {
-    this.edit_profile = !this.edit_profile;
-  }
-
-  editPasswordView() {
-    this.edit_password = !this.edit_password;
-  }
-
-  updateInfo() {
-     this.snackBar.open('Your user has been updated', 'OK', {
-      duration: 2000,
-    });
-  }
-
-   configureCards() {
-    this.isMobile = window.matchMedia('(max-width: 900px)').matches;
-  }
   
   onScroll(){
     this.authService.getUser(this.userId, new HttpParams().set('skip', this.skip.toString()).set('limit', '10')).subscribe((response) => {
@@ -199,8 +177,10 @@ export class ProfileComponent implements OnInit {
   
   public reformatPosts(array: any[], push: Boolean = false){
     const newPosts = array.map((value) => {
+      const {posts, typeUser, ...user} = this.user;
       let newValue = value;
-      newValue.user = this.user;
+      newValue.user = user;
+      newValue.allowedDelete = true;
       return newValue;
     });
     if (push){
@@ -212,6 +192,28 @@ export class ProfileComponent implements OnInit {
   
   public updateLoadBar() {
     this.sendRequest = !this.sendRequest;
+  }
+  
+  public saveFile(file) {
+    this.photo = file;
+  }
+
+  public editProfile() {
+    this.edit_profile = !this.edit_profile;
+  }
+
+  public editPasswordView() {
+    this.edit_password = !this.edit_password;
+  }
+
+  public updateInfo() {
+     this.snackBar.open('Your user has been updated', 'OK', {
+      duration: 2000,
+    });
+  }
+
+  public configureCards() {
+    this.isMobile = window.matchMedia('(max-width: 900px)').matches;
   }
 
 }
