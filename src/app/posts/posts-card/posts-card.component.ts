@@ -44,7 +44,6 @@ export class PostsCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if(result){
         this.deletePost(idx);
       }
@@ -63,6 +62,9 @@ export class PostsCardComponent implements OnInit {
      this.postService.deletePost(this.posts[idx].id, this.posts[idx].user).subscribe(response => {
        console.log(response);
       if(response.success){
+          if(this.posts[idx].photoURL){
+            this.postService.deletePhoto(this.posts[idx].photoURL);
+          }
           this.posts.splice(idx, 1);
       }
     }, error => console.error(error));     

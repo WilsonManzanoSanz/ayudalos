@@ -125,6 +125,14 @@ export class PostsService {
     this.fileRef = this.fireStorage.ref(this.filePath);
     return this.fireStorage.upload(this.filePath, file);
   }
+  
+  public deletePhoto(URL: string){
+    this.fireStorage.storage.refFromURL(URL).delete().then( (response) => {
+      console.log('The image has been deleted');
+    }).catch( error => {
+      console.error(error);
+    });
+  }
 
   public showNav() {
     document.getElementById('fullscreen-post-container').style.height = '100%';

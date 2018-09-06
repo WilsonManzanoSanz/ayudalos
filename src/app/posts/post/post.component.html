@@ -30,8 +30,8 @@
         <div *ngIf="uploadingPhoto">
           <mat-spinner class="center-content"></mat-spinner>
         </div>
-        <div *ngIf="uploadedPhotoURL">
-          <img class="auto-center" src="{{uploadedPhotoURL}}">
+        <div *ngIf="post.photoURL">
+          <img class="auto-center" src="{{post.photoURL}}">
         </div>
       </div>
      <div id="form-button">

@@ -39,6 +39,7 @@ export class DonationsComponent implements OnInit {
   public searchQuery: string;
   public globalPosts: any[] = [];
   public skip  = 10;
+  public post = {};
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

@@ -12,15 +12,15 @@ import {  finalize } from 'rxjs/operators';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-
-   public post: any = {};
+  
    public postForm: NgForm;
    private photo: any;
-   public uploadedPhotoURL: string;
    public uploadingPhoto: Boolean;
    public uploadingPromise = null;
+  
    @Input() type: any;
    @Input() user: any;
+   @Input() post: any = {};
    @Output()
   uploaded = new EventEmitter<string>();
 
@@ -48,7 +48,7 @@ export class PostComponent implements OnInit {
       this.postsService.uploadPostPhoto(this.photo, this.user.uid).snapshotChanges().pipe(
             finalize(() => {
               this.postsService.fileRef.getDownloadURL().subscribe((responseURL) => {
-                this.uploadedPhotoURL = responseURL;
+                this.post.photoURL = responseURL;
                 this.uploadingPhoto = false;
                 resolve(responseURL);
               });
@@ -62,11 +62,11 @@ export class PostComponent implements OnInit {
       this.postForm = form;
       let newPost;
       if (this.uploadingPromise == null) {
-        newPost =  {... form.value, ... {userUid: this.user.uid}};
+        newPost =  {...this.post, ... {userUid: this.user.uid}};
         this.newPost(newPost);
       } else {
         this.uploadingPromise.then((response) => {
-          newPost =  {... form.value, ...{userUid: this.user.uid}, photoURL: this.uploadedPhotoURL};
+          newPost =  {...this.post, ...{userUid: this.user.uid} };
           this.newPost(newPost);
         }).catch((error) => console.error(error));
       }
@@ -78,7 +78,9 @@ export class PostComponent implements OnInit {
     this.postsService.newPost({...newPost, ...this.type}).subscribe(response => {
       console.log('new post has been posted', response);
       const newDonation = response.response;
-        newDonation.user = this.user;
+      const {posts, typeUser, ...user} = this.user;
+      newDonation.user = user;
+      newDonation.commentPosts = [];
       this.uploadComplete(newDonation);
       this.cleanForm();
       this.postsService.closeNav();
@@ -92,7 +94,7 @@ export class PostComponent implements OnInit {
   public cleanForm() {
     this.photo = null;
     this.uploadingPromise = null;
-    this.uploadedPhotoURL = '';
+    this.post.photoURL = '';
   }
 
 }
