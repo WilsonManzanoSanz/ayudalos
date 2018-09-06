@@ -13,6 +13,7 @@ import { DonationsComponent } from './donations/donations.component';
 import { PostComponent } from './post/post.component';
 // Service
 import { PostsService } from './shared/posts.service';
+import { PetitionsService } from './shared/petitions.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SearchComponent } from './search/search.component';
 import { DonationsHomeComponent } from './donations-home/donations-home.component';
@@ -21,6 +22,7 @@ import { PetitionsHomeComponent } from './petitions-home/petitions-home.componen
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './../core/token.interceptor';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-delete-dialog.component';
+import { PetitionsCardComponent } from './petitions-card/petitions-card.component';
 
 @NgModule({
   imports: [
@@ -41,11 +43,13 @@ import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-de
     DonationsHomeComponent,
     PetitionsHomeComponent,
     ConfirmDeleteDialogComponent,
+    PetitionsCardComponent,
   ],
   entryComponents: [ConfirmDeleteDialogComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    PostsService
+    PostsService,
+    PetitionsService
   ],
   exports: [PostsCardComponent]
 })

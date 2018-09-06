@@ -14,27 +14,28 @@ export interface Comment {
   uid?:string;
 }
 
-export interface Post {
+export interface Petition {
   tittle: string;
   description: string;
   category: string;
   photoURL: string;
   inputComment?: string;
   id?: string;
-  commentPosts?: Comment[];
+  goal?:string;
+  commentPetitions?: Comment[];
   date_view?: any;
   user?:User;
   uid?:string;
 }
 
 @Injectable()
-export class PostsService {
+export class PetitionsService {
 
   private filePath;
   public fileRef = null;
-  private posts: Observable<any[]>;
+  private petitions: Observable<any[]>;
   private lastEntry;
-  private URL = environment.urlbase + '/posts/' ;
+  private URL = environment.urlbase + '/petitions/' ;
   private getParams = new HttpParams().set('skip', '0').set('limit', '10');
 
   constructor(
@@ -45,18 +46,18 @@ export class PostsService {
     ) {
   }
 
-  public getDonations() {
+  public getPetitions() {
     return this.http.get<any>(this.URL, {params: this.getParams});
   }
 
-  public getDonation(id, params) {
-    return this.http.get<any>(`${this.URL}${id}`, {params:params});
+  public getPetition(id, params) {
+    return this.http.get<any>(`${this.URL}/${id}`, {params:params});
   }
   
   public postComment(payload){
-    return this.http.post<any>(`${environment.urlbase}/posts-comments`, payload);
+    return this.http.post<any>(`${environment.urlbase}/petitions-comments`, payload);
   }
-  
+
   public searchPosts (term: string): Observable<any[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
@@ -64,7 +65,7 @@ export class PostsService {
     } else{
       this.getParams = this.getParams.set('key', 'tittle').set('value', term);
     }
-    return this.getDonations();
+    return this.getPetitions();
   }
   
   public addParamaters(array: any[]){
@@ -80,20 +81,20 @@ export class PostsService {
     });
   }
 
-  public newPost(body: any) {
+  public newPetition(body: any) {
      return this.http.post<any>(this.URL, body);
   }
 
-  public updatePost(body: any) {
+  public updatePetition(body: any) {
     return this.http.put<any>(this.URL, body);
   }
   
-  public deletePost(idx: any, data) {
+  public deletePetition(idx: any, data) {
     return this.http.delete<any>(`${this.URL}${idx}`, {params: data});
   }
 
-  public uploadPostPhoto(file, userId) {
-    this.filePath =  `${userId}/posts/${file.name}${file.lastModified}`;
+  public uploadPetitionPhoto(file, userId) {
+    this.filePath =  `${userId}/petitions/${file.name}${file.lastModified}`;
     this.fileRef = this.fireStorage.ref(this.filePath);
     return this.fireStorage.upload(this.filePath, file);
   }

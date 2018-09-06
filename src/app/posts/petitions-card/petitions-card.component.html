@@ -1,0 +1,57 @@
+<div *ngFor="let petition of petitions; let idx = index;" id="petition-card-container">
+  <mat-card class="petition-card" id="petition-card">
+  <mat-card-header class="profile-link">
+    <img *ngIf="petition.user.photoURL" mat-card-avatar src="{{petition.user.photoURL}}" alt="{{petition.user.displayName}}" class="pointer" routerLink="/auth/profile/{{petition.user.uid}}">
+    <img *ngIf="!petition.user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{petition.user.displayName}}" class="pointer" routerLink="/auth/profile/{{petition.user.uid}}">
+    <mat-card-title>{{petition.user.displayName}}</mat-card-title>
+    <mat-card-subtitle>{{ (petition.user.email.length>20)? (petition.user.email | slice:0:16)+'..':(petition.user.email) }}</mat-card-subtitle>
+    <span class="spacer"></span>
+    <span class="date">{{petition.createdAt | date:'mediumDate'}}</span>
+    <mat-icon [matMenuTriggerFor]="menu"  class="dateover">more_vert</mat-icon>
+    <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+      <button mat-menu-item>Reportar</button>
+      <button mat-menu-item (click)="openDialog(idx)" *ngIf="petition.allowedDelete">Borrar</button>
+  </mat-menu>
+  </mat-card-header>
+  <mat-card-content id="petition-card-content">
+    <h4 style="margin-bottom:10px;"> {{petition.tittle}}</h4>
+    <p>{{petition.description}}</p>
+    <img  *ngIf="petition.photoURL" mat-card-image src="{{petition.photoURL}}" alt="Donacion">
+    <img  *ngIf="!petition.photoURL" mat-card-image class="small-image" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" alt="Donacion">
+    <mat-divider *ngIf="petition.commentPetitions"></mat-divider>
+  </mat-card-content>
+  <mat-accordion id="petition-card-comments">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title *ngIf="petitions[idx].commentPetitions == undefined">
+          Comments
+        </mat-panel-title>
+        <mat-panel-title *ngIf="petitions[idx].commentPetitions">
+          Comments ({{petitions[idx].commentPetitions.length}})
+        </mat-panel-title>
+        <!--<mat-panel-description>
+          Type your name and age
+        </mat-panel-description>-->
+      </mat-expansion-panel-header>
+      <mat-card-header *ngFor="let comment of petitions[idx].commentPetitions">
+        <img *ngIf="comment.user.photoURL" mat-card-avatar src="{{comment.user.photoURL}}" 
+        alt="{{comment.user.displayName}}" routerLink="/auth/profile/{{comment.user.uid}}">
+        <img *ngIf="!comment.user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{comment.displayName}}" routerLink="/auth/profile/{{comment.uid}}">
+        <mat-card-title>{{comment.user.displayName}}</mat-card-title>
+        <mat-card-subtitle>{{comment.description}}</mat-card-subtitle>    
+      </mat-card-header>
+      <div>
+        <img *ngIf="user.photoURL" mat-card-avatar id="userprofile-input" src="{{user.photoURL}}" 
+        alt="{{user.displayName}}">
+        <img *ngIf="!user.photoURL"  mat-card-avatar id="userprofile-input" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
+        <mat-form-field class="form-comment">
+          <input matInput type="text" placeholder="Write a comment input" [(ngModel)]="petition.inputComment" class="full-width">
+          <button mat-button *ngIf="petition.inputComment" matSuffix mat-icon-button aria-label="send" (click)="postComment(petition.inputComment, idx, petition.id)">
+            <mat-icon>send</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+</div>

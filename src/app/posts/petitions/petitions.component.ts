@@ -1,41 +1,54 @@
 import { Component, OnInit , HostListener } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
-import {PostsService, Post} from '../shared/posts.service';
+import {PetitionsService, Petition} from '../shared/petitions.service';
+import {HttpParams} from '@angular/common/http';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'app-petitions',
   templateUrl: './petitions.component.html',
-  styleUrls: ['./petitions.component.css']
+  styleUrls: ['./petitions.component.css'],
+  animations: [
+    trigger('searchBarState', [
+      state('inactive', style({
+        width: '0vw',
+        padding: '0px'
+      })),
+      state('active',   style({
+         width: '100%',
+      })),
+      transition('inactive => active', animate('500ms ease-in')),
+      transition('active => inactive', animate('500ms ease-out'))
+    ])
+  ]
 })
 export class PetitionsComponent implements OnInit {
 
   public petitionsColumn1: any[] = [];
   public petitionsColumn2: any[] = [];
-  public user: User;
+  public user: any;
   public isMobile: Boolean;
   public sendRequest: Boolean;
+  public stateSearchBar = 'inactive';
+  public searchQuery: string;
+  public globalPetitions: any[] = [];
+  public skip  = 10;
+  public petition = {};
+  
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.configureCards();
   }
 
-  constructor(public petitionService: PostsService, private authService: AuthService) {
-    this.user = this.authService.getUserValue();
-  }
-
-  public getPetitionContent() {
-     this.petitionService.getPetitions().subscribe(response => {
-      if (this.isMobile) {
-        this.petitionsColumn1 = response;
-        return response;
-      }
-      if (response.length > 0) {
-        this.petitionsColumn1 = [];
-        this.petitionsColumn2 = [];
-        //this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
-      }
-    });
+  constructor(public petitionService: PetitionsService, private authService: AuthService) {
+    this.initializeUser();
   }
 
   ngOnInit() {
@@ -43,19 +56,73 @@ export class PetitionsComponent implements OnInit {
     this.getPetitionContent();
   }
 
+  public initializeUser() {
+    this.authService.getCurrentUser().then((user) => {
+      this.user = user;
+    }).catch(error => console.error(error));
+  }
+
+  toggleSearchState() {
+    this.stateSearchBar = this.stateSearchBar === 'active' ? 'inactive' : 'active';
+  } 
+
+  public getPetitionContent() {
+    this.petitionService.addParamaters([{key:'skip', value:0}]);
+    this.petitionService.getPetitions().subscribe(response => {
+        this.addNewPetitions(response.data.items);
+        console.log(response);
+    });
+  }
+  
+  updatesBySearch(newArray: any[]){
+    this.cleanArrays();
+    this.addNewPetitions(newArray); 
+  }
+  
+  cleanArrays(){
+    this.petitionsColumn1 = [];
+    this.petitionsColumn2 = [];
+    this.globalPetitions = [];
+  }
+
+  addNewPetitions(newArray: any[], newElement = false) {
+    if (newArray.length > 0) {
+        if (this.isMobile) {
+           this.petitionsColumn1 = (newElement) ? [ ...newArray, ...this.petitionsColumn1 ]: [ ...this.petitionsColumn1, ... newArray];
+          this.petitionsColumn1 = this.petitionsColumn1.map(value => {
+            if(this.user.uid === value.user.uid){
+                value.allowedDelete = true;
+            }
+            return value;
+          });
+          return newArray;
+        } else {
+            this.globalPetitions = this.petitionService.separateIntoTwoArrays(
+                this.globalPetitions, newArray, this.petitionsColumn1, this.petitionsColumn2, this.user.uid, newElement);
+        }
+    }
+  }
+
+  refreshPetitions(newPost) {
+    const newArray: any[] = [];
+    newArray.push(newPost, );
+    this.addNewPetitions(newArray, true);
+  }
+
   public getMore(startFrom) {
     this.updateLoadBar();
-    this.petitionService.getDonations().subscribe(response => {
+    this.petitionService.addParamaters([{key:'skip', value:this.skip.toString()}]);
+    this.petitionService.getPetitions().subscribe((response) => {
+      this.skip = this.skip + 10;
       this.updateLoadBar();
-      if (response.length > 0) {
-        if (this.isMobile) {
-          this.petitionsColumn1.push(response);
-          return response;
-        } else {
-           //this.petitionService.separateIntoTwoArrays(response, this.petitionsColumn1, this.petitionsColumn2);
-        }
-      }
-    });
+      this.addNewPetitions(response.data.items);
+    }, (error) => console.error(error));
+  }
+
+  public clearSearchForm() {
+    this.cleanArrays();
+    this.getPetitionContent();
+    this.toggleSearchState();
   }
 
   configureCards() {
@@ -67,10 +134,10 @@ export class PetitionsComponent implements OnInit {
   }
 
   public onScroll() {
-    this.getMore(this.petitionService.getLastEntry());
+    this.getMore(10);
   }
 
-  updateLoadBar() {
+  public updateLoadBar() {
     this.sendRequest = !this.sendRequest;
   }
 
