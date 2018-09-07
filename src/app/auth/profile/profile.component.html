@@ -43,7 +43,7 @@
          <button mat-button color="warn" (click)="editPasswordView()"
                  class="center-card-button full-width-important">CAMBIAR CONTRASE&Ntilde;A</button>  
       </mat-card-actions>
-       <form #passwordForm="ngForm" [formGroup]="passwordFormGroup" (ngSubmit)="attemptToChangePassword(passwordFormGroup)" *ngIf="edit_password && edit_profile && user.typeUser.passwordRequired">    
+       <form #passwordForm="ngForm" [formGroup]="passwordFormGroup" (ngSubmit)="attemptToChangePassword(passwordFormGroup)" *ngIf="edit_password && edit_profile && user.typeUser?.passwordRequired">    
          <mat-form-field class="full-width">
             <input matInput placeholder="Actual contrase&ntilde;a" type="password" formControlName="oldpassword"
                    name="oldpassword" id="passwordForm-oldpassword">

@@ -49,8 +49,9 @@ export class AuthService {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // this.token = result.credential.providerId;
         // The signed-in user info.
-       result.user['typeUserId'] = 3;
-        this.registerUser(result.user).subscribe(
+        const newUser  = { uid: result.user.uid, typeUserId:1, 
+                               email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
+        this.registerUser(newUser).subscribe(
            data => this.user = data.response,
            err => this.user = err
         );
@@ -70,8 +71,9 @@ export class AuthService {
         // This gives you a Google Access Token. You can use it to access the Google API.
         // this.token = result.credential.providerId;
         // The signed-in user info.
-        result.user['typeUserId'] = 2;
-        this.registerUser(result.user).subscribe(
+        const newUser  = { uid: result.user.uid, typeUserId:2, 
+                               email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
+        this.registerUser(newUser).subscribe(
           data => this.user = data.response,
            err => this.user = err
         );
@@ -88,13 +90,14 @@ export class AuthService {
   // Auth with email//password
   public emailLogin(email: string, password: string) {
     return new Promise((resolve, reject) => {
-      this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((response) => {
-        response.user['typeUserId'] = 1;
-        this.registerUser(response.user).subscribe(
+      this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then((result) => {
+        /*
+        const newUser  = { uid: result.user.uid, typeUserId:4,};
+        this.registerUser(newUser).subscribe(
            data => this.user = data.response,
            err => this.user = err
-        );
-        resolve(response);
+        );*/
+        resolve(result);
       }).catch((error) => {
         this.handleError(error);
         reject(error);

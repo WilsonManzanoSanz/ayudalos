@@ -19,6 +19,12 @@ mat-card span.date{
   font-size: 0.8em;
 }
 
+.full-size{
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
+}
+
 .nopadding{
   padding: 0 !important;
   margin: 0 !important;

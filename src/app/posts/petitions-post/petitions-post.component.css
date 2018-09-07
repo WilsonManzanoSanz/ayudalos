@@ -14,10 +14,6 @@
   height: 400px;
 }
 
-.post-button {
-    float: right;
-}
-
 .full-screen{
   margin-bottom:  20px;
   height: 90%;
@@ -37,7 +33,12 @@ div#mat-content {
     height: calc(90% - 40px);
 }
 
-div#div-postForm {
+.petition-button {
+    float: right;
+}
+
+
+div#div-petitionForm {
     flex: 1 1 auto;
     overflow: auto;
 }

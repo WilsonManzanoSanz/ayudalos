@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
                   photoURL: response,
                   uid: user.uid,
                   email: user.email,
-                  typeUserId:1,
+                  typeUserId:4,
                 };
                 this.registerUser(newUser);
             });

@@ -23,6 +23,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './../core/token.interceptor';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-delete-dialog.component';
 import { PetitionsCardComponent } from './petitions-card/petitions-card.component';
+import { PetitionsPostComponent } from './petitions-post/petitions-post.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { PetitionsCardComponent } from './petitions-card/petitions-card.componen
     PetitionsHomeComponent,
     ConfirmDeleteDialogComponent,
     PetitionsCardComponent,
+    PetitionsPostComponent,
   ],
   entryComponents: [ConfirmDeleteDialogComponent],
   providers: [

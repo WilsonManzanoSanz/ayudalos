@@ -108,12 +108,12 @@ export class PetitionsService {
   }
 
   public showNav() {
-    document.getElementById('fullscreen-post-container').style.height = '100%';
+    document.getElementById('fullscreen-petition-container').style.height = '100%';
     this.sidenavService.hideNav();
   }
 
   public closeNav() {
-    document.getElementById('fullscreen-post-container').style.height = '0%';
+    document.getElementById('fullscreen-petition-container').style.height = '0%';
     this.sidenavService.showNav();
   }
 

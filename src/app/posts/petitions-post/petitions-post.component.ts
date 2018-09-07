@@ -1,5 +1,5 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {PostsService} from '../shared/posts.service';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {PetitionsService} from '../shared/petitions.service';
 import {SidenavService} from '../../ui/shared/sidenav.service';
 import {AuthService, User} from '../../core/auth.service';
 import {Router} from '@angular/router';
@@ -7,20 +7,20 @@ import { NgForm} from '@angular/forms';
 import {  finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  selector: 'app-petitions-post',
+  templateUrl: './petitions-post.component.html',
+  styleUrls: ['./petitions-post.component.css']
 })
-export class PostComponent implements OnInit {
+export class PetitionsPostComponent implements OnInit {
   
-   public postForm: NgForm;
+   public petitionForm: NgForm;
    private photo: any;
    public uploadingPhoto: Boolean;
    public uploadingPromise = null;
-  
+
    @Input() type: any;
    @Input() user: any;
-   @Input() post: any = {};
+   @Input() petition: any = {};
    @Output()
   uploaded = new EventEmitter<string>();
 
@@ -28,7 +28,7 @@ export class PostComponent implements OnInit {
     private authService: AuthService,
     public sidenavService: SidenavService,
     private router: Router,
-    public postsService: PostsService,
+    public petitionsService: PetitionsService,
     ) {
   }
 
@@ -45,10 +45,10 @@ export class PostComponent implements OnInit {
     this.photo = file;
     this.uploadingPhoto = true;
     this.uploadingPromise = new Promise((resolve, reject) => {
-      this.postsService.uploadPostPhoto(this.photo, this.user.uid).snapshotChanges().pipe(
+      this.petitionsService.uploadPetitionPhoto(this.photo, this.user.uid).snapshotChanges().pipe(
             finalize(() => {
-              this.postsService.fileRef.getDownloadURL().subscribe((responseURL) => {
-                this.post.photoURL = responseURL;
+              this.petitionsService.fileRef.getDownloadURL().subscribe((responseURL) => {
+                this.petition.photoURL = responseURL;
                 this.uploadingPhoto = false;
                 resolve(responseURL);
               });
@@ -57,53 +57,53 @@ export class PostComponent implements OnInit {
     });
   }
 
-  checkPost(form: NgForm) {
+  checkPetition(form: NgForm) {
     if (form.valid) {
-      this.postForm = form;
-      let newPost;
+      this.petitionForm = form;
+      let newPetition;
       if (this.uploadingPromise == null) {
-        newPost =  {...this.post, ... {userUid: this.user.uid}};
-        this.newPost(newPost);
+        newPetition =  {...this.petition, ... {userUid: this.user.uid}};
+        this.newPetition(newPetition);
       } else {
         this.uploadingPromise.then((response) => {
-          newPost =  {...this.post, ...{userUid: this.user.uid} };
-          this.newPost(newPost);
+          newPetition =  {...this.petition, ...{userUid: this.user.uid} };
+          this.newPetition(newPetition);
         }).catch((error) => console.error(error));
       }
     }
   }
 
-  newPost(newPost) {
-    this.postForm.reset();
-    this.postsService.newPost({...newPost, ...this.type}).subscribe(response => {
-      console.log('new post has been posted', response);
+  newPetition(newPetition) {
+    this.petitionForm.reset();
+    this.petitionsService.newPetition({...newPetition, ...this.type}).subscribe(response => {
+      console.log('new petition has been posted', response);
       const newDonation = response.response;
-      const {posts, typeUser, ...user} = this.user;
+      const {petitions, typeUser, ...user} = this.user;
       newDonation.user = user;
       newDonation.commentPosts = [];
       this.uploadComplete(newDonation);
       this.cleanForm();
-      this.postsService.closeNav();
+      this.petitionsService.closeNav();
     }, error => console.log(error));
   }
 
-  uploadComplete(newPost) {
-    this.uploaded.emit(newPost);
+  uploadComplete(newPetition) {
+    this.uploaded.emit(newPetition);
   }
-  
+
   public closeNav(){
-    if(this.post.photoURL){
-      this.postsService.deletePhoto(this.post.photoURL);
+    if(this.petition.photoURL){
+      this.petitionsService.deletePhoto(this.petition.photoURL);
       this.photo = null;
-      this.post.photoURL = '';
+      this.petition.photoURL = '';
     }
-    this.postsService.closeNav();
+    this.petitionsService.closeNav();
   }
 
   public cleanForm() {
     this.photo = null;
     this.uploadingPromise = null;
-    this.post.photoURL = '';
+    this.petition.photoURL = '';
   }
 
 }

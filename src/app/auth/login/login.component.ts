@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
 
          this.router.navigateByUrl('/');
        }).catch((error) => {
-          this.messageError = error.message;
+          console.error(error);
       });
   }
 
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
     this.authService.facebookLogin().then((user) => {
          this.router.navigateByUrl('/');
        }).catch((error) => {
-          this.messageError = error.message;
+          console.error(error);
       });
   }
 

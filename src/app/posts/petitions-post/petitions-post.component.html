@@ -1,11 +1,11 @@
-<div id="fullscreen-post-container" class="overlay">
+<div id="fullscreen-petition-container" class="overlay">
   <mat-card class="full-screen">
     <div style="padding-bottom:20px;">
       <button mat-icon-button>
         <mat-icon aria-label="Home button" (click)="closeNav()">clear</mat-icon>
       </button>
       <span class="spacer"></span>
-      <button mat-button class="post-button" color="accent" form="postForm">
+      <button mat-button class="petition-button" color="accent" form="petitionForm">
       PUBLICAR
       </button>
     </div>
@@ -15,23 +15,23 @@
      <mat-card-title style="margin-top:10px; margin-left:5px;">{{user.displayName}}</mat-card-title>
     </mat-card-header>
     <div id="mat-content">
-      <div id="div-postForm">
-        <form #postForm="ngForm" (ngSubmit)="checkPost(postForm)" id="postForm">
+      <div id="div-petitionForm">
+        <form #petitionForm="ngForm" (ngSubmit)="checkPetition(petitionForm)" id="petitionForm">
         <mat-form-field class="full-width">
-          <input matInput placeholder="Titulo" name="tittle" id="post-tittle" 
-          [(ngModel)]="post.tittle" #tittle="ngModel" required>
+          <input matInput placeholder="Titulo" name="tittle" id="petition-tittle" 
+          [(ngModel)]="petition.tittle" #tittle="ngModel" required>
           <mat-error *ngIf="!tittle.valid">Por favor escribe el titulo</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
-          <textarea matInput rows="4" placeholder="Descripcion" name="description" id="post-description" [(ngModel)]="post.description" #description="ngModel" required></textarea>
+          <textarea matInput rows="4" placeholder="Descripcion" name="description" id="petition-description" [(ngModel)]="petition.description" #description="ngModel" required></textarea>
           <mat-error *ngIf="!tittle.valid">Por favor escribe la descripcion</mat-error>
         </mat-form-field>
         </form>
         <div *ngIf="uploadingPhoto">
           <mat-spinner class="center-content"></mat-spinner>
         </div>
-        <div *ngIf="post.photoURL">
-          <img class="auto-center" src="{{post.photoURL}}">
+        <div *ngIf="petition.photoURL">
+          <img class="auto-center" src="{{petition.photoURL}}">
         </div>
       </div>
      <div id="form-button">
