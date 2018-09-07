@@ -1,0 +1,35 @@
+.profile-link:hover{
+}
+
+.date{
+  padding-top: 4px;
+}
+
+.dateover:hover{
+  cursor:pointer;
+}
+
+img#userprofile-input {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.form-comment{
+  width: calc( 100% - 50px);
+}
+
+.small-image{
+  width: 200px;
+  margin: auto;
+  display: block;
+}
+
+.petition-card{
+  min-height: 400px;
+}
+
+@media only screen and (min-width: 350px) and (max-width: 400px){
+  .form-comment{
+    width: calc( 100% - 50px);
+  }
+}

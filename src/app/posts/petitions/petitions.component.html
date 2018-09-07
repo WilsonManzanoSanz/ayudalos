@@ -7,4 +7,18 @@
      <mat-icon aria-label="Home button" style="padding-top:5px;" class="pointer" (click)="toggleSearchState()">search</mat-icon>
     </mat-card-header>
 </mat-card>
+<div class="scrollable" infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()">
+  <div class="half-width" [class.half-width]="!isMobile">
+    <app-petitions-card class="card-container" style="justify-content:flex-end;"  [petitions]="petitionsColumn1" [user]="user"></app-petitions-card>
+  </div>
+  <div class="half-width" *ngIf="!isMobile" [class.half-width]="!isMobile">
+    <app-petitions-card class="card-container" style="justify-content:flex-start;"  [petitions]="petitionsColumn2" [user]="user"></app-petitions-card>
+  </div>
+</div>
+ <div *ngIf="sendRequest">
+  <mat-spinner class="center-content"></mat-spinner>
+</div>
 <app-petitions-post [user]="user" (uploaded)="refreshPetitions($event)"></app-petitions-post>
