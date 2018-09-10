@@ -96,13 +96,17 @@ export class RegisterComponent implements OnInit {
         this.updateLoadBar();
         this.router.navigateByUrl('/');
         this.authService.getToken();
-        this.authService.getUser(user).subscribe(data=>{
+        },(error)=>{
+        console.error(error);
+          this.updateLoadBar();
+        });
+        /*this.authService.getUser(user).subscribe(data=>{
              this.authService.setUser(user);
            }, error=> console.log(error));
         },(error)=>{
         console.error(error);
           this.updateLoadBar();
-      });
+      });*/
   }
 
   updateLoadBar() {

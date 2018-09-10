@@ -19,6 +19,7 @@ import {
   MatSelectModule,
   MatTabsModule,
   MatDialogModule,
+  MatSliderModule,
 } from '@angular/material';
 
 @NgModule({
@@ -39,6 +40,7 @@ import {
     MatSelectModule,
     MatTabsModule,
     MatDialogModule,
+    MatSliderModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -60,6 +62,7 @@ import {
     MatSelectModule,
     MatTabsModule,
     MatDialogModule,
+    MatSliderModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,

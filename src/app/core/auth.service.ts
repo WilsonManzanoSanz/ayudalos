@@ -29,14 +29,20 @@ export class AuthService {
   constructor(private firebaseAuth: AngularFireAuth, private fireReference: AngularFirestore,
   private fireStore: AngularFirestore, private fireStorage: AngularFireStorage, private http: HttpClient) {
     console.log('Auth service init...');
-      this.firebaseAuth.user.subscribe((user) => {
+    this.initializeUser();
+  }
+  
+  public initializeUser(){
+    this.firebaseAuth.user.subscribe((user) => {
         if (user) {
           if (localStorage.getItem(`user_${user.uid}`)) {
             this.user = JSON.parse(localStorage.getItem(`user_${user.uid}`));
           } else {
             this.getUser(user).subscribe(response => {
                 this.user = response.data;
-                localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
+                if(this.user){
+                  localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
+                } 
             }, error => console.log(error));
           }
         }
@@ -97,6 +103,7 @@ export class AuthService {
            data => this.user = data.response,
            err => this.user = err
         );*/
+        // this.initializeUser();
         resolve(result);
       }).catch((error) => {
         this.handleError(error);
@@ -109,6 +116,7 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password).then((response) => {
         resolve(response.user);
+        //this.initializeUser();
       }).catch((error) => {
         this.handleError(error);
         reject(error);
