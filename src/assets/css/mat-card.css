@@ -65,6 +65,22 @@ mat-card.mat-card p{
   width: 100px;
 }
 
+
+img#userprofile-input {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.form-comment{
+  width: calc( 100% - 50px);
+}
+
+.small-image{
+  width: 200px;
+  margin: auto;
+  display: block;
+}
+
 @media only screen and (min-width: 900px) {
   .mat-header{
   font-size:3em;

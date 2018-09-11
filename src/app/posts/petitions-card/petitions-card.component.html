@@ -1,21 +1,35 @@
 <div *ngFor="let petition of petitions; let idx = index;" id="petition-card-container">
   <mat-card class="petition-card nopadding" id="petition-card">
-    <div class="card-tittle background-primary nomargin flex">
+    
+    <div class="card-tittle primary nomargin flex">
       <img *ngIf="petition.user.photoURL" mat-card-avatar src="{{petition.user.photoURL}}"  matTooltip="{{petition.user.displayName}}" alt="{{petition.user.displayName}}" class="pointer" routerLink="/auth/profile/{{petition.user.uid}}">
       <img *ngIf="!petition.user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" matTooltip="{{petition.user.displayName}}" alt="Photo of {{petition.user.displayName}}" class="pointer" routerLink="/auth/profile/{{petition.user.uid}}">
-      <h2 class="card-tittle background-primary nopadding" style="display:inline;">{{petition.tittle}} </h2>
+      <h2 class="card-tittle primary-dark nopadding" style="display:inline;">{{petition.tittle}} </h2>
       <span class="spacer"></span>
-      <span class="date background-primary ">{{petition.createdAt | date:'mediumDate'}}</span>
+      <span class="date primary ">{{petition.createdAt | date:'mediumDate'}}</span>
       <mat-icon [matMenuTriggerFor]="menu"  class="dateover">more_vert</mat-icon>
       <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
         <button mat-menu-item>Reportar</button>
         <button mat-menu-item (click)="openDialog(idx)" *ngIf="petition.allowedDelete">Borrar</button>
      </mat-menu>
     </div>
-    <mat-card-content style="padding:15px;">
+    <mat-card-content style="padding:0px 15px;">
+      <img  *ngIf="petition.photoURL" style="margin:0px -24px;" mat-card-image src="{{petition.photoURL}}" alt="Donacion">
       <p class="primary-letter">{{petition.description}}</p>
-      <button class="center-card-button full-width-important" mat-button color="primary">Donar</button>
-      <img  *ngIf="petition.photoURL" mat-card-image src="{{petition.photoURL}}" alt="Donacion">
+      <div class="petition-progress-info" *ngIf="petition.goal">
+        <div class="di-left">
+          Raised: <span>$50,000</span>
+        </div>
+        <div class="di-right">
+          Goal: <span>$95,000</span>
+        </div>
+      </div>
+      <div class="petition-progress-bar" *ngIf="petition.goal">
+        <div class="pb-inner">
+          <span>60%</span>
+        </div>
+      </div>
+      <button class="center-content" [style.top.px]="petition.goal ? 0 : 15" mat-raised-button color="primary">Donar</button>
     </mat-card-content>
     <mat-accordion id="petition-card-comments">
     <mat-expansion-panel>

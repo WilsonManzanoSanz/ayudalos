@@ -1,3 +1,4 @@
+
 .profile-link:hover{
 }
 
@@ -7,21 +8,6 @@
 
 .dateover:hover{
   cursor:pointer;
-}
-
-img#userprofile-input {
-    margin-right: 10px;
-    vertical-align: middle;
-}
-
-.form-comment{
-  width: calc( 100% - 50px);
-}
-
-.small-image{
-  width: 200px;
-  margin: auto;
-  display: block;
 }
 
 .post-card{

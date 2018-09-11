@@ -1,7 +1,87 @@
+.petition-progress-bar {
+    display: block;
+    width: 100%;
+    height: 10px;
+    background: #ebebeb;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.primary-dark{
+  color: #00796B !important;
+}
+
+.petition-progress-info {
+    display: block;
+    margin-bottom: 40px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #004D40;
+}
+
+.petition-progress-bar .pb-inner span:after {
+    position: absolute;
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #252525;
+    bottom: -3px;
+    left: 21px;
+    -webkit-transform: rotate(47deg);
+    -ms-transform: rotate(47deg);
+    transform: rotate(47deg);
+}
+
+.petition-progress-bar .pb-inner {
+    position: absolute;
+    height: 100%;
+    width: 60%;
+    left: 0;
+    top: 0;
+    background: #009688;
+}
+
+.petition-progress-info span {
+    color: #252525;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.petition-progress-bar .pb-inner span {
+    position: absolute;
+    width: 48px;
+    height: 22px;
+    top: -35px;
+    right: -24px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 2px;
+    background: #252525;
+}
+
+.di-left {
+    float: left;
+}
+
+.di-right {
+    float: right;
+}
+
+h2.card-tittle.primary-dark.nopadding {
+    font-size: 1.4em;
+}
+
 mat-card-content.mat-card-content{
   padding-bottom:0px !important;
   margin-bottom:0px;
 }
+
+mat-slider#rasied-slider {
+    width: 100%;
+}
+
 p.primary-letter{
   margin-bottom:0px;
 }
@@ -20,25 +100,12 @@ p.primary-letter{
   cursor:pointer;
 }
 
-img#userprofile-input {
-    margin-right: 10px;
-    vertical-align: middle;
+.center-content {
+    text-align: center;
+    margin:  auto !important;
+    display: block !important;
 }
 
-.form-comment{
-  width: calc( 100% - 50px);
-}
-
-.small-image{
-  width: 200px;
-  margin: auto;
-  display: block;
-}
-/*
-.petition-card{
-  min-height: 400px;
-}
-*/
 @media only screen and (min-width: 350px) and (max-width: 400px){
   .form-comment{
     width: calc( 100% - 50px);
