@@ -86,17 +86,21 @@
   </div>
   <div [class.half-width]="!isMobile">
     <mat-tab-group>
-      <mat-tab label="Donaciones">
-          <div  infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false" [infiniteScrollContainer]="'.card-container'"
+      <mat-tab label="Donaciones" >
+        <ng-template matTabContent>
+          <div infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false" [infiniteScrollContainer]="'.card-container'"
              [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" > 
             <app-posts-card class="card-container" [posts]="user.posts" [user]="loggedUser" [allowedDelete]="sameUserLogged"></app-posts-card>
-            <!-- <div *ngIf="sendRequest">
-             <mat-spinner class="center-content"></mat-spinner>
-            </div> -->
           </div>
+        </ng-template>
       </mat-tab>
       <mat-tab label="Peticiones">
-      <app-posts-card  class="card-container" [posts]="petitions"></app-posts-card>
+        <ng-template matTabContent>
+          <div infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false" [infiniteScrollContainer]="'.card-container'"
+             [infiniteScrollThrottle]="1000" (scrolled)="onScroll()">
+            <app-petitions-card class="card-container" [petitions]="user.petitions" [user]="user" [allowedDelete]="sameUserLogged"></app-petitions-card>
+          </div>
+        </ng-template>
       </mat-tab>
     </mat-tab-group>
   </div>

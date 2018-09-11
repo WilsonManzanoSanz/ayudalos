@@ -53,6 +53,6 @@ import { PetitionsPostComponent } from './petitions-post/petitions-post.componen
     PostsService,
     PetitionsService
   ],
-  exports: [PostsCardComponent]
+  exports: [PostsCardComponent, PetitionsCardComponent]
 })
 export class PostsModule { }

@@ -34,6 +34,7 @@ export class ProfileComponent implements OnInit {
   public edit_password_allowed: Boolean = false;
   public wrongCredentials: Boolean = false;
   public isMobile: Boolean;
+  public selectedTabIndex: number;
   public sameUserLogged: Boolean = false;
   // Observable
   public photo: any;
@@ -46,9 +47,11 @@ export class ProfileComponent implements OnInit {
   }
 
   constructor( private authService: AuthService, private route: ActivatedRoute, public snackBar: MatSnackBar) {
-    this.authService.getCurrentUser().then(user => {
+    /*this.authService.getCurrentUser().then(user => {
       this.loggedUser = user;
+      console.log('Logged User', this.loggedUser);
     }).catch(error => console.error(error));
+    */
   }
 
   ngOnInit() {
@@ -56,12 +59,17 @@ export class ProfileComponent implements OnInit {
     this.route.params.subscribe( params => {
       this.userId = {uid: params.id};
       this.authService.getUser(this.userId).subscribe((response) => {
-        if(params.id === this.loggedUser.uid){
-          this.sameUserLogged = true;
-        }
+        this.authService.getCurrentUser().then(user => {
+        this.loggedUser = user;
+          console.log('Logged User', this.loggedUser);
+           if(params.id === this.loggedUser.uid){
+             this.sameUserLogged = true;
+           }
+        }).catch(error => console.error(error));
         this.user = response.data;
         this.skip = this.skip + 10;
-        this.reformatPosts(response.data.posts, false);
+        this.user.posts = this.reformatPosts(response.data.posts, false);
+        this.user.petitions = this.reformatPosts(response.data.petitions, false);
       });
     });
     this.registerFormGroup();
@@ -115,13 +123,14 @@ export class ProfileComponent implements OnInit {
   }
   
   public updateUser(user:any) {
-    this.skip 
+    this.skip = 0; 
     this.authService.updateUser(user).subscribe((response) => {
          this.updateLoadBar();
          this.editProfile();
          this.updateInfo();
          this.user = response.data;
-         this.reformatPosts(response.data.posts, false);
+         this.user.posts = this.reformatPosts(response.data.posts, false);
+         this.user.petitions = this.reformatPosts(response.data.petitions, false);
          this.authService.setUser(response.data);
       },(error)=>{
       console.error(error);
@@ -171,23 +180,13 @@ export class ProfileComponent implements OnInit {
   onScroll(){
     this.authService.getUser(this.userId, new HttpParams().set('skip', this.skip.toString()).set('limit', '10')).subscribe((response) => {
         this.skip = this.skip + 10;
-        const newPosts = this.reformatPosts(response.data.posts, true);
+        if (response.data.posts.length>0) {
+           this.user.posts =  this.reformatPosts(response.data.posts, true);
+        }
+        if (response.data.petitions.length>0) {
+           this.user.posts =  this.reformatPosts(response.data.petitions, true);
+        } 
     });
-  }
-  
-  public reformatPosts(array: any[], push: Boolean = false){
-    const newPosts = array.map((value) => {
-      const {posts, typeUser, ...user} = this.user;
-      let newValue = value;
-      newValue.user = user;
-      newValue.allowedDelete = true;
-      return newValue;
-    });
-    if (push){
-      this.user.posts = [...this.user.posts, ...newPosts];
-    } else {
-      this.user.posts = [...newPosts];
-    }
   }
   
   public updateLoadBar() {
@@ -214,6 +213,21 @@ export class ProfileComponent implements OnInit {
 
   public configureCards() {
     this.isMobile = window.matchMedia('(max-width: 900px)').matches;
+  }
+  
+  public reformatPosts(array: any[], push: Boolean = false){
+    const newPosts = array.map((value) => {
+      const {posts, typeUser, ...user} = this.user;
+      let newValue = value;
+      newValue.user = user;
+      newValue.allowedDelete = true;
+      return newValue;
+    });
+    if (push){
+      return [...this.user.posts, ...newPosts];
+    } else {
+      return [...newPosts];
+    }
   }
 
 }

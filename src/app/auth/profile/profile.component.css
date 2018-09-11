@@ -16,3 +16,20 @@
    height: calc(100vh - 220px);
    overflow-y:scroll;
 }
+
+img.auto-center {
+    max-height: calc(100vh - 400px);
+}
+
+mat-card.max-heigth.mat-card {
+    max-height: calc( 100vh - 230px );
+}
+
+div.mat-expansion-panel-content:not(.mat-expanded) {
+    height: 0px !important;
+    visibility: hidden !important;
+}
+
+.mat-expansion-panel-header  {
+    height: 48px;
+}

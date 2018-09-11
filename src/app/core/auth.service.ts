@@ -39,11 +39,11 @@ export class AuthService {
             this.user = JSON.parse(localStorage.getItem(`user_${user.uid}`));
           } else {
             this.getUser(user).subscribe(response => {
-                this.user = response.data;
-                if(this.user){
+                if(response.data){
+                  this.user = response.data;
                   localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
                 } 
-            }, error => console.log(error));
+            }, error => console.error(error));
           }
         }
       }, (error) => console.error(error));
@@ -58,7 +58,7 @@ export class AuthService {
         const newUser  = { uid: result.user.uid, typeUserId:1, 
                                email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
         this.registerUser(newUser).subscribe(
-           data => this.user = data.response,
+           data => console.log(data),
            err => this.user = err
         );
         resolve(result.user);
@@ -80,7 +80,7 @@ export class AuthService {
         const newUser  = { uid: result.user.uid, typeUserId:2, 
                                email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
         this.registerUser(newUser).subscribe(
-          data => this.user = data.response,
+          data => console.log(data),
            err => this.user = err
         );
         resolve(result.user);

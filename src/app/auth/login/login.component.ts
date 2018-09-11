@@ -57,7 +57,6 @@ export class LoginComponent implements OnInit {
 
   googleLogin() {
     this.authService.googleLogin().then((user) => {
-
          this.router.navigateByUrl('/');
        }).catch((error) => {
           console.error(error);

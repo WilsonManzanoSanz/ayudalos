@@ -86,6 +86,7 @@ export class RegisterComponent implements OnInit {
         photoURL: user.photoURL,
         uid: user.uid,
         email: user.email,
+        typeUserId:4,
       };
       this.registerUser(newUser);
     }
@@ -93,20 +94,18 @@ export class RegisterComponent implements OnInit {
 
   registerUser(user:any) {
     this.http.post(this.URL, user).subscribe((data) => {
-        this.updateLoadBar();
-        this.router.navigateByUrl('/');
-        this.authService.getToken();
-        },(error)=>{
-        console.error(error);
-          this.updateLoadBar();
-        });
-        /*this.authService.getUser(user).subscribe(data=>{
-             this.authService.setUser(user);
-           }, error=> console.log(error));
-        },(error)=>{
-        console.error(error);
-          this.updateLoadBar();
-      });*/
+      this.updateLoadBar();
+      this.router.navigateByUrl('/');
+      this.authService.getToken();
+      /*
+      this.authService.getUser(user).subscribe( response => {
+         this.authService.setUser(response.data);
+      }, error=> console.log(error));
+      */
+    },(error)=>{
+    console.error(error);
+      this.updateLoadBar();
+    });
   }
 
   updateLoadBar() {
