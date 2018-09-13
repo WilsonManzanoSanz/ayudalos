@@ -26,7 +26,7 @@
       </div>
       <div class="petition-progress-bar" *ngIf="petition.goal" >
         <div class="pb-inner" [style.width.%]="(petition.raised/petition.goal )* 100 ">
-          <span>{{petition.raised/petition.goal * 100 | number  }}%</span>
+          <span>{{petition.raised/petition.goal * 100 | number | slice:0:4 }}%</span>
         </div>
       </div>
       <button class="center-content" [style.top.px]="petition.goal ? 0 : 15" mat-raised-button color="primary">Aportar {{petition.categoryDonation?.category}}</button>

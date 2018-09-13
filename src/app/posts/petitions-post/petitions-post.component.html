@@ -23,11 +23,11 @@
           <mat-error *ngIf="!tittle.valid">Por favor escribe el titulo</mat-error>
         </mat-form-field>
          <div>
-          <label>Selecciona una categoria</label>
           <select class="mat-select" #select="ngModel" [(ngModel)]="petition.category" id="select-category" name="category" (change)="onChange(petition.category)" required>
+            <option selected="selected" value="null">Por favor selecciona una categoria</option>
             <option class="" *ngFor="let category of categories; let i = index" [ngValue]="category" >{{category.category}}</option>
           </select>
-           <mat-error *ngIf="!petitionForm.controls.category?.valid && !petitionForm.controls.category?.touched">Por favor selecciona una categoria </mat-error>
+           <mat-error *ngIf="(petitionForm.controls.category?.value == null) && ((petitionForm.controls.category?.touched) || petitionForm.submitted)">Por favor selecciona una categoria </mat-error>
         </div>
         
         <mat-form-field *ngIf="petition.category?.moneyRequired">

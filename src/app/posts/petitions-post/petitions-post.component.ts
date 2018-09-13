@@ -22,8 +22,7 @@ export class PetitionsPostComponent implements OnInit {
 
    @Input() type: any;
    @Input() user: any;
-   @Input() petition: any = {
-   };
+   @Input() petition: any = {category : null};
    @Output()
   uploaded = new EventEmitter<string>();
 
@@ -40,6 +39,7 @@ export class PetitionsPostComponent implements OnInit {
       response => this.categories = response.items,
       error => console.error(error)
     );
+    console.log('oriiginal',this.petitionForm);
   }
 
   addPhoto() {
@@ -65,7 +65,7 @@ export class PetitionsPostComponent implements OnInit {
   }
 
   checkPetition(form: NgForm) {
-    console.log(form);
+    console.log('try',form);
     if (form.valid) {
       this.petitionForm = form;
       this.petition.categoryDonationId = this.petition.category.id;
@@ -87,7 +87,7 @@ export class PetitionsPostComponent implements OnInit {
       const newDonation = response.response;
       const {petitions, typeUser, ...user} = this.user;
       newDonation.user = user;
-      newDonation.commentPosts = [];
+      newDonation.commentPetitions = [];
       this.uploadComplete(newDonation);
       this.cleanForm();
       this.petitionsService.closeNav();
