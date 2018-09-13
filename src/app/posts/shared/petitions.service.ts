@@ -116,6 +116,10 @@ export class PetitionsService {
     document.getElementById('fullscreen-petition-container').style.height = '0%';
     this.sidenavService.showNav();
   }
+  
+  public getCategories(){
+    return this.http.get<any>(`${environment.urlbase}/category-donations/`);
+  }
 
   // TODO SEPARETE MODEL AND SERVICE
   public separateIntoTwoArrays(array: any[] = [], newArray: any[] = [], odds: any[] = [], evens: any[]= [], uid: string, newElement: Boolean = false) {

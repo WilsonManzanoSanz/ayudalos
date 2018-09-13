@@ -18,15 +18,15 @@
       <p class="primary-letter">{{petition.description}}</p>
       <div class="petition-progress-info" *ngIf="petition.goal">
         <div class="di-left">
-          Raised: <span>$50,000</span>
+          Raised: <span>{{petition.raised}}</span>
         </div>
         <div class="di-right">
-          Goal: <span>$95,000</span>
+          Goal: <span>{{petition.goal}}</span>
         </div>
       </div>
-      <div class="petition-progress-bar" *ngIf="petition.goal">
-        <div class="pb-inner">
-          <span>60%</span>
+      <div class="petition-progress-bar" *ngIf="petition.goal" >
+        <div class="pb-inner" [style.width.%]="(petition.raised/petition.goal )* 100 ">
+          <span>{{petition.raised/petition.goal * 100 | number  }}%</span>
         </div>
       </div>
       <button class="center-content" [style.top.px]="petition.goal ? 0 : 15" mat-raised-button color="primary">Donar</button>

@@ -22,6 +22,11 @@
           [(ngModel)]="post.tittle" #tittle="ngModel" required>
           <mat-error *ngIf="!tittle.valid">Por favor escribe el titulo</mat-error>
         </mat-form-field>
+        <mat-form-field style="width:50%;">
+          <mat-select placeholder="Selecciona una categoria" [(ngModel)]="post.categoryDonationId" id="select-category" name="category" required>
+            <mat-option  *ngFor="let category of categories; let i = index" [value]="category.id" >{{category.category}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field class="full-width">
           <textarea matInput rows="4" placeholder="Descripcion" name="description" id="post-description" [(ngModel)]="post.description" #description="ngModel" required></textarea>
           <mat-error *ngIf="!tittle.valid">Por favor escribe la descripcion</mat-error>

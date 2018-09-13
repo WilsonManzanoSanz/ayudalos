@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {PostsService} from '../shared/posts.service';
+import {PetitionsService} from '../shared/petitions.service';
 import {SidenavService} from '../../ui/shared/sidenav.service';
 import {AuthService, User} from '../../core/auth.service';
 import {Router} from '@angular/router';
@@ -17,6 +18,7 @@ export class PostComponent implements OnInit {
    private photo: any;
    public uploadingPhoto: Boolean;
    public uploadingPromise = null;
+   public categories:any;
   
    @Input() type: any;
    @Input() user: any;
@@ -29,10 +31,15 @@ export class PostComponent implements OnInit {
     public sidenavService: SidenavService,
     private router: Router,
     public postsService: PostsService,
+    public petitionsService: PetitionsService
     ) {
   }
 
   ngOnInit() {
+    this.petitionsService.getCategories().subscribe(
+      response => this.categories = response.items,
+      error => console.error(error)
+    );
   }
 
   addPhoto() {

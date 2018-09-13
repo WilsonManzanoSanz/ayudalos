@@ -22,9 +22,22 @@
           [(ngModel)]="petition.tittle" #tittle="ngModel" required>
           <mat-error *ngIf="!tittle.valid">Por favor escribe el titulo</mat-error>
         </mat-form-field>
+         <div>
+          <label>Selecciona una categoria</label>
+          <select class="mat-select" #select="ngModel" [(ngModel)]="petition.category" id="select-category" name="category" (change)="onChange(petition.category)" required>
+            <option class="" *ngFor="let category of categories; let i = index" [ngValue]="category" >{{category.category}}</option>
+          </select>
+           <mat-error *ngIf="!petitionForm.controls.category?.valid && !petitionForm.controls.category?.touched">Por favor selecciona una categoria </mat-error>
+        </div>
+        
+        <mat-form-field *ngIf="petition.category?.moneyRequired">
+          <input matInput placeholder="Meta a alcanzar" name="goal" id="petition-goal"  type="number"
+          [(ngModel)]="petition.goal" #goal="ngModel" required>
+          <mat-error *ngIf="!goal.valid">Por favor escribe la meta a alcanzar</mat-error>
+        </mat-form-field>
         <mat-form-field class="full-width">
           <textarea matInput rows="4" placeholder="Descripcion" name="description" id="petition-description" [(ngModel)]="petition.description" #description="ngModel" required></textarea>
-          <mat-error *ngIf="!tittle.valid">Por favor escribe la descripcion</mat-error>
+          <mat-error *ngIf="!description.valid">Por favor escribe la descripcion</mat-error>
         </mat-form-field>
         </form>
         <div *ngIf="uploadingPhoto">

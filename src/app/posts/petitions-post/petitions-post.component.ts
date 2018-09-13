@@ -17,10 +17,13 @@ export class PetitionsPostComponent implements OnInit {
    private photo: any;
    public uploadingPhoto: Boolean;
    public uploadingPromise = null;
+   public categories: any[] = [];
+   public moneyRequired: Boolean = false;
 
    @Input() type: any;
    @Input() user: any;
-   @Input() petition: any = {};
+   @Input() petition: any = {
+   };
    @Output()
   uploaded = new EventEmitter<string>();
 
@@ -33,6 +36,10 @@ export class PetitionsPostComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.petitionsService.getCategories().subscribe(
+      response => this.categories = response.items,
+      error => console.error(error)
+    );
   }
 
   addPhoto() {
@@ -58,15 +65,15 @@ export class PetitionsPostComponent implements OnInit {
   }
 
   checkPetition(form: NgForm) {
+    console.log(form);
     if (form.valid) {
       this.petitionForm = form;
-      let newPetition;
+      this.petition.categoryDonationId = this.petition.category.id;
+      let newPetition = {...this.petition, ... {userUid: this.user.uid}, raised: Math.floor(Math.random() * this.petition.goal)};
       if (this.uploadingPromise == null) {
-        newPetition =  {...this.petition, ... {userUid: this.user.uid}};
         this.newPetition(newPetition);
       } else {
         this.uploadingPromise.then((response) => {
-          newPetition =  {...this.petition, ...{userUid: this.user.uid} };
           this.newPetition(newPetition);
         }).catch((error) => console.error(error));
       }
@@ -104,6 +111,15 @@ export class PetitionsPostComponent implements OnInit {
     this.photo = null;
     this.uploadingPromise = null;
     this.petition.photoURL = '';
+  }
+  
+  onChange(value){
+    //console.log(value);
+    this.petition.categoryDonationId = this.petition.category.id;
+    this.moneyRequired = false;
+    if(value.moneyRequired){
+      this.moneyRequired = true;
+    }
   }
 
 }
