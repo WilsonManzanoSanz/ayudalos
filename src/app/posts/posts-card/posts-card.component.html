@@ -16,8 +16,11 @@
   <mat-card-content id="post-card-content">
     <h4 style="margin-bottom:10px;"> {{post.tittle}}</h4>
     <p>{{post.description}}</p>
-    <img  *ngIf="post.photoURL" mat-card-image src="{{post.photoURL}}" alt="Donacion">
-    <img  *ngIf="!post.photoURL" mat-card-image class="small-image" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" alt="Donacion">
+    <div style="position: relative; margin-top:30px;">
+      <img  *ngIf="post.photoURL" mat-card-image src="{{post.photoURL}}" alt="Donacion">
+      <img  *ngIf="!post.photoURL" mat-card-image class="small-image" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" alt="Donacion">
+      <div class="topright primary">{{post.categoryDonation?.category}}</div>
+    </div>
     <mat-divider *ngIf="post.commentPosts"></mat-divider>
   </mat-card-content>
   <mat-accordion id="post-card-comments">
@@ -43,7 +46,7 @@
       <div>
         <img *ngIf="user.photoURL" mat-card-avatar id="userprofile-input" src="{{user.photoURL}}" 
         alt="{{user.displayName}}">
-        <img *ngIf="!user.photoURL"  mat-card-avatar id="userprofile-input" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
+        <img *ngIf="!user.photoURL"  mat-card-avatar id="userprofile-input" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">   
         <mat-form-field class="form-comment">
           <input matInput type="text" placeholder="Write a comment input" [(ngModel)]="post.inputComment" class="full-width">
           <button mat-button *ngIf="post.inputComment" matSuffix mat-icon-button aria-label="send" (click)="postComment(post.inputComment, idx, post.id)">

@@ -29,7 +29,7 @@
           <span>{{petition.raised/petition.goal * 100 | number  }}%</span>
         </div>
       </div>
-      <button class="center-content" [style.top.px]="petition.goal ? 0 : 15" mat-raised-button color="primary">Donar</button>
+      <button class="center-content" [style.top.px]="petition.goal ? 0 : 15" mat-raised-button color="primary">Aportar {{petition.categoryDonation?.category}}</button>
     </mat-card-content>
     <mat-accordion id="petition-card-comments">
     <mat-expansion-panel>
