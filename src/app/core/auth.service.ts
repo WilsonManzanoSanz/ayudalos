@@ -59,7 +59,7 @@ export class AuthService {
                                email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
         this.registerUser(newUser).subscribe(
            data => console.log(data),
-           err => this.user = err
+           err => console.error(err)
         );
         resolve(result.user);
         // ...
@@ -81,7 +81,7 @@ export class AuthService {
                                email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
         this.registerUser(newUser).subscribe(
           data => console.log(data),
-           err => this.user = err
+           err => console.error(err)
         );
         resolve(result.user);
         // ...
@@ -101,7 +101,7 @@ export class AuthService {
         const newUser  = { uid: result.user.uid, typeUserId:4,};
         this.registerUser(newUser).subscribe(
            data => this.user = data.response,
-           err => this.user = err
+           err => console.error(err)
         );*/
         // this.initializeUser();
         resolve(result);

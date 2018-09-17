@@ -9,7 +9,7 @@
 </mat-card>
 
 <app-search [@searchBarState]="stateSearchBar" [stateSearchBar]="stateSearchBar"
-            (updatePosts)="updatesBySearch($event)" (closeElement)="clearSearchForm($event)"></app-search>
+            (updatePosts)="updatesBySearch($event)" (closeElement)="clearSearchForm()"></app-search>
 
 <div class="scrollable" infiniteScroll
   [infiniteScrollDistance]="2"
