@@ -115,8 +115,8 @@ export class AuthService {
   public emailSignUp(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password).then((response) => {
-        resolve(response.data);
-        //this.initializeUser();
+        resolve(response.user);
+        this.initializeUser();
       }).catch((error) => {
         this.handleError(error);
         reject(error);
