@@ -22,7 +22,6 @@ export class RegisterComponent implements OnInit {
   public wrongCredentials: Boolean = false;
   public passwordValidator = new PasswordValidator();
   public photo: any = null;
-  private URL = 'https://node-wilsonmanzanosanz271555.codeanyapp.com/api/v1/users';
 
   constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage, private http: HttpClient) {
   }
@@ -93,7 +92,7 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser(user:any) {
-    this.http.post(this.URL, user).subscribe((data) => {
+    this.authService.registerUser(user).subscribe((data) => {
       this.updateLoadBar();
       this.router.navigateByUrl('/');
       this.authService.getToken();

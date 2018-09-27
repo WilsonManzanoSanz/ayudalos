@@ -12,3 +12,5 @@ yarn-error.log
 testem.log
 /typings
 /src/environments/
+dist/
+
