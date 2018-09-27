@@ -13,4 +13,5 @@ testem.log
 /typings
 /src/environments/
 dist/
-
+/dist
+/dist/
