@@ -62,7 +62,8 @@ mat-card.mat-card p{
 }
 
 .image-content{
-  width: 100px;
+  padding-top:10px;
+  width: 90%;
 }
 
 
@@ -90,10 +91,15 @@ img#userprofile-input {
  }
 }
 
+.center-about{
+  margin: 0px 40px;
+}
+
  @media only screen and (min-width: 799px) and (max-width: 1199px)  {
   .center-card {
     margin: 1em 14em 5em 14em;
   }
+  
   
 }
 @media only screen and (min-width: 1200px) {

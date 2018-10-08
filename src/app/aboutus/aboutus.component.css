@@ -1,3 +1,7 @@
+.about-logo{
+  width:100px;
+}
+
 .avatar-picture{
   display: block;
   margin: auto;
@@ -62,6 +66,11 @@ mat-card.aboutus-card {
   padding:15px;
 }
 
+.center-about{
+  margin: 0px 20px;
+}
+
+
 @media only screen and (max-width: 700px)  {
   .card-container > div {
     margin: 0px;
@@ -72,12 +81,18 @@ mat-card.aboutus-card {
   .flex-item{
     width: 500px;
   }
+  .center-about{
+    margin: 0px 150px;
+  }
 }
 
 @media only screen and (min-width: 800px) and (max-width:1019px)  {
   .flex-item{
     width: 320px;
     color:black;
+  }
+  .center-about{
+    margin: 0px 100px;
   }
 }
 
