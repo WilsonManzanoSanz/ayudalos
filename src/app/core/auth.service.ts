@@ -3,6 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 import { AngularFireStorage,  AngularFireUploadTask , AngularFireStorageReference} from 'angularfire2/storage';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material';
 import * as firebase from 'firebase/app';
 import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
@@ -22,11 +23,13 @@ export class AuthService {
   private providerFb = new firebase.auth.FacebookAuthProvider();
   private token = '';
   private URL = environment.urlbase + '/users';
+  private previousUrl = null;
+  private loadingUser = null;
   // Firestore
   public filePath: string;
   public fileRef: AngularFireStorageReference;
 
-  constructor(private firebaseAuth: AngularFireAuth, private fireReference: AngularFirestore,
+  constructor(private firebaseAuth: AngularFireAuth, private fireReference: AngularFirestore, public snackBar: MatSnackBar,
   private fireStore: AngularFirestore, private fireStorage: AngularFireStorage, private http: HttpClient) {
     console.log('Auth service init...');
     this.initializeUser();
@@ -38,12 +41,18 @@ export class AuthService {
           if (localStorage.getItem(`user_${user.uid}`)) {
             this.user = JSON.parse(localStorage.getItem(`user_${user.uid}`));
           } else {
-            this.getUser(user).subscribe(response => {
-                if(response.data){
+            this.loadingUser = new Promise((resolve, reject) => {
+              this.getUser(user).subscribe(response => {
+              if(response.data){
                   this.user = response.data;
                   localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
+                  resolve(this.user);
                 } 
-            }, error => console.error(error));
+              }, error => {
+                reject(error);
+                console.error(error);
+              });
+            });
           }
         }
       }, (error) => console.error(error));
@@ -58,7 +67,7 @@ export class AuthService {
         const newUser  = { uid: result.user.uid, typeUserId:1, 
                                email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
         this.registerUser(newUser).subscribe(
-           data => console.log(data),
+           data => console.log('registered', data),
            err => console.error(err)
         );
         resolve(result.user);
@@ -210,7 +219,7 @@ export class AuthService {
   }
 
   public getUser(user: any, params = new HttpParams().set('skip', '0').set('limit', '10')) {
-    console.log('se invoco... get User');
+    console.log('getUser');
     return this.http.get<any>(`${this.URL}/${user.uid}`, {params:params});
   }
 
@@ -222,19 +231,21 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       if (this.getUserValue()) {
         resolve(this.user);
-      } else {
-          this.hardLoadUser().subscribe(user => {
-            if (user) {
-              this.getUser(user).subscribe((responseUser) => {
-                  resolve(responseUser.data);
-              }, error => console.error(error));
-            }
-          }, (error => {
-              console.error(error);
-              reject(error);
-              })
-          );
-       }
+      } this.hardLoadUser().subscribe(user => {
+          /*if (user) {
+            this.getUser(user).subscribe((responseUser) => {
+                resolve(responseUser.data);
+            }, error => console.error(error));
+          }*/
+          if(this.loadingUser){
+            this.loadingUser.then(user => resolve(user)).catch(error => reject(error));
+          }
+        }, (error => {
+            console.error(error);
+            reject(error);
+            })
+        ); 
+        
     });
   }
 
@@ -244,11 +255,21 @@ export class AuthService {
 
   public setUser(user) {
     this.user = user;
-    // console.log(this.user);
   }
 
   public handleError(error) {
     console.error(error);
+  }
+  
+  public notifyUserRequirement(url){
+    this.previousUrl = url;
+    this.snackBar.open('Primero te tienes que ingresar en tu cuenta o registrarse', 'OK', {
+      duration: 2000,
+    });
+  }
+  
+  public getPreviousState(){
+    return this.previousUrl;
   }
 
 

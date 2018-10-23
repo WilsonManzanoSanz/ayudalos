@@ -14,8 +14,8 @@ export class AuthGuard implements CanActivate {
            this.authService.onAuthStateChanged().then(user => {
                if (!user) {
                    this.router.navigate(['/auth']);
+                   this.authService.notifyUserRequirement(state.url);
                    reject(false);
-                   console.error('User is not logged');
                } else {
                    resolve(true);
                }

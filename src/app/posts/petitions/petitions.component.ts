@@ -32,7 +32,7 @@ export class PetitionsComponent implements OnInit {
 
   public petitionsColumn1: any[] = [];
   public petitionsColumn2: any[] = [];
-  public user: any;
+  public user: any = {};
   public isMobile: Boolean;
   public sendRequest: Boolean;
   public stateSearchBar = 'inactive';
@@ -53,12 +53,13 @@ export class PetitionsComponent implements OnInit {
 
   ngOnInit() {
     this.configureCards();
-    this.getPetitionContent();
+    
   }
 
   public initializeUser() {
     this.authService.getCurrentUser().then((user) => {
       this.user = user;
+      this.getPetitionContent();
     }).catch(error => console.error(error));
   }
 
@@ -70,7 +71,6 @@ export class PetitionsComponent implements OnInit {
     this.petitionService.addParamaters([{key:'skip', value:0}]);
     this.petitionService.getPetitions().subscribe(response => {
         this.addNewPetitions(response.data.items);
-        console.log(response);
     });
   }
   

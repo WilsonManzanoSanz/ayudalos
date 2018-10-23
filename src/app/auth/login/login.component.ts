@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
          this.cleanView();
          this.authService.emailLogin(this.loginFormGroup.value.email, this.loginFormGroup.value.password).then((user) => {
            this.updateLoadBar();
-           this.router.navigateByUrl('/');
+           this.goToHome();
        }).catch((error) => {
            this.updateLoadBar();
            this.wrongCredentials = true;
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
 
   googleLogin() {
     this.authService.googleLogin().then((user) => {
-         this.router.navigateByUrl('/');
+         this.goToHome();
        }).catch((error) => {
           console.error(error);
       });
@@ -65,10 +65,18 @@ export class LoginComponent implements OnInit {
 
   facebookLogin() {
     this.authService.facebookLogin().then((user) => {
-         this.router.navigateByUrl('/');
+        this.goToHome();
        }).catch((error) => {
           console.error(error);
       });
+  }
+  
+  goToHome(){
+    if(this.authService.getPreviousState()){
+       this.router.navigateByUrl(this.authService.getPreviousState());
+     } else {
+        this.router.navigateByUrl('/');
+    }
   }
 
   updateLoadBar() {
