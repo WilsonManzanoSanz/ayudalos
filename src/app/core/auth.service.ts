@@ -265,6 +265,7 @@ export class AuthService {
     this.previousUrl = url;
     this.snackBar.open('Primero te tienes que ingresar en tu cuenta o registrarse', 'OK', {
       duration: 2000,
+      verticalPosition:'top'
     });
   }
   
