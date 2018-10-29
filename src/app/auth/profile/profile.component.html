@@ -1,7 +1,7 @@
 <div [class.flex]="!isMobile">
   <div [class.half-width]="!isMobile">
-    <div style="padding:20px;">
-    <mat-card class="" style="justify-content:center;">
+    <div class="profile-card">
+    <mat-card  style="justify-content:center;">
       <mat-card-header>
         <img *ngIf="!user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
         <img *ngIf="user.photoURL"  mat-card-avatar src="{{user.photoURL}}" alt="Photo of {{user.displayName}}">

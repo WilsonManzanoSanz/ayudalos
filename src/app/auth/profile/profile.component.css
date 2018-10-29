@@ -33,3 +33,18 @@ div.mat-expansion-panel-content:not(.mat-expanded) {
 .mat-expansion-panel-header  {
     height: 48px;
 }
+
+
+.profile-card{
+   padding:20px;
+}
+
+@media only screen and (max-width: 900px) {
+  
+  .profile-card{
+    padding:0px;
+  }
+  .center-content.mat-card-actions{
+    margin-bottom:0px;
+  }
+}

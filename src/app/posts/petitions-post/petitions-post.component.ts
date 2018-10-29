@@ -69,7 +69,8 @@ export class PetitionsPostComponent implements OnInit {
     if (form.valid) {
       this.petitionForm = form;
       this.petition.categoryDonationId = this.petition.category.id;
-      let newPetition = {...this.petition, ... {userUid: this.user.uid}, raised: Math.floor(Math.random() * this.petition.goal)};
+      //let newPetition = {...this.petition, ... {userUid: this.user.uid}, raised: Math.floor(Math.random() * this.petition.goal)};
+      let newPetition = {...this.petition, ... {userUid: this.user.uid}, raised: 0};
       if (this.uploadingPromise == null) {
         this.newPetition(newPetition);
       } else {
