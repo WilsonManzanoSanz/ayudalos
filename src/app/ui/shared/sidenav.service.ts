@@ -12,7 +12,7 @@ export class SidenavService {
 
   private sidenav: MatSidenav;
   private navItems: Array<NavItem> = [
-    {name: 'CONOCENOS', path: '/aboutus', icon: 'info'},
+    {name: 'CONÓCENOS', path: '/aboutus', icon: 'info'},
     {name: 'DONACIONES', path: '/posts/donations/home', icon: 'favorite'},
     {name: 'PETICIONES', path: '/posts/petitions/home', icon: 'filter_vintage'},
   ];

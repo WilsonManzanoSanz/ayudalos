@@ -35,10 +35,10 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title *ngIf="petitions[idx].commentPetitions == undefined">
-          Comments
+          Comentarios
         </mat-panel-title>
         <mat-panel-title *ngIf="petitions[idx].commentPetitions">
-          Comments ({{petitions[idx].commentPetitions.length}})
+          Comentarios ({{petitions[idx].commentPetitions.length}})
         </mat-panel-title>
         <!--<mat-panel-description>
           Type your name and age
@@ -56,7 +56,7 @@
         alt="{{user.displayName}}">
         <img *ngIf="!user.photoURL"  mat-card-avatar id="userprofile-input" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
         <mat-form-field class="form-comment">
-          <input matInput type="text" placeholder="Write a comment input" [(ngModel)]="petition.inputComment" class="full-width">
+          <input matInput type="text" placeholder="Escribe un comentario" [(ngModel)]="petition.inputComment" class="full-width">
           <button mat-button *ngIf="petition.inputComment" matSuffix mat-icon-button aria-label="send" (click)="postComment(petition.inputComment, idx, petition.id)">
             <mat-icon>send</mat-icon>
           </button>

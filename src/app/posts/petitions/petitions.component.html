@@ -2,7 +2,7 @@
    <mat-card-header>
     <img *ngIf="user.photoURL" mat-card-avatar src="{{user.photoURL}}" alt="{{user.displayName}}">
     <img *ngIf="!user.photoURL"  mat-card-avatar src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
-    <mat-card-subtitle class="card-search" (click)="petitionService.showNav()">!Cuentanos tu historia! Dinos como te podemos ayudar.</mat-card-subtitle>
+    <mat-card-subtitle class="card-search" (click)="petitionService.showNav()">!Cuéntanos tu historia! Dinos cómo te podemos ayudar.</mat-card-subtitle>
     <span class="spacer"></span>
      <mat-icon aria-label="Home button" style="padding-top:5px;" class="pointer primary" (click)="toggleSearchState()">search</mat-icon>
     </mat-card-header>

@@ -48,27 +48,27 @@
             <input matInput placeholder="Actual contrase&ntilde;a" type="password" formControlName="oldpassword"
                    name="oldpassword" id="passwordForm-oldpassword">
             <mat-error *ngIf="passwordFormGroup.controls['password'].errors?.required">
-              La constrase&ntilde;a es <strong>requerida</strong>
+              La contrase&ntilde;a es <strong>requerida</strong>
             </mat-error>
           </mat-form-field>    
           <mat-form-field class="full-width">
-            <input matInput placeholder="Nueva constrase&ntilde;a" type="password" formControlName="password"
+            <input matInput placeholder="Nueva contrase&ntilde;a" type="password" formControlName="password"
                    name="password" id="passwordForm-password">
             <mat-error *ngIf="passwordFormGroup.controls['password'].errors?.required">
-              La constrase&ntilde;a es <strong>requerida</strong>
+              La contrase&ntilde;a es <strong>requerida</strong>
             </mat-error>
             <mat-error *ngIf="passwordFormGroup.controls['password'].errors?.minlength">
-              Usa 6 mas caracteres para tu constrase&ntilde;a
+              Usa 6 mas caracteres para tu contrase&ntilde;a
             </mat-error>
           </mat-form-field>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Confirma tu constrase&ntilde;a" type="password" formControlName="password2"
+            <input matInput placeholder="Confirma tu contrase&ntilde;a" type="password" formControlName="password2"
                    name="password2" id="passwordForm-password2">
             <mat-error *ngIf="passwordFormGroup.controls['password2'].errors?.required">
-              La constrase&ntilde;a es <strong>requerida</strong>
+              La contrase&ntilde;a es <strong>requerida</strong>
             </mat-error>
             <mat-error *ngIf="passwordFormGroup.controls['password2'].errors?.passwordMatchValidator">
-              Las constrase&ntilde;as deben ser <strong>iguales</strong>
+              Las contrase&ntilde;as deben ser <strong>iguales</strong>
             </mat-error>
           </mat-form-field>
           <div *ngIf="!sendRequest" class="center-content">
@@ -77,7 +77,7 @@
             </div>   
           </div>
           <div *ngIf="wrongCredentials" class="center-content">
-            <p class="warning-text"> Tu actual constrase&ntilde;a no es correcta</p>
+            <p class="warning-text"> Tu actual contrase&ntilde;a no es correcta</p>
          </div>
         </form>
        </div>
