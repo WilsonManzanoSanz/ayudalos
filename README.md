@@ -1,6 +1,6 @@
-# HelpThem
+# Ayudalos
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.4.
+Ayudalos is a web progrossive app powered by Angular, where you are able to donate resources for people who needs food, clothes, education, home appliances and economic funds. Also foundations, and people can ask for help in the webpage.
 
 ## Development server
 
