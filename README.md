@@ -1,6 +1,6 @@
-# Ayudalos
+# Ayúdalos
 
-Ayudalos is a web progrossive app powered by Angular, where you are able to donate resources for people who needs food, clothes, education, home appliances and economic funds. Also foundations, and people can ask for help in the webpage.
+Ayúdalos is a web progrossive app powered by Angular, where you are able to donate resources for people who needs food, clothes, education, home appliances and economic funds. Also foundations, and people can ask for help in the webpage.
 
 ## Development server
 
