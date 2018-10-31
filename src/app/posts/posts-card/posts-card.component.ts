@@ -3,6 +3,7 @@ import {AuthService, User} from '../../core/auth.service';
 import {PostsService, Post} from '../shared/posts.service';
 import {ConfirmDeleteDialogComponent} from '../confirm-delete-dialog/confirm-delete-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {environment} from './../../../environments/environment';
 
 @Component({
   selector: 'app-posts-card',
@@ -42,12 +43,25 @@ export class PostsCardComponent implements OnInit {
       width: '250px',
       data: {name: this.user.displayName}
     });
-
+   
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         this.deletePost(idx);
       }
     });
+  }
+  
+  openShareProcess(idx){
+    debugger;
+    if (navigator.share) {
+      navigator.share({
+          title: `${this.posts[idx].tittle} en Ayudalos`,
+          text: this.posts[idx].description,
+          url: `${environment.urlpage}/posts/donations/${this.posts[idx].id}`,
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }
   }
   
   mouseEnter(idx: number){

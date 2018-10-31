@@ -9,17 +9,20 @@
     <span class="date">{{post.createdAt | date:'mediumDate'}}</span>
     <mat-icon [matMenuTriggerFor]="menu"  class="dateover">more_vert</mat-icon>
     <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+      <button mat-menu-item (click)="openShareProcess(idx)">Compartir</button>
       <button mat-menu-item>Reportar</button>
       <button mat-menu-item (click)="openDialog(idx)" *ngIf="post.allowedDelete">Borrar</button>
   </mat-menu>
   </mat-card-header>
   <mat-card-content id="post-card-content">
-    <h4 style="margin-bottom:10px;"> {{post.tittle}}</h4>
+    <div class="flex">
+      <h4 style="margin-bottom:0px;"> {{post.tittle}}</h4><span class="spacer"></span><span class="primary">{{post.categoryDonation?.category}}</span>
+    </div>
     <p>{{post.description}}</p>
     <div style="position: relative; margin-top:30px;">
       <img  *ngIf="post.photoURL" mat-card-image src="{{post.photoURL}}" alt="Donacion">
-      <img  *ngIf="!post.photoURL" mat-card-image class="small-image" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" alt="Donacion">
-      <div class="topright primary">{{post.categoryDonation?.category}}</div>
+      <!--<img  *ngIf="!post.photoURL" mat-card-image class="small-image" src="https://blog.stylingandroid.com/wp-content/themes/lontano-pro/images/no-image-slide.png" alt="Donacion">-->
+      <!--<div class="topright primary">{{post.categoryDonation?.category}}</div>-->
     </div>
     <mat-divider *ngIf="post.commentPosts"></mat-divider>
   </mat-card-content>

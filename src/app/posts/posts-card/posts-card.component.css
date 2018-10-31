@@ -15,11 +15,11 @@
 .dateover:hover{
   cursor:pointer;
 }
-
+/*
 .post-card{
   min-height: 400px;
 }
-
+*/
 @media only screen and (min-width: 350px) and (max-width: 400px){
   .form-comment{
     width: calc( 100% - 50px);
