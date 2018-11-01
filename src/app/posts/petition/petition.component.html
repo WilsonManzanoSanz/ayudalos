@@ -1,3 +1,14 @@
-<p>
-  petition works!
-</p>
+ <app-petitions-card *ngIf="!notFound" class="card-container center-card" style=""  [petitions]="petitions" [user]="user"></app-petitions-card>
+<div *ngIf="notFound" style="height:80vh;">
+  <div class="center-card" style="height:60vh;">
+    <h1 style="color:red;">
+      Donación no encontrada.
+    </h1>
+    <div class="">
+      <button mat-raised-button color="primary" class="center-card-button full-width-important" routerLink="/petitions/donations">
+      Ve a donaciones
+      </button>
+    </div>
+  </div>
+</div>
+

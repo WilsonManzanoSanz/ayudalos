@@ -9,7 +9,7 @@
     <span class="date">{{post.createdAt | date:'mediumDate'}}</span>
     <mat-icon [matMenuTriggerFor]="menu"  class="dateover">more_vert</mat-icon>
     <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
-      <button mat-menu-item (click)="openShareProcess(idx, mytemplate)">Compartir</button>
+      <button mat-menu-item (click)="openShareProcess(idx)">Compartir</button>
       <!--<button mat-menu-item>Reportar</button>-->
       <button mat-menu-item (click)="openDialog(idx)" *ngIf="post.allowedDelete">Borrar</button>
   </mat-menu>

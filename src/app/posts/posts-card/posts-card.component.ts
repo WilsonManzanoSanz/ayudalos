@@ -54,18 +54,19 @@ export class PostsCardComponent implements OnInit {
   }
   
   openShareProcess(idx){
+    const url = `${environment.urlpage}/posts/donation/${this.posts[idx].id}`;
     if (navigator['share']) {
       navigator['share']({
           title: `${this.posts[idx].tittle} en Ayudalos`,
           text: this.posts[idx].description,
-          url: `${environment.urlpage}/posts/donations/${this.posts[idx].id}`,
+          url: url,
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
     }else{
       const dialogRef = this.dialog.open(ShareDialogComponent, {
         width: '60%',
-        data: `${environment.urlpage}/posts/donation/${this.posts[idx].id}`
+        data: url,
       });
 
       dialogRef.afterClosed().subscribe(result => {

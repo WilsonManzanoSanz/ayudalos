@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DonationsComponent } from '../donations/donations.component';
 import { DonationComponent } from '../donation/donation.component';
 import { PetitionsComponent } from '../petitions/petitions.component';
+import { PetitionComponent } from '../petition/petition.component';
 import { DonationsHomeComponent } from '../donations-home/donations-home.component';
 import { PetitionsHomeComponent } from '../petitions-home/petitions-home.component';
 import {AuthGuard} from '../../core/auth.guard';
@@ -13,6 +14,7 @@ const ROUTES: Routes = [
   { path: 'donations', component: DonationsComponent, canActivate: [AuthGuard] },
   { path: 'donations', component: DonationsComponent, canActivate: [AuthGuard] },
   { path: 'donation/:id', component: DonationComponent},
+  { path: 'petition/:id', component: PetitionComponent},
   { path: 'petitions', component: PetitionsComponent, canActivate: [AuthGuard] }
 ];
 

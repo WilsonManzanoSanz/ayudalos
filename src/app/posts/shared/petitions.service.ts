@@ -50,8 +50,8 @@ export class PetitionsService {
     return this.http.get<any>(this.URL, {params: this.getParams});
   }
 
-  public getPetition(id, params) {
-    return this.http.get<any>(`${this.URL}/${id}`, {params:params});
+  public getPetition(id) {
+    return this.http.get<any>(`${this.URL}/${id}`);
   }
   
   public postComment(payload){

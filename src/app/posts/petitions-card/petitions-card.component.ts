@@ -2,7 +2,9 @@ import { Component, OnInit, Input  } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {PetitionsService, Petition} from '../shared/petitions.service';
 import {ConfirmDeleteDialogComponent} from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import {ShareDialogComponent} from '../share-dialog/share-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {environment} from './../../../environments/environment';
 
 @Component({
   selector: 'app-petitions-card',
@@ -48,6 +50,27 @@ export class PetitionsCardComponent implements OnInit {
         this.deletePetition(idx);
       }
     });
+  }
+  
+  openShareProcess(idx){
+    const url = `${environment.urlpage}/posts/petition/${this.petitions[idx].id}`;
+    if (navigator['share']) {
+      navigator['share']({
+          title: `${this.petitions[idx].tittle} en Ayudalos`,
+          text: this.petitions[idx].description,
+          url: url,
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }else{
+      const dialogRef = this.dialog.open(ShareDialogComponent, {
+        width: '60%',
+        data: url
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
   }
   
   mouseEnter(idx: number){
