@@ -10,9 +10,9 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DonationComponent implements OnInit {
   
-  private posts: any[] = [];
-  private notFound: Boolean = false;
-  private user: any = {};
+  public posts: any[] = [];
+  public notFound: Boolean = false;
+  public user: any = {};
 
   constructor(public donationService: PostsService, private authService: AuthService,  private route: ActivatedRoute) { }
 

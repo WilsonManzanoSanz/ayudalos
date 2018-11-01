@@ -11,9 +11,9 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class PetitionComponent implements OnInit {
   
-  private petitions: any[] = [];
-  private notFound: Boolean = false;
-  private user: any = {};
+  public petitions: any[] = [];
+  public notFound: Boolean = false;
+  public user: any = {};
 
   constructor(public petitionService: PetitionsService, private authService: AuthService,  private route: ActivatedRoute) { }
 
