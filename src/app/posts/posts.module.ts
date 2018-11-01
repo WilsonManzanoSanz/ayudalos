@@ -26,6 +26,7 @@ import { PetitionsCardComponent } from './petitions-card/petitions-card.componen
 import { PetitionsPostComponent } from './petitions-post/petitions-post.component';
 import { DonationComponent } from './donation/donation.component';
 import { PetitionComponent } from './petition/petition.component';
+import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 
 @NgModule({
   imports: [
@@ -50,8 +51,12 @@ import { PetitionComponent } from './petition/petition.component';
     PetitionsPostComponent,
     DonationComponent,
     PetitionComponent,
+    ShareDialogComponent,
   ],
-  entryComponents: [ConfirmDeleteDialogComponent],
+  entryComponents: [
+    ConfirmDeleteDialogComponent, 
+    ShareDialogComponent,
+],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     PostsService,

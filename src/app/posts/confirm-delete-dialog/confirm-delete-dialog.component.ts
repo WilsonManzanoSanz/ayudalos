@@ -9,7 +9,9 @@ export class ConfirmDeleteDialogComponent  {
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      
+    }
 
   onNoClick(): void {
     this.dialogRef.close();

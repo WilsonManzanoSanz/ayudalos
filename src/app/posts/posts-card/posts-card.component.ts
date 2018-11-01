@@ -2,6 +2,7 @@ import { Component, OnInit, Input  } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {PostsService, Post} from '../shared/posts.service';
 import {ConfirmDeleteDialogComponent} from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import {ShareDialogComponent} from '../share-dialog/share-dialog.component';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {environment} from './../../../environments/environment';
 
@@ -16,6 +17,7 @@ export class PostsCardComponent implements OnInit {
   @Input() user: any;
   @Input() allowedDelete: any;
   date_view: Boolean = false;
+  link: string = '';
 
   constructor(public postService: PostsService, private authService: AuthService, public dialog: MatDialog) {
   }
@@ -52,15 +54,22 @@ export class PostsCardComponent implements OnInit {
   }
   
   openShareProcess(idx){
-    console.log(navigator);
-    if (navigator.share) {
-      navigator.share({
+    if (navigator['share']) {
+      navigator['share']({
           title: `${this.posts[idx].tittle} en Ayudalos`,
           text: this.posts[idx].description,
           url: `${environment.urlpage}/posts/donations/${this.posts[idx].id}`,
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
+    }else{
+      const dialogRef = this.dialog.open(ShareDialogComponent, {
+        width: '60%',
+        data: `${environment.urlpage}/posts/donation/${this.posts[idx].id}`
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      });
     }
   }
   

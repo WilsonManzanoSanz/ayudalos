@@ -236,7 +236,6 @@ export class AuthService {
             }, error => console.error(error));
           }*/
           if (this.getUserValue()) {
-            console.log('resolve');
             resolve(this.user);
           }
           if(this.loadingUser){
