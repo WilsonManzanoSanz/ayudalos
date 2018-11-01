@@ -1,7 +1,6 @@
 import { Component, OnInit , HostListener } from '@angular/core';
 import {AuthService, User} from '../../core/auth.service';
 import {PostsService} from '../shared/posts.service';
-import {HttpParams} from '@angular/common/http';
 import {
   trigger,
   state,

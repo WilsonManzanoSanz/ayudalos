@@ -49,8 +49,8 @@ export class PostsService {
     return this.http.get<any>(this.URL, {params: this.getParams});
   }
 
-  public getDonation(id, params) {
-    return this.http.get<any>(`${this.URL}${id}`, {params:params});
+  public getDonation(id) {
+    return this.http.get<any>(`${this.URL}${id}`);
   }
   
   public postComment(payload){

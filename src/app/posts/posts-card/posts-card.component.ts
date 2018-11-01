@@ -52,7 +52,7 @@ export class PostsCardComponent implements OnInit {
   }
   
   openShareProcess(idx){
-    debugger;
+    console.log(navigator);
     if (navigator.share) {
       navigator.share({
           title: `${this.posts[idx].tittle} en Ayudalos`,

@@ -229,16 +229,20 @@ export class AuthService {
   
   public getCurrentUser(){
     return new Promise((resolve, reject) => {
-      if (this.getUserValue()) {
-        resolve(this.user);
-      } this.hardLoadUser().subscribe(user => {
+      this.hardLoadUser().subscribe(user => {
           /*if (user) {
             this.getUser(user).subscribe((responseUser) => {
                 resolve(responseUser.data);
             }, error => console.error(error));
           }*/
+          if (this.getUserValue()) {
+            console.log('resolve');
+            resolve(this.user);
+          }
           if(this.loadingUser){
-            this.loadingUser.then(user => resolve(user)).catch(error => reject(error));
+            this.loadingUser.then(user => {
+              resolve(user);
+            }).catch(error => reject(error));
           }
         }, (error => {
             console.error(error);

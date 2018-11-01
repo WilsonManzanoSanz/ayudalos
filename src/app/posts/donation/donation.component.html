@@ -1,0 +1,13 @@
+ <app-posts-card *ngIf="!notFound" class="card-container center-card" style=""  [posts]="posts" [user]="user"></app-posts-card>
+<div *ngIf="notFound" style="height:80vh;">
+  <div class="center-card" style="height:60vh;">
+    <h1 style="color:red;">
+      Donación no encontrada.
+    </h1>
+    <div class="">
+      <button mat-raised-button color="primary" class="center-card-button full-width-important" routerLink="/posts/donations">
+      Ve a donaciones
+      </button>
+    </div>
+  </div>
+</div>

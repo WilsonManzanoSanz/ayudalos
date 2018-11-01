@@ -24,6 +24,8 @@ import { TokenInterceptor } from './../core/token.interceptor';
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-delete-dialog.component';
 import { PetitionsCardComponent } from './petitions-card/petitions-card.component';
 import { PetitionsPostComponent } from './petitions-post/petitions-post.component';
+import { DonationComponent } from './donation/donation.component';
+import { PetitionComponent } from './petition/petition.component';
 
 @NgModule({
   imports: [
@@ -46,6 +48,8 @@ import { PetitionsPostComponent } from './petitions-post/petitions-post.componen
     ConfirmDeleteDialogComponent,
     PetitionsCardComponent,
     PetitionsPostComponent,
+    DonationComponent,
+    PetitionComponent,
   ],
   entryComponents: [ConfirmDeleteDialogComponent],
   providers: [
