@@ -57,7 +57,7 @@ export class PetitionsCardComponent implements OnInit {
     if (navigator['share']) {
       navigator['share']({
           title: `${this.petitions[idx].tittle} en Ayudalos`,
-          text: this.petitions[idx].description,
+          text: this.petitions[idx].tittle,
           url: url,
       })
         .then(() => console.log('Successful share'))

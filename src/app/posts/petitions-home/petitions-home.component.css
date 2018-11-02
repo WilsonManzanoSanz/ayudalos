@@ -12,3 +12,7 @@ mat-card#mat-title-petitions{
   width:20em;
 }
 
+.background-main-image{
+  overflow-x:hidden;
+}
+

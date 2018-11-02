@@ -58,7 +58,7 @@ export class PostsCardComponent implements OnInit {
     if (navigator['share']) {
       navigator['share']({
           title: `${this.posts[idx].tittle} en Ayudalos`,
-          text: this.posts[idx].description,
+          text: this.posts[idx].tittle,
           url: url,
       })
         .then(() => console.log('Successful share'))

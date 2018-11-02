@@ -1,70 +1,73 @@
 <div  class="background-main-image">
-  <img class="main-image center-content pointer" routerLink="/posts/donations/"
-       src="https://images.unsplash.com/photo-1525943887023-baee104c9e6e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1f94eb3d20fc36967d74640b2a82e138&auto=format&fit=crop&w=1131&q=80" alt="home donation page">
-<div>
-  <mat-card class="pointer center-content" id="mat-title-donations"  routerLink="/posts/donations">
-    <h2 class="card-tittle nopadding primary">¿Quieres donar algo?</h2>
-    <mat-card-content>
-      <h4 class="primary-letter center">Acá te explicamos que puedes donar...
-      </h4>
-    </mat-card-content>
-  </mat-card>
-</div>
-<div class="card-container" id="home-cards">    
   <div>
-      <mat-card>
-        <h2 class="card-tittle primary">Dona Comida</h2>
+    <img class="main-image center-content pointer" routerLink="/posts/donations/"
+       src="https://images.unsplash.com/photo-1525943887023-baee104c9e6e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1f94eb3d20fc36967d74640b2a82e138&auto=format&fit=crop&w=1131&q=80" alt="home donation page">
+   <!-- <button mat-button class="middle-banner-button" color="primary"
+            routerLink="/posts/donations" id="ir-donaciones-button">IR A DONACIONES</button> -->
+    <div>
+      <mat-card class="pointer center-content" id="mat-title-donations"  routerLink="/posts/donations">
+        <h2 class="card-tittle nopadding primary">¿Quieres donar algo?</h2>
         <mat-card-content>
-          <img  mat-card-image src="https://cdn20.patchcdn.com/users/22878510/20161102/120046/styles/T800x600/public/article_images/food_drive_shutterstock_193690586-1478102436-7013.jpg" alt="Donacion comida">
-          <p class="primary-letter">
-            La comida es el sustento básico de todas las familias. A diario en nuestra canasta familiar nos sobran productos que no utilizaremos o que terminaremos desechando. Por medio de <b>AYÚDALOS</b>, puedes donar estos productos que no utilizarás, así ayudarás a muchas más familias que lo necesitan para su sustento diario. No deperdiciemos comida, brindémosla a quien más lo necesita.
-          </p>
+          <button mat-raised-button class="primary-letter center ">Acá te explicamos que puedes donar</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="card-container" id="home-cards">    
+    <div>
+        <mat-card>
+          <h2 class="card-tittle primary">Dona Comida</h2>
+          <mat-card-content>
+            <img  mat-card-image src="https://cdn20.patchcdn.com/users/22878510/20161102/120046/styles/T800x600/public/article_images/food_drive_shutterstock_193690586-1478102436-7013.jpg" alt="Donacion comida">
+            <p class="primary-letter">
+              La comida es el sustento básico de todas las familias. A diario en nuestra canasta familiar nos sobran productos que no utilizaremos o que terminaremos desechando. Por medio de <b>AYÚDALOS</b>, puedes donar estos productos que no utilizarás, así ayudarás a muchas más familias que lo necesitan para su sustento diario. No deperdiciemos comida, brindémosla a quien más lo necesita.
+            </p>
+            <button class="center-card-button full-width-important" mat-button color="primary" routerLink="/posts/donations/">DONAR</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div>
+        <mat-card>
+          <h2 class="card-tittle primary">Dona prendas de vestir</h2>
+          <mat-card-content>
+            <img  mat-card-image src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/Clothing-Donation-Photo.jpg?alt=media&token=6a66ddfd-477a-477d-93c0-6625f9ed0896" alt="Donacion ropa">
+            <p class="primary-letter">
+             ¿Cuántas prendas en buen estado se terminan llevando a la basura porque simplemente no te gustó, no era tu talla adecuada o te dejó de quedar? 
+  No las botes, regalar es una mejor opción a aquellas personas que no tienen los recursos suficientes para renovar su closet.
+            </p>
+          </mat-card-content>
           <button class="center-card-button full-width-important" mat-button color="primary" routerLink="/posts/donations/">DONAR</button>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    
-    <div>
-      <mat-card>
-        <h2 class="card-tittle primary">Dona prendas de vestir</h2>
-        <mat-card-content>
-          <img  mat-card-image src="https://firebasestorage.googleapis.com/v0/b/helpthem-60d1a.appspot.com/o/Clothing-Donation-Photo.jpg?alt=media&token=6a66ddfd-477a-477d-93c0-6625f9ed0896" alt="Donacion ropa">
-          <p class="primary-letter">
-           ¿Cuántas prendas en buen estado se terminan llevando a la basura porque simplemente no te gustó, no era tu talla adecuada o te dejó de quedar? 
-No las botes, regalar es una mejor opción a aquellas personas que no tienen los recursos suficientes para renovar su closet.
-          </p>
-        </mat-card-content>
-        <button class="center-card-button full-width-important" mat-button color="primary" routerLink="/posts/donations/">DONAR</button>
-      </mat-card>
-    </div>
-    
-    <div>
-      <mat-card>
-        <h2 class="card-tittle primary">Dona Educación</h2>
-        <mat-card-content>
-          <img  mat-card-image src="https://thumbs.dreamstime.com/b/pencil-case-school-supplies-calculator-pile-books-isolated-white-background-various-including-notebooks-pink-57559029.jpg" alt="Donacion utiles escolares">
-          <p class="primary-letter">
-            Has pensado: ¿Cuántos niños dejan de recibir educación por falta de recursos o apoyo? 
-No permitas que eso suceda, la educación es primordial en nuestros niños, niñas y adolescentes de Colombia. 
-La educación es un derecho fundamental y que todos los niños deben recibir sin excepción, puedes cambiar la vida de miles de niños aportando útiles escolares, meriendas, uniformes, entre otros recursos para qué día a día encuentren la motivación necesaria para ir a aprender.
-          </p>
-        </mat-card-content>
-        <button class="center-card-button full-width-important" mat-button color="primary" routerLink="/posts/donations/">DONAR</button>
-      </mat-card>
-    </div>
-    
-    <div>
-      <mat-card>
-        <h2 class="card-tittle primary">Dona cualquier otro recurso</h2>
-        <mat-card-content>
-          <img  mat-card-image src="https://saveculture.org/wp-content/uploads/2016/06/donate-image.jpg" alt="Helpthem photo">
-          <p class="primary-letter">
-            ¿Tienes algo útil que puedes ser beneficioso para otras personas como un electrodoméstico, libros, o una herramienta? Dónalo y podrás ayudar a una persona que no puede acceder a ello y lo necesita. ¡Lo agredecerá mucho!
-          </p>
-        </mat-card-content>
-        <button class="center-card-button full-width-important" mat-button color="primary" routerLink="/posts/donations/">DONAR</button>
-      
-      </mat-card>
-    </div>
-</div>
+        </mat-card>
+      </div>
+
+      <div>
+        <mat-card>
+          <h2 class="card-tittle primary">Dona Educación</h2>
+          <mat-card-content>
+            <img  mat-card-image src="https://thumbs.dreamstime.com/b/pencil-case-school-supplies-calculator-pile-books-isolated-white-background-various-including-notebooks-pink-57559029.jpg" alt="Donacion utiles escolares">
+            <p class="primary-letter">
+              Has pensado: ¿Cuántos niños dejan de recibir educación por falta de recursos o apoyo? 
+  No permitas que eso suceda, la educación es primordial en nuestros niños, niñas y adolescentes de Colombia. 
+  La educación es un derecho fundamental y que todos los niños deben recibir sin excepción, puedes cambiar la vida de miles de niños aportando útiles escolares, meriendas, uniformes, entre otros recursos para qué día a día encuentren la motivación necesaria para ir a aprender.
+            </p>
+          </mat-card-content>
+          <button class="center-card-button full-width-important" mat-button color="primary" routerLink="/posts/donations/">DONAR</button>
+        </mat-card>
+      </div>
+
+      <div>
+        <mat-card>
+          <h2 class="card-tittle primary">Dona cualquier otro recurso</h2>
+          <mat-card-content>
+            <img  mat-card-image src="https://saveculture.org/wp-content/uploads/2016/06/donate-image.jpg" alt="Helpthem photo">
+            <p class="primary-letter">
+              ¿Tienes algo útil que puedes ser beneficioso para otras personas como un electrodoméstico, libros, o una herramienta? Dónalo y podrás ayudar a una persona que no puede acceder a ello y lo necesita. ¡Lo agredecerá mucho!
+            </p>
+          </mat-card-content>
+          <button class="center-card-button full-width-important" mat-button color="primary" routerLink="/posts/donations/">DONAR</button>
+
+        </mat-card>
+      </div>
+  </div>
 </div>
