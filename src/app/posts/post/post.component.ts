@@ -19,6 +19,7 @@ export class PostComponent implements OnInit {
    public uploadingPhoto: Boolean;
    public uploadingPromise = null;
    public categories:any;
+   public image:any = null;
   
    @Input() type: any;
    @Input() user: any;
@@ -50,7 +51,18 @@ export class PostComponent implements OnInit {
 
   saveFile(file: any) {
     this.photo = file;
-    this.uploadingPhoto = true;
+    this.image = document.getElementById('preview-image');
+     let reader  = new FileReader();
+     reader.onload =  () => {
+       this.image.style.display = 'block';
+       this.image.src = reader.result;
+     }
+     if (file) {
+       reader.readAsDataURL(file);
+     } else {
+       this.image.src = "";
+     }
+    /*this.uploadingPhoto = true;
     this.uploadingPromise = new Promise((resolve, reject) => {
       this.postsService.uploadPostPhoto(this.photo, this.user.uid).snapshotChanges().pipe(
             finalize(() => {
@@ -61,26 +73,40 @@ export class PostComponent implements OnInit {
               });
             })
       ).subscribe();
-    });
+    });*/
   }
 
   checkPost(form: NgForm) {
     if (form.valid) {
       this.postForm = form;
-      let newPost;
-      if (this.uploadingPromise == null) {
+      let newPost = {...this.post, ...{userUid: this.user.uid} };
+      /*if (this.uploadingPromise == null) {
         newPost =  {...this.post, ... {userUid: this.user.uid}};
         this.newPost(newPost);
       } else {
         this.uploadingPromise.then((response) => {
           newPost =  {...this.post, ...{userUid: this.user.uid} };
-          this.newPost(newPost);
+          
         }).catch((error) => console.error(error));
+      }*/
+      if(this.photo){
+        this.uploadingPhoto = true;
+        this.postsService.uploadPostPhoto(this.photo, this.user.uid).snapshotChanges().pipe(
+            finalize(() => {
+              this.postsService.fileRef.getDownloadURL().subscribe((responseURL) => {
+                newPost.photoURL = responseURL;
+                this.uploadingPhoto = false;
+                this.addNewPost(newPost);
+              });
+            })
+        ).subscribe();
+    } else {
+      this.addNewPost(newPost);
       }
     }
   }
 
-  newPost(newPost) {
+  addNewPost(newPost) {
     this.postForm.reset();
     this.postsService.newPost({...newPost, ...this.type}).subscribe(response => {
       console.log('new post has been posted', response);

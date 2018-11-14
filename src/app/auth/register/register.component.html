@@ -51,6 +51,7 @@
           class="center-card-button full-width-important">Agrega tu foto de perfil</button>
           <input id="fileToUpload" type="file" style="display:none;"  accept="image/*">
         </div>
+         <img src="" className="nodisplay" height="200" alt="Image preview..." id="preview-image" style="display:none; margin:10px auto;">
         <div *ngIf="!sendRequest" class="center-content">
           <p class="warning-text" *ngIf="wrongCredentials">Tu email ha sido usado. Selecciona a ingresar o olvidar constrase&ntilde;a</p>
           <div>

@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   public wrongCredentials: Boolean = false;
   public passwordValidator = new PasswordValidator();
   public photo: any = null;
+  public image:any = null;
 
   constructor(private authService: AuthService, private router: Router, private storage: AngularFireStorage, private http: HttpClient) {
   }
@@ -119,6 +120,17 @@ export class RegisterComponent implements OnInit {
 
   savePhotoInCache(file) {
      this.photo = file;
+     this.image = document.getElementById('preview-image');
+     let reader  = new FileReader();
+     reader.onload =  () => {
+       this.image.style.display = 'block';
+       this.image.src = reader.result;
+     }
+     if (file) {
+       reader.readAsDataURL(file);
+     } else {
+       this.image.src = "";
+     }
   }
 
 

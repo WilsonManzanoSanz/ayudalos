@@ -19,6 +19,7 @@ export class PetitionsPostComponent implements OnInit {
    public uploadingPromise = null;
    public categories: any[] = [];
    public moneyRequired: Boolean = false;
+   public image:any = null;
 
    @Input() type: any;
    @Input() user: any;
@@ -50,7 +51,18 @@ export class PetitionsPostComponent implements OnInit {
 
   saveFile(file: any) {
     this.photo = file;
-    this.uploadingPhoto = true;
+    this.image = document.getElementById('preview-image');
+     let reader  = new FileReader();
+     reader.onload =  () => {
+       this.image.style.display = 'block';
+       this.image.src = reader.result;
+     }
+     if (file) {
+       reader.readAsDataURL(file);
+     } else {
+       this.image.src = "";
+     }
+    /*this.uploadingPhoto = true;
     this.uploadingPromise = new Promise((resolve, reject) => {
       this.petitionsService.uploadPetitionPhoto(this.photo, this.user.uid).snapshotChanges().pipe(
             finalize(() => {
@@ -61,7 +73,7 @@ export class PetitionsPostComponent implements OnInit {
               });
             })
       ).subscribe();
-    });
+    });*/
   }
 
   checkPetition(form: NgForm) {
@@ -71,12 +83,25 @@ export class PetitionsPostComponent implements OnInit {
       this.petition.categoryDonationId = this.petition.category.id;
       //let newPetition = {...this.petition, ... {userUid: this.user.uid}, raised: Math.floor(Math.random() * this.petition.goal)};
       let newPetition = {...this.petition, ... {userUid: this.user.uid}, raised: 0};
-      if (this.uploadingPromise == null) {
+      /*if (this.uploadingPromise == null) {
         this.newPetition(newPetition);
       } else {
         this.uploadingPromise.then((response) => {
           this.newPetition(newPetition);
         }).catch((error) => console.error(error));
+      }*/
+      if(this.photo){
+        this.petitionsService.uploadPetitionPhoto(this.photo, this.user.uid).snapshotChanges().pipe(
+              finalize(() => {
+                this.petitionsService.fileRef.getDownloadURL().subscribe((responseURL) => {
+                  newPetition.photoURL = responseURL;
+                  this.uploadingPhoto = false;
+                  this.newPetition(newPetition);
+                });
+              })
+        ).subscribe();
+      } else {
+        this.newPetition(newPetition);
       }
     }
   }
