@@ -7,6 +7,10 @@
      <mat-icon aria-label="Home button" style="padding-top:5px;" class="pointer primary" (click)="toggleSearchState()">search</mat-icon>
     </mat-card-header>
 </mat-card>
+
+<app-search [@searchBarState]="stateSearchBar" [stateSearchBar]="stateSearchBar"
+            (updatePosts)="updatesBySearch($event)" (closeElement)="clearSearchForm()"></app-search>
+
 <div class="scrollable" infiniteScroll
   [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="1000"
