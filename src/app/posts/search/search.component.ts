@@ -15,7 +15,6 @@ export class SearchComponent implements OnInit {
   @Input() service: any;
   public searchQuery = '';
   public searchTerms = new Subject<string>();
-  public service = null;
   @Output() closeElement = new EventEmitter<any>();
   @Output() updatePosts = new EventEmitter<any>();
   
