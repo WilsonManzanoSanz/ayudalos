@@ -8,7 +8,7 @@
     </mat-card-header>
 </mat-card>
 
-<app-search [@searchBarState]="stateSearchBar" [stateSearchBar]="stateSearchBar"
+<app-search [@searchBarState]="stateSearchBar" [stateSearchBar]="stateSearchBar" [service]="petitionService"
             (updatePosts)="updatesBySearch($event)" (closeElement)="clearSearchForm()"></app-search>
 
 <div class="scrollable" infiniteScroll

@@ -3,7 +3,6 @@ import { Observable, Subject } from 'rxjs';
 import {
    debounceTime, distinctUntilChanged, switchMap
  } from 'rxjs/operators';
-import {PostsService, Post} from '../shared/posts.service';
 
 @Component({
   selector: 'app-search',
@@ -13,12 +12,17 @@ import {PostsService, Post} from '../shared/posts.service';
 export class SearchComponent implements OnInit {
 
   @Input() stateSearchBar: string;
+  @Input() service: any;
   public searchQuery = '';
   public searchTerms = new Subject<string>();
+  public service = null;
   @Output() closeElement = new EventEmitter<any>();
   @Output() updatePosts = new EventEmitter<any>();
+  
 
-  constructor(public postService: PostsService) { }
+  constructor() {
+    
+  }
 
   ngOnInit(): void {
     this.searchTerms.pipe(
@@ -31,7 +35,7 @@ export class SearchComponent implements OnInit {
       // switch to new search observable each time the term changes
       switchMap(
         (term: string) => {
-          return this.postService.searchPosts(term);
+          return this.service.searchPosts(term);
         })
     ).subscribe(data => { 
       if(data['data'].items){
@@ -49,7 +53,7 @@ export class SearchComponent implements OnInit {
 
   hideElement() {
     this.searchQuery = '';
-    this.postService.deleteParamaters([{key:'key'}, {key:'value'}]);
+    this.service.deleteParamaters([{key:'key'}, {key:'value'}]);
     this.closeElement.emit();
     
   }
