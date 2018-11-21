@@ -7,6 +7,25 @@
     <mat-card-content>
       <form [formGroup]="registerFormGroup" (ngSubmit)="attemptToRegister(registerFormGroup)">
         <mat-form-field class="full-width">
+          <input matInput placeholder="Nombre completo" formControlName="displayName" name="displayName" id="registerForm-displayName">
+          <mat-error *ngIf="registerFormGroup.controls['displayName']?.errors?.required">
+              El nombre completo es <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="registerFormGroup.controls['displayName']?.errors?.minlength">
+              Tu nombre completo al menos debe tener 10 caracteres
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="Escribe una descripción sobre tu fundación" formControlName="description" name="description"
+                    id="registerForm-description"></textarea>
+          <mat-error *ngIf="registerFormGroup.controls['description']?.errors?.required">
+              La descripción es <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="registerFormGroup.controls['description']?.errors?.minlength">
+              La descripción tiene que tener al menos 20 caracteres
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
           <input matInput placeholder="Email" formControlName="email" name="email"
                  id="registerForm-email">
           <mat-hint>Bienvenido a nuestra pagina</mat-hint>
@@ -15,15 +34,6 @@
           </mat-error>
           <mat-error *ngIf="registerFormGroup.controls['email']?.errors?.required">
              El email es <strong>requerido</strong>
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Nombre completo" formControlName="displayName" name="displayName" id="registerForm-displayName">
-          <mat-error *ngIf="registerFormGroup.controls['displayName']?.errors?.required">
-              El nombre completo es <strong>requerido</strong>
-          </mat-error>
-          <mat-error *ngIf="registerFormGroup.controls['displayName']?.errors?.minlength">
-              Tu nombre completo al menos debe tener 10 caracteres
           </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">

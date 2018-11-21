@@ -36,6 +36,8 @@ export class ProfileComponent implements OnInit {
   public isMobile: Boolean;
   public selectedTabIndex: number;
   public sameUserLogged: Boolean = false;
+  public descriptionText:string = '';
+  public displayName:string = '';
   // Observable
   public photo: any;
   public downloadURL: string;
@@ -64,6 +66,8 @@ export class ProfileComponent implements OnInit {
           console.log('Logged User', this.loggedUser);
            if(params.id === this.loggedUser.uid){
              this.sameUserLogged = true;
+             this.descriptionText = this.loggedUser.description;
+             this.displayName = this.loggedUser.displayName;
            }
         }).catch(error => console.error(error));
         this.user = response.data;
@@ -94,6 +98,7 @@ export class ProfileComponent implements OnInit {
   saveChanges(nameForm: NgForm) {
     if (nameForm.valid) {
        const displayName = nameForm.value.displayName;
+       const description = nameForm.value.description; 
        // If can get the percent in the subscribe funciton
        if (Boolean(this.photo)) {
          this.updateLoadBar();
@@ -102,6 +107,7 @@ export class ProfileComponent implements OnInit {
             this.authService.fileRef.getDownloadURL().subscribe((response) => {
               const user = {
                 displayName: displayName,
+                description: description,
                 photoURL: response,
                 uid: this.user.uid,
                 email: this.user.email,
@@ -113,6 +119,7 @@ export class ProfileComponent implements OnInit {
        } else {
          const user = {
           displayName: displayName,
+          description: description,
           uid: this.user.uid,
           email: this.user.email,
         };

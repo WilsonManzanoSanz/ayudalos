@@ -8,6 +8,9 @@
         <mat-card-title class="big-tittle primary">{{user.displayName}}</mat-card-title>
         <mat-card-subtitle class="primary">{{user.email}}</mat-card-subtitle>
       </mat-card-header>
+      <p class="primary nomargin" id="card-description">
+        {{user.description}}
+      </p>
       <img *ngIf="!user.photoURL" class="auto-center" src="https://visualpharm.com/assets/386/Female Profile-595b40b65ba036ed117d3de0.svg" alt="Photo of {{user.displayName}}">
       <img *ngIf="user.photoURL" class="auto-center" src="{{user.photoURL}}" alt="Photo of {{user.displayName}}">
       <mat-card-actions class="center-content" *ngIf="!edit_profile && sameUserLogged">
@@ -34,7 +37,17 @@
               <mat-error *ngIf="!fullname.errors?.minlength">
                 Tu nombre completo tiene que tener al menos 6 caracteres.
               </mat-error>
-          </mat-form-field>
+          </mat-form-field> 
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Escribe una descripción sobre tu fundación" name="description"
+                      id="nameForm-description" required minlength="20" [(ngModel)]="descriptionText" #description="ngModel"></textarea>
+            <mat-error *ngIf="description.errors?.required">
+                La descripción es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="description.errors?.minlength">
+                La descripción tiene que tener al menos 20 caracteres
+            </mat-error>
+        </mat-form-field>
           <button mat-raised-button color="primary" class="center-card-button full-width-important"  type="submit">GUARDAR</button>
         </form>      
       </div>

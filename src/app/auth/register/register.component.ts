@@ -17,7 +17,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class RegisterComponent implements OnInit {
 
   public registerFormGroup: FormGroup;
-  public registerObject: any = {email: '', password: '', password2: '', displayName: ''};
+  public registerObject: any = {email: '', password: '', password2: '', displayName: '', description:''};
   public sendRequest: Boolean = false;
   public wrongCredentials: Boolean = false;
   public passwordValidator = new PasswordValidator();
@@ -37,6 +37,10 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.email
       ]),
+      description: new FormControl(this.registerObject.description, [
+        Validators.required,
+        Validators.minLength(8)
+      ]),
       password: new FormControl(this.registerObject.password, [
         Validators.required,
         Validators.minLength(6)
@@ -53,7 +57,7 @@ export class RegisterComponent implements OnInit {
       this.updateLoadBar();
       this.wrongCredentials = false;
       this.authService.emailSignUp(this.registerFormGroup.value.email, this.registerFormGroup.value.password).then((response) => {
-         this.updateProfile(response, form.value.displayName);
+         this.updateProfile(response, form.value.displayName, form.value.description);
        }).catch((error) => {
           console.error(error);
           this.updateLoadBar();
@@ -63,7 +67,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-   updateProfile(user, displayName) {
+   updateProfile(user, displayName, description) {
     if (Boolean(this.photo)) {
        // If can get the percent in the subscribe funciton
        this.authService.uploadPhofilePhoto(user.uid, this.photo).snapshotChanges().pipe(
@@ -75,6 +79,7 @@ export class RegisterComponent implements OnInit {
                   uid: user.uid,
                   email: user.email,
                   typeUserId:4,
+                  description:description,
                 };
                 this.registerUser(newUser);
             });
@@ -87,6 +92,7 @@ export class RegisterComponent implements OnInit {
         uid: user.uid,
         email: user.email,
         typeUserId:4,
+        description:description,
       };
       this.registerUser(newUser);
     }
@@ -97,7 +103,6 @@ export class RegisterComponent implements OnInit {
       this.updateLoadBar();
       this.router.navigateByUrl('/');
       this.authService.getToken();
-      
       this.authService.getUser(user).subscribe( response => {
          this.authService.setUser(response.data);
       }, error=> console.log(error));

@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
   }
 
   googleLogin() {
+    console.log('google');
     this.authService.googleLogin().then((user) => {
          this.goToHome();
        }).catch((error) => {
