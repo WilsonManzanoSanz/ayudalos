@@ -11,7 +11,7 @@
     <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
       <button mat-menu-item (click)="openShareProcess(idx)">Compartir</button>
       <!--<button mat-menu-item>Reportar</button>-->
-      <button mat-menu-item (click)="openDialog(idx)" *ngIf="post.allowedDelete">Borrar</button>
+      <button mat-menu-item (click)="openDialog(idx)" *ngIf="allowedDelete">Borrar</button>
   </mat-menu>
   </mat-card-header>
   <mat-card-content id="post-card-content">

@@ -15,7 +15,7 @@ export class PetitionsCardComponent implements OnInit {
 
   @Input() petitions: Petition[];
   @Input() user: any;
-  @Input() allowedDelete: any;
+  @Input() allowedDelete: Boolean;
   date_view: Boolean = false;
 
   constructor(public petitionService: PetitionsService, private authService: AuthService, public dialog: MatDialog) {

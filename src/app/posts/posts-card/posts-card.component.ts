@@ -15,7 +15,7 @@ export class PostsCardComponent implements OnInit {
 
   @Input() posts: Post[];
   @Input() user: any;
-  @Input() allowedDelete: any;
+  @Input() allowedDelete: Boolean;
   date_view: Boolean = false;
   link: string = '';
 
