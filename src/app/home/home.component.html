@@ -1,18 +1,47 @@
 <div class="background-main-image">
-  <div class="carousel">
-    <div class="carousel-cell">
-      <img src="/assets/img/logo.png" alt="1 image" />
-    </div>
-    <div class="carousel-cell">
-      <img src="/assets/img/carousel1.jpg" alt="2 image" />
-    </div>
-    <div class="carousel-cell">
-      <img src="/assets/img/carousel2.jpg" alt="3 image" />
-    </div>
-    <div class="carousel-cell">
-      <img src="/assets/img/carousel3.jpg" alt="4 image" />
-    </div>
+  <div class="slideshow-container">
+
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 4</div>
+    <img src="/assets/img/logo.png" style="width:100%;">
+    <div class="text" style="color:black;"><button mat-raised-button class="button-carousel" color="primary" routerLink="/posts/donations">DONAR
+      </button></div>
   </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 4</div>
+    <img src="/assets/img/carousel1.jpg" style="width:100%">
+    <div class="text"><button mat-raised-button  color="primary" class="primary-letter button-carousel" style="background-color:white;" routerLink="/auth">UNETE
+      </button></div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">3 / 4</div>
+    <img src="/assets/img/carousel2.jpg" style="width:100%">
+    <div class="text"><button mat-raised-button color="primary" class="button-carousel" routerLink="/posts/petitions">PIDE
+      </button></div>
+  </div>
+    
+    <div class="mySlides fade">
+    <div class="numbertext">4 / 4</div>
+    <img src="/assets/img/carousel3.jpg" style="width:100%">
+    <div class="text"><button mat-raised-button color="primary" class="button-carousel" routerLink="/posts/petitions">DONA
+      </button></div>
+  </div>
+
+  <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+  <a class="next" (click)="plusSlides(1)">&#10095;</a>
+
+  </div>
+  <br>
+
+  <div style="text-align:center">
+    <span class="dot" (click)="currentSlide(1)"></span> 
+    <span class="dot" (click)="currentSlide(2)"></span> 
+    <span class="dot" (click)="currentSlide(3)"></span> 
+    <span class="dot" (click)="currentSlide(4)"></span> 
+  </div>
+
 
   <div class="card-container" id="home-cards">
      <div routerLink="/aboutus">
