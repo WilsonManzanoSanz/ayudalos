@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   
   timeout() {
     setTimeout(() => {
+        console.log('change');
         this.plusSlides(1);
         this.timeout();
     }, 6000);
