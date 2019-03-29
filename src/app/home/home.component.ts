@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 //import Flickity from 'flickity';
 
 
@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   //flkty: any;
   public slideIndex = 1;
+  public slides:any = document.getElementsByClassName("mySlides");
+  public dots:any = document.getElementsByClassName("dot");
   
   constructor() {
   }
@@ -25,10 +27,14 @@ export class HomeComponent implements OnInit {
       autoPlay: false,
     });*/
   }
+
+
+  ngOnDestroy(){
+    
+  }
   
   timeout() {
     setTimeout(() => {
-        console.log('change');
         this.plusSlides(1);
         this.timeout();
     }, 6000);
@@ -43,18 +49,17 @@ export class HomeComponent implements OnInit {
   }
 
   showSlides(n) {
-    let i;
-    let slides:any = document.getElementsByClassName("mySlides");
-    let dots:any = document.getElementsByClassName("dot");
-    if (n > slides.length) {this.slideIndex = 1}    
-    if (n < 1) {this.slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[this.slideIndex-1].style.display = "block";  
-    dots[this.slideIndex-1].className += " active";
+    if(document.getElementsByClassName("mySlides")[1]){
+      let i;
+      this.slideIndex = (n > this.slides.length) ? 1 : this.slideIndex = this.slides.length;
+      for (i = 0; i < this.slides.length; i++) {
+          this.slides[i].style.display = "none";  
+      }
+      for (i = 0; i < this.dots.length; i++) {
+          this.dots[i].className = this.dots[i].className.replace(" active", "");
+      }
+      this.slides[this.slideIndex-1].style.display = "block";  
+      this.dots[this.slideIndex-1].className += " active";
+      }
   }
 }
