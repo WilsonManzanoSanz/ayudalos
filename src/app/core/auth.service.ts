@@ -37,17 +37,21 @@ export class AuthService {
   
   public initializeUser(){
     this.firebaseAuth.user.subscribe((user) => {
+      console.log(new Date().toDateString(), user);
+        this.setUser(user);
         if (user) {
-          if (localStorage.getItem(`user_${user.uid}`)) {
+          if (localStorage.getItem(`user`)) {
             this.user = JSON.parse(localStorage.getItem(`user_${user.uid}`));
           } else {
             this.loadingUser = new Promise((resolve, reject) => {
               this.getUser(user).subscribe(response => {
-              if(response.data){
-                  this.user = response.data;
-                  localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
-                  resolve(this.user);
-                } 
+              if( response && response.data){
+                this.user = response.data;
+                localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
+                resolve(this.user);
+              } else if(!response.success && Boolean(this.user)){
+                this.signOut();
+              }
               }, error => {
                 reject(error);
                 console.error(error);
@@ -56,6 +60,10 @@ export class AuthService {
           }
         }
       }, (error) => console.error(error));
+  }
+
+  getLocalUser(){
+
   }
 
   public googleLogin() {
@@ -219,7 +227,7 @@ export class AuthService {
   }
 
   public getUser(user: any, params = new HttpParams().set('skip', '0').set('limit', '10')) {
-    console.log('getUser');
+    console.log('requesting user...');
     return this.http.get<any>(`${this.URL}/${user.uid}`, {params:params});
   }
 
