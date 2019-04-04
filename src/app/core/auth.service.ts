@@ -38,7 +38,6 @@ export class AuthService {
   public initializeUser(){
     this.firebaseAuth.user.subscribe((user) => {
       console.log(new Date().toDateString(), user);
-        this.setUser(user);
         if (user) {
           if (localStorage.getItem(`user`)) {
             this.user = JSON.parse(localStorage.getItem(`user_${user.uid}`));
@@ -46,8 +45,8 @@ export class AuthService {
             this.loadingUser = new Promise((resolve, reject) => {
               this.getUser(user).subscribe(response => {
               if( response && response.data){
-                this.user = response.data;
-                localStorage.setItem(`user_${user.uid}`, JSON.stringify(response.data));
+                this.setUser(response.data);
+                this.saveLocalUser(response.data);
                 resolve(this.user);
               } else if(!response.success && Boolean(this.user)){
                 this.signOut();
@@ -75,7 +74,11 @@ export class AuthService {
         const newUser  = { uid: result.user.uid, typeUserId:1, 
                                email: result.user.email, displayName: result.user.displayName, photoURL: result.user.photoURL};
         this.registerUser(newUser).subscribe(
-           data => console.log('registered', data),
+           data => {
+             if(data.success && Boolean(data.data[0])){
+               this.setUser(data.data[0]);
+             }
+           },
            err => console.error(err)
         );
         resolve(result.user);
@@ -266,6 +269,10 @@ export class AuthService {
 
   public setUser(user) {
     this.user = user;
+  }
+
+  public saveLocalUser(user){
+    localStorage.setItem(`user_${user.uid}`, JSON.stringify(user));
   }
 
   public handleError(error) {
