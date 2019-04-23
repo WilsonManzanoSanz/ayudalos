@@ -230,7 +230,6 @@ export class AuthService {
   }
 
   public getUser(user: any, params = new HttpParams().set('skip', '0').set('limit', '10')) {
-    console.log('requesting user...');
     return this.http.get<any>(`${this.URL}/${user.uid}`, {params:params});
   }
 

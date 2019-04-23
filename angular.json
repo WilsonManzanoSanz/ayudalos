@@ -23,10 +23,10 @@
               "src/manifest.json"
             ],
             "styles": [
-              "src/styles.css",
-              "src/assets/css/colors.css",
-              "src/assets/css/carousel.css",
-              "src/assets/css/mat-card.css",
+              "src/styles.scss",
+              "src/assets/scss/colors.scss",
+              "src/assets/scss/carousel.scss",
+              "src/assets/scss/mat-card.scss",
               "src/customTheme.scss"
             ],
             "scripts": []
@@ -132,7 +132,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "css"
+      "styleext": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app"
