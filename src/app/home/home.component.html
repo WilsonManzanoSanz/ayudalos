@@ -43,6 +43,13 @@
   </div>
 
 
+  <div class="container wrapper">
+    <div class="flex-container scroll-horizontal">
+      <app-petitions-card class="card-container" style="justify-content:start;"  [petitions]="petitions" [user]="user"></app-petitions-card>
+    </div>
+  </div>
+
+
   <div class="card-container" id="home-cards">
      <div routerLink="/aboutus">
       <mat-card>

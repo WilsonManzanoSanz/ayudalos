@@ -112,6 +112,16 @@ mat-card span.date{
   margin:0;
 }
 
+.scroll-horizontal{
+  .card-container{
+    overflow-x: scroll;
+    max-height: 580px;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+}
+
 @media only screen and (max-width: 700px) {
   .main-image{
     max-width: 100%;

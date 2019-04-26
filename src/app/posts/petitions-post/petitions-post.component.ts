@@ -40,7 +40,6 @@ export class PetitionsPostComponent implements OnInit {
       response => this.categories = response.items,
       error => console.error(error)
     );
-    console.log('oriiginal',this.petitionForm);
   }
 
   addPhoto() {

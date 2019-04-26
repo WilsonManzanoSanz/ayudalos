@@ -1,5 +1,5 @@
 <div *ngFor="let petition of petitions; let idx = index;" id="petition-card-container">
-  <mat-card class="petition-card nopadding" id="petition-card">
+  <mat-card class="petition-card" id="petition-card">
     
     <div class="card-tittle primary nomargin flex">
       <img *ngIf="petition.user.photoURL" mat-card-avatar src="{{petition.user.photoURL}}"  matTooltip="{{petition.user.displayName}}" alt="{{petition.user.displayName}}" class="pointer" routerLink="/auth/profile/{{petition.user.uid}}">
@@ -11,11 +11,11 @@
       <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
         <!--<button mat-menu-item>Reportar</button>-->
         <button mat-menu-item (click)="openShareProcess(idx)">Compartir</button>
-        <button mat-menu-item (click)="openDialog(idx)" *ngIf="allowedDelete">Borrar</button>
+        <button mat-menu-item (click)="openDialog(idx)" *ngIf="petition.allowedDelete">Borrar</button>
      </mat-menu>
     </div>
-    <mat-card-content style="padding:0px 15px;">
-      <img  *ngIf="petition.photoURL" style="margin:0px -24px;" mat-card-image src="{{petition.photoURL}}" alt="Donacion">
+    <img  *ngIf="petition.photoURL" mat-card-image src="{{petition.photoURL}}" alt="Donacion">
+    <mat-card-content>
       <p class="primary-letter">{{petition.description}}</p>
       <div class="petition-progress-info" *ngIf="petition.goal">
         <div class="di-left">

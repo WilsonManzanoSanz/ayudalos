@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 //import Flickity from 'flickity';
-
+import { PetitionsService } from '../posts/shared/petitions.service';
+import {AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +14,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   public slideIndex = 1;
   public slides:any = document.getElementsByClassName("mySlides");
   public dots:any = document.getElementsByClassName("dot");
+  public petitions:any[] = [];
+  public user:any;
   
-  constructor() {
+  constructor(public petitionService:PetitionsService, public authService:AuthService) {
   }
 
   ngOnInit() {
@@ -26,9 +29,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       contain: true,
       autoPlay: false,
     });*/
+    this.user = this.authService.getCurrentUser().then((user) => this.user = user);
+    this.petitionService.getPetitions().subscribe(response => this.petitions = response.data.items);
   }
-
-
+  
   ngOnDestroy(){
     
   }

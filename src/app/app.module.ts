@@ -24,8 +24,12 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 export const firebaseConfig = environment.firebaseConfig;
 // Service worker
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AboutusComponent } from './aboutus/aboutus.component';
+//Services
 import { AboutService } from './core/about.service';
+import { PetitionsService } from './posts/shared/petitions.service';
+//Components
+import { AboutusComponent } from './aboutus/aboutus.component';
+import {PetitionsCardComponent} from './posts/petitions-card/petitions-card.component';
 
 @NgModule({
   declarations:
@@ -33,6 +37,7 @@ import { AboutService } from './core/about.service';
     AppComponent,
     HomeComponent,
     AboutusComponent,
+    PetitionsCardComponent,
   ],
   imports:
   [
@@ -54,6 +59,7 @@ import { AboutService } from './core/about.service';
     AuthService,
     AuthGuard, 
     AboutService,
+    PetitionsService,
   ],
   bootstrap: [AppComponent]
 })
